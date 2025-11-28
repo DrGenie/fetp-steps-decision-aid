@@ -2,7 +2,7 @@
 // Global configuration
 // ===========================
 
-// Model coefficients from the paper
+// Model coefficients from the paperr
 // Utilities are defined relative to baseline levels
 // Cost coefficients are per 1 000 INR per trainee per month
 
