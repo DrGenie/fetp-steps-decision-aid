@@ -1,4 +1,4 @@
-/* styles.csss */
+/* styles.css */
 *,
 *::before,
 *::after {
@@ -308,6 +308,10 @@ input:focus {
   margin-bottom: 10px;
 }
 
+.epi-grid {
+  margin-top: 6px;
+}
+
 .summary-card {
   border-radius: 12px;
   background: radial-gradient(circle at top left, rgba(30, 64, 175, 0.7), #020617);
@@ -333,26 +337,26 @@ input:focus {
   color: var(--text-muted);
 }
 
-.results-grid {
-  display: grid;
-  grid-template-columns: 1.1fr 1.1fr;
-  gap: 12px;
-  margin-top: 6px;
-}
-
-.modal-results-grid {
-  margin-top: 10px;
-}
-
-.results-list {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
+.headline-recommendation {
+  margin: 4px 0 6px;
   font-size: 12px;
+  color: var(--text-muted);
 }
 
-.results-list li {
-  margin-bottom: 5px;
+/* INFO ICON */
+
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  font-size: 9px;
+  color: var(--text-muted);
+  cursor: default;
 }
 
 /* TABLES */
@@ -379,6 +383,30 @@ input:focus {
   text-align: left;
   background: rgba(15, 23, 42, 0.9);
   font-weight: 500;
+}
+
+/* RESULTS GRID */
+
+.results-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1.1fr;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.modal-results-grid {
+  margin-top: 10px;
+}
+
+.results-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  font-size: 12px;
+}
+
+.results-list li {
+  margin-bottom: 5px;
 }
 
 /* COST CARDS */
@@ -594,6 +622,10 @@ canvas {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .epi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .cost-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -610,7 +642,8 @@ canvas {
     gap: 6px;
   }
 
-  .summary-grid {
+  .summary-grid,
+  .epi-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
