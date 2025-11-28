@@ -1,640 +1,468 @@
-<!-- index.htmll -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>STEPS - FETP Scale-up Decision Aid (India)</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-
+  <title>STEPS – FETP Scale Up Decision Aid (India)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="styles.css" />
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-  <script defer src="script.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- jsPDF -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <!-- SheetJS for Excel export -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
   <header class="app-header">
-    <div class="app-header-left">
-      <div class="app-logo-circle">S</div>
+    <div class="brand">
+      <div class="brand-mark">S</div>
       <div>
-        <h1 class="app-title">STEPS</h1>
-        <p class="app-subtitle">Scalable Training Estimation and Planning System - India FETP</p>
+        <h1>STEPS</h1>
+        <p>Scalable Training Estimation and Planning System – FETP India</p>
       </div>
     </div>
-    <div class="app-header-right">
-      <span class="badge">India FETP - version 1</span>
+    <div class="header-actions">
+      <select id="currencyToggle" class="currency-toggle">
+        <option value="INR">Currency: INR</option>
+        <option value="USD">Currency: USD</option>
+      </select>
+      <select id="modelToggle" class="model-toggle">
+        <option value="mxl">Preference model: Average mixed logit</option>
+        <option value="lc2">Preference model: Training supporters (LC Class 2)</option>
+      </select>
     </div>
   </header>
 
-  <main class="app-main">
-    <!-- LEFT COLUMN -->
-    <section class="panel panel-left">
-      <!-- Left tabs -->
-      <nav class="tabs">
-        <button class="tab-button active" data-tab="tab-intro">Introduction</button>
-        <button class="tab-button" data-tab="tab-config">Configuration</button>
-        <button class="tab-button" data-tab="tab-attributes">Attributes & Levels</button>
-        <button class="tab-button" data-tab="tab-costing">Costing</button>
-      </nav>
+  <nav class="tabs">
+    <button class="tab-button active" data-tab="tab-intro">Introduction</button>
+    <button class="tab-button" data-tab="tab-config">Configuration</button>
+    <button class="tab-button" data-tab="tab-results">Results</button>
+    <button class="tab-button" data-tab="tab-cost">Cost templates</button>
+    <button class="tab-button" data-tab="tab-scenarios">Saved scenarios</button>
+    <button class="tab-button" data-tab="tab-about">About and methods</button>
+  </nav>
 
-      <!-- INTRO TAB -->
-      <section id="tab-intro" class="tab-pane active">
-        <h2 class="panel-title">What STEPS does</h2>
-        <p class="panel-intro">
-          STEPS is a simple planning tool for Field Epidemiology Training Programs in India.
-          It helps you see how different programme designs affect stakeholder support,
-          costs and perceived value.
+  <main>
+    <!-- Intro tab -->
+    <section id="tab-intro" class="tab-panel active">
+      <div class="panel-grid">
+        <div class="card">
+          <h2>What STEPS does</h2>
+          <p>
+            STEPS is an interactive planning tool that combines evidence from a discrete
+            choice experiment with costing information to help design and scale Field
+            Epidemiology Training Programmes (FETP) in India.
+          </p>
+          <p>
+            You can configure the type of programme, mentorship, delivery mode, response
+            time target, cost per trainee, cohort size, and number of cohorts. The tool
+            then reports predicted stakeholder endorsement, programme costs, and a simple
+            benefit–cost profile based on willingness to pay and optional epidemiological
+            assumptions.
+          </p>
+          <p>
+            Use the configuration tab to define a scenario, then move to the results tab
+            to see summary charts and tables. You can save multiple scenarios and download
+            policy briefs and data for inclusion in the business case.
+          </p>
+        </div>
+        <div class="card">
+          <h2>Quick start</h2>
+          <ol class="intro-list">
+            <li>Go to the Configuration tab.</li>
+            <li>Select programme tier, mentorship, delivery mode and response time.</li>
+            <li>Choose the cost per trainee per month within the DCE range.</li>
+            <li>Set cohort size, duration, and number of cohorts.</li>
+            <li>Review endorsement, costs, and benefit–cost ratios in the Results tab.</li>
+            <li>Save scenarios and download a brief or Excel file for reporting.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Configuration tab -->
+    <section id="tab-config" class="tab-panel">
+      <div class="panel-grid">
+        <div class="card">
+          <h2>Programme configuration</h2>
+
+          <label class="field-label" for="programmeTier">Programme tier</label>
+          <select id="programmeTier" class="field-input">
+            <option value="frontline">Frontline (3 months)</option>
+            <option value="intermediate">Intermediate (12 months)</option>
+            <option value="advanced">Advanced (24 months)</option>
+          </select>
+
+          <label class="field-label" for="careerIncentive">Career incentive</label>
+          <select id="careerIncentive" class="field-input">
+            <option value="certificate">Government and partner certificate</option>
+            <option value="university">University qualification</option>
+            <option value="career_pathway">Government career pathway</option>
+          </select>
+
+          <label class="field-label" for="mentorshipLevel">
+            Mentorship intensity
+            <span class="info-tag" data-info="mentorship">i</span>
+          </label>
+          <select id="mentorshipLevel" class="field-input">
+            <option value="low">Low (≥5 fellows per mentor)</option>
+            <option value="medium">Medium (3–4 fellows per mentor)</option>
+            <option value="high">High (≤2 fellows per mentor)</option>
+          </select>
+
+          <label class="field-label" for="deliveryMode">
+            Delivery mode
+            <span class="info-tag" data-info="delivery">i</span>
+          </label>
+          <select id="deliveryMode" class="field-input">
+            <option value="blended">Blended (in person and online)</option>
+            <option value="inperson">Fully in person</option>
+            <option value="online">Fully online</option>
+          </select>
+
+          <label class="field-label" for="responseTime">
+            Outbreak response capacity
+            <span class="info-tag" data-info="response">i</span>
+          </label>
+          <select id="responseTime" class="field-input">
+            <option value="30">Within 30 days</option>
+            <option value="15">Within 15 days</option>
+            <option value="7">Within 7 days</option>
+          </select>
+
+          <label class="field-label" for="costPerTrainee">
+            Cost per trainee per month (INR)
+            <span class="info-tag" data-info="cost">i</span>
+          </label>
+          <input
+            id="costPerTrainee"
+            type="range"
+            min="75000"
+            max="400000"
+            step="5000"
+            value="250000"
+          />
+          <div class="slider-values">
+            <span>₹75,000</span>
+            <span id="costPerTraineeDisplay">₹250,000</span>
+            <span>₹400,000</span>
+          </div>
+
+          <label class="field-label" for="cohortSize">Trainees per cohort</label>
+          <input id="cohortSize" class="field-input" type="number" min="5" value="20" />
+
+          <label class="field-label" for="programmeDuration">
+            Programme duration (months)
+          </label>
+          <input
+            id="programmeDuration"
+            class="field-input"
+            type="number"
+            min="1"
+            value="3"
+          />
+
+          <label class="field-label" for="numCohorts">
+            Number of cohorts (national scale up)
+          </label>
+          <input id="numCohorts" class="field-input" type="number" min="1" value="10" />
+
+          <label class="field-label" for="scenarioNotes">
+            Scenario notes (for reporting)
+          </label>
+          <textarea
+            id="scenarioNotes"
+            class="field-input"
+            rows="3"
+            placeholder="Short description or assumptions for this scenario."
+          ></textarea>
+
+          <div class="button-row">
+            <button id="applyConfigBtn" class="primary-btn">Apply configuration</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Key outputs (current configuration)</h2>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <h3>Predicted endorsement</h3>
+              <p id="endorsementRate">–</p>
+              <small>Share of stakeholders expected to support this programme.</small>
+            </div>
+            <div class="summary-item">
+              <h3>Cost per cohort</h3>
+              <p id="costPerCohort">–</p>
+              <small>Financial cost for one cohort at the chosen design.</small>
+            </div>
+            <div class="summary-item">
+              <h3>Benefit per cohort</h3>
+              <p id="benefitPerCohort">–</p>
+              <small>Willingness to pay based benefit, scaled by uptake.</small>
+            </div>
+            <div class="summary-item">
+              <h3>Benefit–cost ratio</h3>
+              <p id="bcrValue">–</p>
+              <small>Above 1 suggests good value relative to cost.</small>
+            </div>
+          </div>
+          <canvas id="bcrChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results tab -->
+    <section id="tab-results" class="tab-panel">
+      <div class="panel-grid">
+        <div class="card">
+          <h2>Programme performance</h2>
+          <table class="results-table">
+            <tbody>
+              <tr>
+                <th>Preference model</th>
+                <td id="resultsModelName">–</td>
+              </tr>
+              <tr>
+                <th>Programme tier</th>
+                <td id="resultsTier">–</td>
+              </tr>
+              <tr>
+                <th>Mentorship</th>
+                <td id="resultsMentorship">–</td>
+              </tr>
+              <tr>
+                <th>Delivery mode</th>
+                <td id="resultsDelivery">–</td>
+              </tr>
+              <tr>
+                <th>Response capacity</th>
+                <td id="resultsResponse">–</td>
+              </tr>
+              <tr>
+                <th>Cost per trainee per month</th>
+                <td id="resultsCostPerTrainee">–</td>
+              </tr>
+              <tr>
+                <th>Trainees per cohort</th>
+                <td id="resultsCohortSize">–</td>
+              </tr>
+              <tr>
+                <th>Programme duration</th>
+                <td id="resultsDuration">–</td>
+              </tr>
+              <tr>
+                <th>Number of cohorts</th>
+                <td id="resultsNumCohorts">–</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Economic outputs</h3>
+          <table class="results-table">
+            <tbody>
+              <tr>
+                <th>Predicted endorsement</th>
+                <td id="resultsEndorsement">–</td>
+              </tr>
+              <tr>
+                <th>Cost per cohort</th>
+                <td id="resultsCostCohort">–</td>
+              </tr>
+              <tr>
+                <th>Benefit per cohort</th>
+                <td id="resultsBenefitCohort">–</td>
+              </tr>
+              <tr>
+                <th>Benefit–cost ratio</th>
+                <td id="resultsBcr">–</td>
+              </tr>
+              <tr>
+                <th>Net benefit per cohort</th>
+                <td id="resultsNbCohort">–</td>
+              </tr>
+              <tr>
+                <th>Total cost (all cohorts)</th>
+                <td id="resultsTotalCost">–</td>
+              </tr>
+              <tr>
+                <th>Total benefit (all cohorts)</th>
+                <td id="resultsTotalBenefit">–</td>
+              </tr>
+              <tr>
+                <th>Total net benefit</th>
+                <td id="resultsTotalNb">–</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="button-row">
+            <button id="saveScenarioBtn" class="secondary-btn">Save scenario</button>
+            <button id="downloadBriefBtn" class="secondary-btn">Download policy brief (PDF)</button>
+            <button id="downloadExcelBtn" class="secondary-btn">Download data (Excel)</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Visual summary</h2>
+          <canvas id="costBenefitChart"></canvas>
+          <canvas id="uptakeChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cost templates tab -->
+    <section id="tab-cost" class="tab-panel">
+      <div class="card">
+        <h2>Cost templates and sources</h2>
+        <p>
+          This table summarises cost information assembled from WHO, NCDC, NIE and other
+          partners. Values are in Indian rupees and represent total costs for recent
+          programme cycles. They are used to check that the cost per trainee per month
+          values in the DCE are realistic but are not imposed directly on your scenario.
         </p>
-
-        <div class="info-card">
-          <h3>How to use STEPS</h3>
-          <p>
-            1. Go to the Configuration tab and choose a programme type, cohort size,
-            mentorship level and cost per trainee per month.
-          </p>
-          <p>
-            2. STEPS uses discrete choice experiment results to estimate how attractive this
-            configuration is for key stakeholders and what they are willing to pay for each
-            improvement in design.
-          </p>
-          <p>
-            3. You can then explore scale-up scenarios, save different options, and
-            download a short policy brief or an Excel file for your own analysis.
-          </p>
-        </div>
-
-        <div class="info-card">
-          <h3>Who this tool is for</h3>
-          <p>
-            The main audience is policy makers and programme managers in India who
-            need quick, transparent summaries of trade offs between training design,
-            costs and benefits when planning FETP scale up.
-          </p>
-        </div>
-      </section>
-
-      <!-- CONFIG TAB -->
-      <section id="tab-config" class="tab-pane">
-        <h2 class="panel-title">Configure FETP scenario</h2>
-        <p class="panel-intro">
-          Choose a training configuration. STEPS will combine the discrete choice
-          experiment results with costing inputs to provide a summary for this scenario.
-        </p>
-
-        <form id="config-form" class="config-grid" autocomplete="off">
-          <!-- Program type -->
-          <div class="form-group">
-            <label for="program-type">
-              Program type / tier
-              <span class="info-icon" title="Frontline is short and basic, intermediate is one year, advanced is a full two year leadership track.">i</span>
-            </label>
-            <select id="program-type" name="programType">
-              <option value="frontline">Frontline (3 months)</option>
-              <option value="intermediate">Intermediate (12-15 months)</option>
-              <option value="advanced">Advanced (24 months)</option>
-            </select>
-            <p class="help-text">
-              All tiers follow the learning by doing model but differ in depth, intensity and seniority.
-            </p>
-          </div>
-
-          <!-- Preference model -->
-          <div class="form-group">
-            <label for="preference-model">
-              Preference model
-              <span class="info-icon" title="Average mixed logit uses preferences across all respondents. Supportive group uses the latent class of respondents who were most positive about FETP scale up.">i</span>
-            </label>
-            <select id="preference-model" name="preferenceModel">
-              <option value="mxl">Average preferences (mixed logit)</option>
-              <option value="lc_supporters">Supportive group only (latent class)</option>
-            </select>
-            <p class="help-text">
-              Use the supportive group option when you want to see how a strongly supportive segment values the same configuration.
-            </p>
-          </div>
-
-          <!-- Career incentives -->
-          <div class="form-group">
-            <label for="career-incentive">Trainee career incentives</label>
-            <select id="career-incentive" name="careerIncentive">
-              <option value="certificate">Government and partner certificate</option>
-              <option value="uni">University qualification</option>
-              <option value="govpath">Government career pathway</option>
-            </select>
-          </div>
-
-          <!-- Mentorship intensity -->
-          <div class="form-group">
-            <label for="mentorship">
-              Mentorship intensity
-              <span class="info-icon" title="Higher mentorship means fewer fellows per mentor and closer support during fieldwork and analysis.">i</span>
-            </label>
-            <select id="mentorship" name="mentorship">
-              <option value="low">Low (5 or more fellows per mentor)</option>
-              <option value="medium">Medium (3-4 fellows per mentor)</option>
-              <option value="high">High (2 or fewer fellows per mentor)</option>
-            </select>
-          </div>
-
-          <!-- Delivery mode -->
-          <div class="form-group">
-            <label for="delivery">Delivery mode</label>
-            <select id="delivery" name="delivery">
-              <option value="blended">Blended (in person, online and fieldwork)</option>
-              <option value="inperson">Fully in person</option>
-              <option value="online">Fully online</option>
-            </select>
-          </div>
-
-          <!-- Outbreak response capacity -->
-          <div class="form-group">
-            <label for="response">
-              Outbreak response capacity after training
-              <span class="info-icon" title="How quickly graduates are expected to detect and respond to an outbreak after training.">i</span>
-            </label>
-            <select id="response" name="response">
-              <option value="30">Respond within 30 days</option>
-              <option value="15">Respond within 15 days</option>
-              <option value="7">Respond within 7 days</option>
-            </select>
-          </div>
-
-          <!-- Cohort size -->
-          <div class="form-group">
-            <label for="cohort-size">Cohort size (fellows per cycle)</label>
-            <input id="cohort-size" name="cohortSize" type="number" min="5" max="60" step="1" value="20" />
-          </div>
-
-          <!-- Cost per trainee per month -->
-          <div class="form-group">
-            <label for="cost-per-trainee">
-              Cost per trainee per month (INR)
-            </label>
-            <input
-              id="cost-per-trainee"
-              name="costPerTrainee"
-              type="number"
-              min="75000"
-              max="400000"
-              step="5000"
-              value="250000"
-            />
-            <p class="help-text">
-              This should be inside the range used in the discrete choice experiment (75,000 to 400,000 rupees per trainee per month).
-            </p>
-          </div>
-
-          <!-- Cost source -->
-          <div class="form-group">
-            <label for="cost-source">Cost template source</label>
-            <select id="cost-source" name="costSource">
-              <option value="WHO">WHO template</option>
-              <option value="NIE">NIE template</option>
-              <option value="NCDC">NCDC template</option>
-              <option value="custom">Combined or custom mix</option>
-            </select>
-          </div>
-        </form>
-
-        <div class="actions-row">
-          <button id="btn-apply" class="btn btn-primary">Apply configuration and view results</button>
-          <button id="btn-save-scenario" class="btn btn-outline">Save scenario</button>
-        </div>
-
-        <div class="hint-box">
-          <h3>What the numbers represent</h3>
-          <p>
-            The endorsement probability comes from the discrete choice experiment and shows how attractive this
-            configuration is compared with choosing no programme. The benefit cost ratio is based on
-            willingness to pay from the same experiment combined with your cost inputs.
-          </p>
-        </div>
-      </section>
-
-      <!-- ATTRIBUTES TAB -->
-      <section id="tab-attributes" class="tab-pane">
-        <h2 class="panel-title">FETP attributes and levels</h2>
-        <p class="panel-intro">
-          These are the attributes and levels used in the discrete choice experiment.
-          STEPS uses the estimated coefficients and willingness to pay values from the
-          mixed logit model and the latent class model.
-        </p>
-
-        <div class="attributes-table-wrapper">
-          <table class="basic-table">
+        <div class="cost-table-wrapper">
+          <table class="results-table small">
             <thead>
               <tr>
-                <th>Attribute</th>
-                <th>Description</th>
-                <th>Levels</th>
+                <th>Programme</th>
+                <th>Source(s)</th>
+                <th>Approximate total cost (INR)</th>
+                <th>Key comments</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Program type</td>
-                <td>Tier of training and depth of competencies</td>
-                <td>Frontline (3 months), Intermediate (12-15 months), Advanced (24 months)</td>
+                <td>Frontline FETP</td>
+                <td>WHO</td>
+                <td>₹104,482,758 (six cohorts)</td>
+                <td>
+                  Includes staff, workshops, travel, overheads, and opportunity cost for
+                  six cohorts of frontline training.
+                </td>
               </tr>
               <tr>
-                <td>Trainee career incentives</td>
-                <td>Credentials and career pathways on completion</td>
-                <td>Government and partner certificate, University qualification, Government career pathway</td>
+                <td>Intermediate FETP</td>
+                <td>WHO, NIE, NCDC</td>
+                <td>₹288,040,319 (combined)</td>
+                <td>
+                  Aggregated budget across institutions for recent intermediate
+                  programmes. Represents full cycle costs rather than a single cohort.
+                </td>
               </tr>
               <tr>
-                <td>Mentorship intensity</td>
-                <td>Number of fellows per mentor during fieldwork and analysis</td>
-                <td>Low (5 or more), Medium (3-4), High (2 or fewer)</td>
-              </tr>
-              <tr>
-                <td>Delivery mode</td>
-                <td>How the curriculum is delivered</td>
-                <td>Blended, Fully in person, Fully online</td>
-              </tr>
-              <tr>
-                <td>Outbreak response capacity</td>
-                <td>How quickly graduates can detect and respond after training</td>
-                <td>Within 30 days, 15 days, 7 days</td>
-              </tr>
-              <tr>
-                <td>Cost per trainee per month</td>
-                <td>Programme cost per trainee, per month</td>
-                <td>75,000; 100,000; 250,000; 350,000; 400,000 rupees</td>
+                <td>Advanced FETP</td>
+                <td>NIE, NCDC</td>
+                <td>₹295,536,700 (combined)</td>
+                <td>
+                  Includes substantial in country and international travel and trainee
+                  stipends for a two year advanced programme cycle.
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
-
-        <div class="info-card">
-          <h3>Alternative specific constants</h3>
-          <p>
-            The experiment also included a constant for the left hand programme option and a constant
-            for the opt out option. In STEPS the programme constant captures general support for
-            running an FETP option, while the opt out constant reflects the background tendency
-            to say no to any programme.
-          </p>
-        </div>
-      </section>
-
-      <!-- COSTING TAB -->
-      <section id="tab-costing" class="tab-pane">
-        <h2 class="panel-title">Costing structure</h2>
-        <p class="panel-intro">
-          Cost estimates are drawn from WHO, NIE and NCDC templates for frontline, intermediate
-          and advanced tiers. The values below summarise the latest cost data you provided.
+        <p class="small-note">
+          Note: In STEPS, financial costs are calculated from the cost per trainee per
+          month that you set in the Configuration tab, multiplied by cohort size and
+          programme duration. The templates above provide reference points and a
+          checklist of cost components, including staff, training materials, travel,
+          overheads, and opportunity costs.
         </p>
-
-        <div class="cost-cards">
-          <article class="cost-card">
-            <h3>Frontline</h3>
-            <p class="cost-total">
-              Estimated total cost per cohort: <span id="cost-frontline-cohort">INR</span>
-            </p>
-            <ul class="cost-list">
-              <li>In country staff and management</li>
-              <li>Workshops, seminars and training materials</li>
-              <li>In country travel for fellows and mentors</li>
-              <li>Office space, utilities and shared services</li>
-              <li>Opportunity cost of trainees time</li>
-            </ul>
-          </article>
-
-          <article class="cost-card">
-            <h3>Intermediate</h3>
-            <p class="cost-total">
-              Estimated total cost per cohort: <span id="cost-intermediate-cohort">INR</span>
-            </p>
-            <ul class="cost-list">
-              <li>Staff salaries based on WHO, NIE and NCDC inputs</li>
-              <li>Domestic and international travel</li>
-              <li>Workshops, seminars and other direct costs</li>
-              <li>Management, in kind contributions and overheads</li>
-            </ul>
-          </article>
-
-          <article class="cost-card">
-            <h3>Advanced</h3>
-            <p class="cost-total">
-              Estimated total cost per cohort: <span id="cost-advanced-cohort">INR</span>
-            </p>
-            <ul class="cost-list">
-              <li>Stipends and equipment for fellows</li>
-              <li>Intensive travel and field placements</li>
-              <li>International engagements and supervision</li>
-              <li>Management and institutional overheads</li>
-            </ul>
-          </article>
-        </div>
-
-        <div class="toggle-row">
-          <label class="toggle">
-            <input type="checkbox" id="include-opportunity-cost" checked />
-            <span class="toggle-slider"></span>
-          </label>
-          <span class="toggle-label">
-            Include trainees opportunity costs when interpreting the cost per trainee per month
-          </span>
-        </div>
-      </section>
+      </div>
     </section>
 
-    <!-- RIGHT COLUMN -->
-    <section class="panel panel-right">
-      <nav class="tabs tabs-secondary">
-        <button class="tab-button-secondary active" data-tab="tab-summary">Summary</button>
-        <button class="tab-button-secondary" data-tab="tab-full-results">Full results</button>
-        <button class="tab-button-secondary" data-tab="tab-sensitivity">Sensitivity</button>
-        <button class="tab-button-secondary" data-tab="tab-simulation">National simulation</button>
-        <button class="tab-button-secondary" data-tab="tab-report">Saved scenarios & export</button>
-        <button class="tab-button-secondary" data-tab="tab-about">About STEPS</button>
-      </nav>
-
-      <!-- SUMMARY TAB -->
-      <section id="tab-summary" class="tab-pane-secondary active">
-        <h2 class="panel-title">Scenario snapshot</h2>
-
-        <div class="summary-grid">
-          <div class="summary-card">
-            <h3>Endorsement</h3>
-            <p class="summary-value" id="summary-uptake">0%</p>
-            <p class="summary-label">
-              Predicted probability that stakeholders support this programme instead of choosing no programme.
-            </p>
-          </div>
-          <div class="summary-card">
-            <h3>Benefit cost ratio</h3>
-            <p class="summary-value" id="summary-bcr">0.00</p>
-            <p class="summary-label">
-              Perceived socio economic benefits per rupee of programme cost based on the choice experiment.
-            </p>
-          </div>
-          <div class="summary-card">
-            <h3>Net benefit per cohort</h3>
-            <p class="summary-value" id="summary-net-benefit">INR 0</p>
-            <p class="summary-label">
-              Total benefits minus total costs for one cohort over the full programme duration.
-            </p>
-          </div>
-        </div>
-
-        <p id="headline-recommendation" class="headline-recommendation"></p>
-
-        <div class="chart-row">
-          <canvas id="chart-uptake-bar"></canvas>
-        </div>
-        <div class="chart-row">
-          <canvas id="chart-benefit-vs-cost"></canvas>
-        </div>
-      </section>
-
-      <!-- FULL RESULTS TAB -->
-      <section id="tab-full-results" class="tab-pane-secondary">
-        <div class="results-header">
-          <h2 class="panel-title">Detailed results</h2>
-          <button id="btn-show-modal" class="btn btn-ghost">Open in popup</button>
-        </div>
-
-        <div class="results-grid">
-          <div>
-            <h3>Key indicators</h3>
-            <ul class="results-list">
-              <li><strong>Utility of programme:</strong> <span id="res-utility">0.000</span></li>
-              <li><strong>Utility of opt out:</strong> <span id="res-utility-optout">0.000</span></li>
-              <li><strong>Endorsement probability:</strong> <span id="res-uptake">0%</span></li>
-              <li><strong>Benefit per trainee per month:</strong> <span id="res-benefit-per-trainee">INR 0</span></li>
-              <li><strong>Total benefit per cohort:</strong> <span id="res-total-benefit">INR 0</span></li>
-              <li><strong>Total cost per cohort:</strong> <span id="res-total-cost">INR 0</span></li>
-              <li><strong>Benefit cost ratio:</strong> <span id="res-bcr">0.00</span></li>
-              <li><strong>Net benefit per cohort:</strong> <span id="res-net-benefit">INR 0</span></li>
-            </ul>
-          </div>
-          <div>
-            <h3>Scenario configuration</h3>
-            <ul class="results-list" id="res-config-list"></ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- SENSITIVITY TAB -->
-      <section id="tab-sensitivity" class="tab-pane-secondary">
-        <h2 class="panel-title">Sensitivity to costs</h2>
-        <p class="panel-intro">
-          This chart varies the cost per trainee per month by plus or minus 20 percent and
-          shows how endorsement and the benefit cost ratio change.
+    <!-- Saved scenarios tab -->
+    <section id="tab-scenarios" class="tab-panel">
+      <div class="card">
+        <h2>Saved scenarios</h2>
+        <p>
+          Use this table to compare alternative configurations. You can save multiple
+          scenarios, then export them to Excel or use them in the World Bank business
+          case.
         </p>
-        <canvas id="chart-sensitivity"></canvas>
-      </section>
+        <table class="results-table" id="savedScenariosTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Tier</th>
+              <th>Mentorship</th>
+              <th>Delivery</th>
+              <th>Response</th>
+              <th>Cost / trainee / month</th>
+              <th>Cohort size</th>
+              <th>Endorsement</th>
+              <th>BCR</th>
+              <th>Scenario notes</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
 
-      <!-- SIMULATION TAB -->
-      <section id="tab-simulation" class="tab-pane-secondary">
-        <h2 class="panel-title">National scale up simulation</h2>
-        <p class="panel-intro">
-          Explore what happens when this configuration is rolled out across many cohorts and
-          link it to simple epidemiological outcomes.
-        </p>
-
-        <div class="simulation-controls">
-          <div class="form-group-inline">
-            <label for="num-cohorts">Number of cohorts</label>
-            <input id="num-cohorts" type="number" min="1" max="500" step="1" value="50" />
-          </div>
-
-          <div class="form-group-inline">
-            <label for="fellows-per-district">Fellows needed per district (user assumption)</label>
-            <input id="fellows-per-district" type="number" min="0.1" step="0.1" value="2" />
-          </div>
-
-          <div class="form-group-inline">
-            <label for="value-per-grad">Value per additional FETP graduate (INR, user assumption)</label>
-            <input id="value-per-grad" type="number" min="0" step="100000" value="1000000" />
-          </div>
-
-          <div class="form-group-inline">
-            <label for="outbreaks-per-100-grad">Outbreaks averted per 100 graduates (assumption)</label>
-            <input id="outbreaks-per-100-grad" type="number" min="0" step="0.1" value="1" />
-          </div>
-
-          <div class="form-group-inline">
-            <label for="value-per-outbreak">Value per outbreak averted (INR, user assumption)</label>
-            <input id="value-per-outbreak" type="number" min="0" step="1000000" value="10000000" />
-          </div>
-        </div>
-
-        <div class="summary-grid">
-          <div class="summary-card">
-            <h3>Total national cost</h3>
-            <p class="summary-value" id="sim-total-cost">INR 0</p>
-          </div>
-          <div class="summary-card">
-            <h3>Total national benefit</h3>
-            <p class="summary-value" id="sim-total-benefit">INR 0</p>
-          </div>
-          <div class="summary-card">
-            <h3>National net benefit</h3>
-            <p class="summary-value" id="sim-total-net-benefit">INR 0</p>
-          </div>
-        </div>
-
-        <div class="summary-grid epi-grid">
-          <div class="summary-card">
-            <h3>Additional graduates</h3>
-            <p class="summary-value" id="sim-total-graduates">0</p>
-            <p class="summary-label">Effective number of graduates, adjusted by endorsement.</p>
-          </div>
-          <div class="summary-card">
-            <h3>District coverage</h3>
-            <p class="summary-value" id="sim-district-coverage">0</p>
-            <p class="summary-label">
-              Approximate number of districts covered at the assumed fellows per district.
-            </p>
-          </div>
-          <div class="summary-card">
-            <h3>Outbreaks averted</h3>
-            <p class="summary-value" id="sim-outbreaks-averted">0</p>
-          </div>
-          <div class="summary-card">
-            <h3>Epi benefit (INR)</h3>
-            <p class="summary-value" id="sim-epi-benefit-total">INR 0</p>
-            <p class="summary-label">
-              Combined value of additional graduates and outbreaks averted based on your assumptions.
-            </p>
-          </div>
-        </div>
-
-        <div class="chart-row">
-          <canvas id="chart-simulation"></canvas>
-        </div>
-      </section>
-
-      <!-- REPORT TAB -->
-      <section id="tab-report" class="tab-pane-secondary">
-        <h2 class="panel-title">Saved scenarios and export</h2>
-        <p class="panel-intro">
-          Save different STEPS configurations, compare them, and download a short policy
-          summary in PDF or a detailed Excel file.
-        </p>
-
-        <div class="saved-scenarios">
-          <table class="basic-table" id="saved-table">
-            <thead>
-              <tr>
-                <th>Scenario</th>
-                <th>Programme</th>
-                <th>Endorsement</th>
-                <th>Benefit cost ratio</th>
-                <th>Net benefit per cohort</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-
-        <div class="compare-row">
-          <div class="form-group-inline">
-            <label for="compare-a">Compare scenario A</label>
-            <select id="compare-a"></select>
-          </div>
-          <div class="form-group-inline">
-            <label for="compare-b">Compare scenario B</label>
-            <select id="compare-b"></select>
-          </div>
-        </div>
-
-        <div class="chart-row">
-          <canvas id="chart-compare"></canvas>
-        </div>
-
-        <div class="actions-row">
-          <button id="btn-export-pdf" class="btn btn-primary">Download policy PDF</button>
-          <button id="btn-export-excel" class="btn btn-outline">Download Excel</button>
-        </div>
-      </section>
-
-      <!-- ABOUT TAB -->
-      <section id="tab-about" class="tab-pane-secondary">
-        <h2 class="panel-title">About STEPS and how to read the results</h2>
-        <p class="panel-intro">
-          This section gives a short explanation of how the tool works and how to interpret the numbers.
-        </p>
-
-        <div class="info-card">
-          <h3>Preference models</h3>
+    <!-- About tab -->
+    <section id="tab-about" class="tab-panel">
+      <div class="panel-grid">
+        <div class="card">
+          <h2>About STEPS</h2>
           <p>
-            The tool uses results from a discrete choice experiment with Indian FETP stakeholders.
-            The main model is a mixed logit that allows preferences to vary across respondents.
-            The supportive group option uses the latent class that was most favourable to FETP scale up.
+            STEPS is a decision support tool for planning the scale up of Field
+            Epidemiology Training Programmes in India. It has been developed using a
+            discrete choice experiment with 214 stakeholders, combined with detailed cost
+            data and simple epidemiological assumptions.
           </p>
           <p>
-            Endorsement probabilities reflect how likely stakeholders are to choose a given configuration
-            instead of saying that no programme should be run.
-          </p>
-        </div>
-
-        <div class="info-card">
-          <h3>Costs and benefits</h3>
-          <p>
-            Costs combine your inputs on cost per trainee per month with cohort size and
-            programme duration. You can choose to include or exclude trainees opportunity
-            costs in this interpretation.
+            The tool reports how different combinations of programme tier, mentorship,
+            delivery mode, response time and cost are likely to perform in terms of
+            stakeholder endorsement, costs and benefit–cost ratios. It is intended to
+            support the business case for scaling FETP, including the advanced tier.
           </p>
           <p>
-            Benefits are based on willingness to pay for changes in programme design
-            inferred from the discrete choice experiment. They are expressed in Indian
-            rupees per trainee per month and then scaled up to the cohort.
+            For technical users, the full econometric specification, WTP calculations and
+            assumptions are described in the technical appendix.
           </p>
-        </div>
-
-        <div class="info-card">
-          <h3>Epidemiological outcomes</h3>
           <p>
-            The national simulation tab translates endorsement and cohort numbers into
-            simple epidemiology related metrics such as additional graduates, district coverage
-            and outbreaks averted. These rely on user supplied multipliers that can be agreed
-            with the country team.
+            <a href="docs/STEPS_technical_appendix.pdf" target="_blank">
+              Download technical appendix (PDF)
+            </a>
           </p>
         </div>
-
-        <div class="info-card">
-          <h3>Who should use the technical note</h3>
+        <div class="card">
+          <h2>How to interpret results</h2>
           <p>
-            For technical readers, the full methods note with detailed model specification,
-            distributions and references can be linked here later as a separate PDF.
-            The main interface keeps language simple so that non technical users can
-            use the tool without needing to read equations.
+            The predicted endorsement percentage comes from either the average mixed
+            logit model or the training supporters class in a latent class model. It
+            represents the share of stakeholders who would be expected to endorse the
+            chosen configuration rather than an opt out option.
+          </p>
+          <p>
+            The benefit–cost ratio combines willingness to pay based benefits with the
+            financial cost per cohort. Ratios above one indicate that, given the
+            assumptions, stakeholders would on average be willing to pay at least as much
+            as the programme costs. Ratios below one point to configurations that may
+            need adjustment to deliver better value for money.
+          </p>
+          <p>
+            Monetary values are shown in INR by default. If you switch to USD, the tool
+            converts values using an exchange rate stored in the configuration file while
+            keeping all internal calculations in INR.
+          </p>
+          <p>
+            Scenario notes that you enter in the Configuration tab are stored with each
+            saved scenario and appear in the downloaded Excel file and policy brief.
           </p>
         </div>
-      </section>
+      </div>
     </section>
   </main>
 
-  <!-- RESULTS MODAL -->
-  <div id="results-modal" class="modal hidden">
-    <div class="modal-backdrop"></div>
-    <div class="modal-content">
-      <button class="modal-close" id="modal-close">&times;</button>
-      <h2>STEPS scenario results</h2>
-      <p class="modal-lead">
-        This popup summarises endorsement, costs and benefits for the current configuration.
-      </p>
-      <div class="results-grid modal-results-grid">
-        <div>
-          <h3>Key numbers</h3>
-          <ul class="results-list">
-            <li><strong>Endorsement probability:</strong> <span id="modal-uptake">0%</span></li>
-            <li><strong>Benefit per trainee per month:</strong> <span id="modal-benefit-per-trainee">INR 0</span></li>
-            <li><strong>Total benefit per cohort:</strong> <span id="modal-total-benefit">INR 0</span></li>
-            <li><strong>Total cost per cohort:</strong> <span id="modal-total-cost">INR 0</span></li>
-            <li><strong>Benefit cost ratio:</strong> <span id="modal-bcr">0.00</span></li>
-            <li><strong>Net benefit per cohort:</strong> <span id="modal-net-benefit">INR 0</span></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Programme description</h3>
-          <ul class="results-list" id="modal-config-list"></ul>
-        </div>
-      </div>
-    </div>
-  </div>
+  <footer class="app-footer">
+    <p>
+      STEPS – Mesfin Genie, PhD, Newcastle Business School, The University of Newcastle, Australia.
+      Contact: <a href="mailto:mesfin.genie@newcastle.edu.au">mesfin.genie@newcastle.edu.au</a>
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
