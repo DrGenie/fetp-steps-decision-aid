@@ -1,1020 +1,812 @@
-// script.js
-"use strict";
+// =====================================================
+// STEPS – FETP Scale Up Decision Aid (India)
+// Front end logic
+// =====================================================
 
-// Programme durations (months)
-const DURATION_BY_PROGRAM = {
-  frontline: 3,
-  intermediate: 12,
-  advanced: 24,
+/* -----------------------------------------------------
+   Global state and configuration
+----------------------------------------------------- */
+
+const INR_PER_USD = 89.5; // configurable exchange rate
+
+const appState = {
+  currency: "INR",
+  model: "mxl", // "mxl" or "lc2"
+  config: {
+    programmeTier: "frontline",
+    careerIncentive: "certificate",
+    mentorshipLevel: "low",
+    deliveryMode: "blended",
+    responseTime: "30",
+    costPerTraineeINR: 250000,
+    cohortSize: 20,
+    durationMonths: 3,
+    numCohorts: 10,
+    notes: ""
+  },
+  results: null,
+  epiConfig: null,
+  charts: {
+    bcrChart: null,
+    costBenefitChart: null,
+    uptakeChart: null
+  },
+  savedScenarios: []
 };
 
-// Mixed logit average coefficients
-const DCE_COEF_MXL = {
-  ascA: 0.168,
+// MXL average coefficients (preference space) – means only.
+// Cost coefficient is mean of back transformed lognormal: about -0.005 per ₹000.
+const mxlParams = {
+  name: "Average mixed logit",
   ascOptOut: -0.601,
-  program: {
-    frontline: 0.0,
-    intermediate: 0.220,
-    advanced: 0.487,
-  },
-  career: {
-    certificate: 0.0,
-    uni: 0.017,
-    govpath: -0.122,
-  },
-  mentorship: {
-    low: 0.0,
-    medium: 0.453,
-    high: 0.640,
-  },
-  delivery: {
-    blended: 0.0,
-    inperson: -0.232,
-    online: -1.073,
-  },
-  response: {
-    "30": 0.0,
-    "15": 0.546,
-    "7": 0.610,
-  },
   costPerThousand: -0.005,
+  intermediate: 0.220,
+  advanced: 0.487,
+  uni: 0.017,
+  govcareer: -0.122,
+  mentorMedium: 0.453,
+  mentorHigh: 0.640,
+  inperson: -0.232,
+  online: -1.073,
+  resp15: 0.546,
+  resp7: 0.610
 };
 
-// Latent class "supporters" coefficients
-// Replace with the exact Class 2 estimates when final numbers are confirmed.
-const DCE_COEF_LC2 = {
-  ascA: 0.25,
-  ascOptOut: -0.9,
-  program: {
-    frontline: 0.0,
-    intermediate: 0.35,
-    advanced: 0.9,
-  },
-  career: {
-    certificate: 0.0,
-    uni: 0.1,
-    govpath: -0.2,
-  },
-  mentorship: {
-    low: 0.0,
-    medium: 0.7,
-    high: 1.1,
-  },
-  delivery: {
-    blended: 0.0,
-    inperson: -0.2,
-    online: -1.4,
-  },
-  response: {
-    "30": 0.0,
-    "15": 0.8,
-    "7": 0.9,
-  },
-  costPerThousand: -0.007,
+// LC Class 2 (training supporters) coefficients and cost
+const lc2Params = {
+  name: "Training supporters (LC Class 2)",
+  ascOptOut: -2.543,
+  costPerThousand: -0.001,
+  intermediate: 0.087,
+  advanced: 0.422,
+  uni: -0.024,
+  govcareer: -0.123,
+  mentorMedium: 0.342,
+  mentorHigh: 0.486,
+  inperson: -0.017,
+  online: -0.700,
+  resp15: 0.317,
+  resp7: 0.504
 };
 
-// WTP (average mixed logit) in thousand INR per trainee per month
-const WTP_000_MXL = {
-  program: {
-    frontline: 0.0,
-    intermediate: 47.06,
-    advanced: 103.99,
-  },
-  career: {
-    certificate: 0.0,
-    uni: 3.69,
-    govpath: -26.17,
-  },
-  mentorship: {
-    low: 0.0,
-    medium: 96.87,
-    high: 136.79,
-  },
-  delivery: {
-    blended: 0.0,
-    inperson: -49.56,
-    online: -229.33,
-  },
-  response: {
-    "30": 0.0,
-    "15": 116.70,
-    "7": 130.46,
-  },
+// WTP values (per trainee per month, INR) from MXL (Table 4)
+const wtpMxl = {
+  intermediate: 47060,
+  advanced: 103990,
+  uni: 3690,
+  govcareer: -26170,
+  mentorMedium: 96870,
+  mentorHigh: 136790,
+  inperson: -49560,
+  online: -229330,
+  resp15: 116700,
+  resp7: 130460
 };
 
-// WTP (supporters) - can be updated with latent class WTP values
-const WTP_000_LC2 = {
-  program: {
-    frontline: 0.0,
-    intermediate: 60.0,
-    advanced: 130.0,
-  },
-  career: {
-    certificate: 0.0,
-    uni: 8.0,
-    govpath: -20.0,
-  },
-  mentorship: {
-    low: 0.0,
-    medium: 120.0,
-    high: 170.0,
-  },
-  delivery: {
-    blended: 0.0,
-    inperson: -40.0,
-    online: -260.0,
-  },
-  response: {
-    "30": 0.0,
-    "15": 140.0,
-    "7": 160.0,
-  },
+// WTP values (per trainee per month, INR) from LC Class 2 (Table 6)
+const wtpLc2 = {
+  intermediate: 63000,
+  advanced: 303000,
+  uni: -18000,
+  govcareer: -88000,
+  mentorMedium: 245000,
+  mentorHigh: 349000,
+  inperson: -12000,
+  online: -503000,
+  resp15: 228000,
+  resp7: 362000
 };
 
-// Template costs per cohort (INR)
-const TEMPLATE_COHORT_COSTS = {
-  frontline: 17400000,
-  intermediate: 288000000,
-  advanced: 289000000,
-};
+/* -----------------------------------------------------
+   Utility, WTP and core calculations
+----------------------------------------------------- */
 
-const savedScenarios = [];
-
-let uptakeBarChart = null;
-let benefitCostChart = null;
-let sensitivityChart = null;
-let simulationChart = null;
-let compareChart = null;
-
-function formatINR(value) {
-  if (!Number.isFinite(value)) return "INR 0";
-  return "INR " + Math.round(value).toLocaleString("en-IN");
+function getModelParams() {
+  return appState.model === "mxl" ? mxlParams : lc2Params;
 }
 
-function formatPercent(value) {
-  if (!Number.isFinite(value)) return "0%";
-  return value.toFixed(1) + "%";
+function getWtpParams() {
+  return appState.model === "mxl" ? wtpMxl : wtpLc2;
 }
 
-function clampCostPerTrainee(raw) {
-  const min = 75000;
-  const max = 400000;
-  if (!Number.isFinite(raw)) return 250000;
-  return Math.min(Math.max(raw, min), max);
-}
-
-function getCurrentConfig() {
-  const program = document.getElementById("program-type").value;
-  const preferenceModel = document.getElementById("preference-model").value;
-  const career = document.getElementById("career-incentive").value;
-  const mentorship = document.getElementById("mentorship").value;
-  const delivery = document.getElementById("delivery").value;
-  const response = document.getElementById("response").value;
-  const cohortSizeRaw = Number(document.getElementById("cohort-size").value);
-  const costPerTraineeRaw = Number(document.getElementById("cost-per-trainee").value);
-  const costSource = document.getElementById("cost-source").value;
-  const includeOpportunityCost = document.getElementById("include-opportunity-cost").checked;
-
-  const cohortSize = Number.isFinite(cohortSizeRaw) && cohortSizeRaw > 0 ? cohortSizeRaw : 20;
-  const costPerTrainee = clampCostPerTrainee(costPerTraineeRaw);
-  const durationMonths = DURATION_BY_PROGRAM[program] || 12;
-
+// Build attribute dummies from configuration
+function buildAttributeVector(cfg) {
   return {
-    program,
-    preferenceModel,
-    career,
-    mentorship,
-    delivery,
-    response,
-    cohortSize,
-    costPerTrainee,
-    costSource,
-    includeOpportunityCost,
-    durationMonths,
+    intermediate: cfg.programmeTier === "intermediate" ? 1 : 0,
+    advanced: cfg.programmeTier === "advanced" ? 1 : 0,
+    uni: cfg.careerIncentive === "university" ? 1 : 0,
+    govcareer: cfg.careerIncentive === "career_pathway" ? 1 : 0,
+    mentorMedium: cfg.mentorshipLevel === "medium" ? 1 : 0,
+    mentorHigh: cfg.mentorshipLevel === "high" ? 1 : 0,
+    inperson: cfg.deliveryMode === "inperson" ? 1 : 0,
+    online: cfg.deliveryMode === "online" ? 1 : 0,
+    resp15: cfg.responseTime === "15" ? 1 : 0,
+    resp7: cfg.responseTime === "7" ? 1 : 0
   };
 }
 
-function selectCoef(config) {
-  if (config.preferenceModel === "lc_supporters") {
-    return DCE_COEF_LC2;
-  }
-  return DCE_COEF_MXL;
+// Systematic utility for programme alternative (excluding ASC_A)
+function computeProgrammeUtility(cfg) {
+  const p = getModelParams();
+  const x = buildAttributeVector(cfg);
+  const costThousand = cfg.costPerTraineeINR / 1000;
+
+  let v =
+    p.intermediate * x.intermediate +
+    p.advanced * x.advanced +
+    p.uni * x.uni +
+    p.govcareer * x.govcareer +
+    p.mentorMedium * x.mentorMedium +
+    p.mentorHigh * x.mentorHigh +
+    p.inperson * x.inperson +
+    p.online * x.online +
+    p.resp15 * x.resp15 +
+    p.resp7 * x.resp7 +
+    p.costPerThousand * costThousand;
+
+  return v;
 }
 
-function selectWTP(config) {
-  if (config.preferenceModel === "lc_supporters") {
-    return WTP_000_LC2;
-  }
-  return WTP_000_MXL;
+// Systematic utility for opt out (only ASC_OptOut)
+function computeOptOutUtility() {
+  const p = getModelParams();
+  return p.ascOptOut;
 }
 
-function computeUtilityAndUptake(config) {
-  const coef = selectCoef(config);
-
-  let V_prog =
-    coef.ascA +
-    coef.program[config.program] +
-    coef.career[config.career] +
-    coef.mentorship[config.mentorship] +
-    coef.delivery[config.delivery] +
-    coef.response[config.response];
-
-  const cost000 = config.costPerTrainee / 1000;
-  V_prog += coef.costPerThousand * cost000;
-
-  const V_opt = coef.ascOptOut;
-
-  const expProg = Math.exp(V_prog);
-  const expOpt = Math.exp(V_opt);
-  const pProg = expProg / (expProg + expOpt);
-
-  return { V_prog, V_opt, pProg };
+// Predicted endorsement (programme vs opt out)
+function computeEndorsementProbability(cfg) {
+  const vProg = computeProgrammeUtility(cfg);
+  const vOpt = computeOptOutUtility();
+  const delta = vProg - vOpt;
+  const p = 1 / (1 + Math.exp(-delta));
+  const bounded = Math.min(Math.max(p, 0.01), 0.99);
+  return bounded;
 }
 
-function computeBenefits(config, uptakeProb) {
-  const wtpSource = selectWTP(config);
+// WTP-based per trainee per month benefit relative to reference programme
+function computePerTraineeMonthlyBenefit(cfg) {
+  const w = getWtpParams();
+  const x = buildAttributeVector(cfg);
 
-  const wtpProgram = wtpSource.program[config.program];
-  const wtpCareer = wtpSource.career[config.career];
-  const wtpMentor = wtpSource.mentorship[config.mentorship];
-  const wtpDelivery = wtpSource.delivery[config.delivery];
-  const wtpResponse = wtpSource.response[config.response];
+  let b = 0;
 
-  const wtpTotal000 =
-    wtpProgram + wtpCareer + wtpMentor + wtpDelivery + wtpResponse;
+  if (x.intermediate === 1) b += w.intermediate || 0;
+  if (x.advanced === 1) b += w.advanced || 0;
+  if (x.uni === 1) b += w.uni || 0;
+  if (x.govcareer === 1) b += w.govcareer || 0;
+  if (x.mentorMedium === 1) b += w.mentorMedium || 0;
+  if (x.mentorHigh === 1) b += w.mentorHigh || 0;
+  if (x.inperson === 1) b += w.inperson || 0;
+  if (x.online === 1) b += w.online || 0;
+  if (x.resp15 === 1) b += w.resp15 || 0;
+  if (x.resp7 === 1) b += w.resp7 || 0;
 
-  const perTraineeBenefitPerMonth = wtpTotal000 * 1000;
+  return b;
+}
 
-  const totalBenefit =
-    perTraineeBenefitPerMonth *
-    config.cohortSize *
-    config.durationMonths *
-    uptakeProb;
+// Core metrics for current configuration
+function computeMetrics(cfg) {
+  const endorsement = computeEndorsementProbability(cfg);
+  const perTraineeBenefitMonth = computePerTraineeMonthlyBenefit(cfg);
+
+  const costPerCohortINR =
+    cfg.costPerTraineeINR * cfg.cohortSize * cfg.durationMonths;
+
+  const benefitPerCohortINR =
+    perTraineeBenefitMonth *
+    cfg.cohortSize *
+    cfg.durationMonths *
+    endorsement;
+
+  const bcr =
+    costPerCohortINR > 0 ? benefitPerCohortINR / costPerCohortINR : null;
+  const nbPerCohortINR = benefitPerCohortINR - costPerCohortINR;
+
+  const totalCostINR = costPerCohortINR * cfg.numCohorts;
+  const totalBenefitINR = benefitPerCohortINR * cfg.numCohorts;
+  const totalNbINR = nbPerCohortINR * cfg.numCohorts;
 
   return {
-    perTraineeBenefitPerMonth,
-    totalBenefit,
+    endorsement,
+    perTraineeBenefitMonth,
+    costPerCohortINR,
+    benefitPerCohortINR,
+    bcr,
+    nbPerCohortINR,
+    totalCostINR,
+    totalBenefitINR,
+    totalNbINR
   };
 }
 
-function computeCost(config) {
-  let totalCost =
-    config.costPerTrainee * config.cohortSize * config.durationMonths;
+/* -----------------------------------------------------
+   Utility functions for formatting
+----------------------------------------------------- */
 
-  if (config.includeOpportunityCost) {
-    totalCost *= 1.2;
-  }
-
-  return totalCost;
+function formatCurrencyINR(value) {
+  if (value == null || isNaN(value)) return "–";
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0
+  }).format(Math.round(value));
 }
 
-function getHeadlineRecommendation(uptakeProb, bcr) {
-  if (!Number.isFinite(uptakeProb) || !Number.isFinite(bcr)) return "";
-
-  if (bcr >= 1.2 && uptakeProb >= 0.7) {
-    return "Headline recommendation: this configuration has strong support and good value for money. It is a high priority candidate for scaling up.";
-  }
-  if (bcr >= 1.0 && uptakeProb >= 0.5) {
-    return "Headline recommendation: this configuration looks broadly attractive. It can be considered for inclusion among priority FETP options after checking delivery capacity.";
-  }
-  if (bcr < 1.0 && uptakeProb >= 0.5) {
-    return "Headline recommendation: support is reasonable but the benefit cost ratio is below 1. Consider reducing costs, refining programme design or moving towards higher value configurations.";
-  }
-  if (bcr >= 1.0 && uptakeProb < 0.5) {
-    return "Headline recommendation: the estimated value for money is acceptable but endorsement is low. This may require changes to framing, communication or programme features to gain wider support.";
-  }
-  return "Headline recommendation: in its current form this configuration is not attractive. Consider shifting to higher mentorship, faster outbreak response or a different tier before scaling up.";
+function formatCurrencyUSD(value) {
+  if (value == null || isNaN(value)) return "–";
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0
+  }).format(Math.round(value));
 }
 
-function updateSummaryCards(results) {
-  const { uptakeProb, netBenefit, bcr } = results;
+function formatCurrency(valueINR) {
+  if (appState.currency === "USD") {
+    const vUSD = valueINR / INR_PER_USD;
+    return formatCurrencyUSD(vUSD);
+  }
+  return formatCurrencyINR(valueINR);
+}
 
-  document.getElementById("summary-uptake").textContent = formatPercent(
-    uptakeProb * 100
+function formatPercent(p) {
+  if (p == null || isNaN(p)) return "–";
+  return (p * 100).toFixed(1) + " %";
+}
+
+function tierLabel(value) {
+  if (value === "frontline") return "Frontline (3 months)";
+  if (value === "intermediate") return "Intermediate (12 months)";
+  if (value === "advanced") return "Advanced (24 months)";
+  return value;
+}
+
+/* -----------------------------------------------------
+   DOM handling and charts
+----------------------------------------------------- */
+
+document.addEventListener("DOMContentLoaded", () => {
+  initTabs();
+  initControls();
+  loadEpiConfig();
+  loadSavedScenarios();
+  applyTierDefaultDuration();
+  recomputeAndRender();
+});
+
+function initTabs() {
+  const tabs = document.querySelectorAll(".tab-button");
+  const panels = document.querySelectorAll(".tab-panel");
+
+  tabs.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      tabs.forEach((b) => b.classList.remove("active"));
+      panels.forEach((p) => p.classList.remove("active"));
+      btn.classList.add("active");
+      const target = btn.dataset.tab;
+      document.getElementById(target).classList.add("active");
+    });
+  });
+}
+
+function initControls() {
+  const costSlider = document.getElementById("costPerTrainee");
+  const costDisplay = document.getElementById("costPerTraineeDisplay");
+
+  costSlider.addEventListener("input", () => {
+    const value = parseInt(costSlider.value, 10);
+    appState.config.costPerTraineeINR = value;
+    costDisplay.textContent = formatCurrencyINR(value);
+  });
+
+  document.getElementById("programmeTier").addEventListener("change", (e) => {
+    appState.config.programmeTier = e.target.value;
+    applyTierDefaultDuration();
+  });
+
+  document.getElementById("careerIncentive").addEventListener("change", (e) => {
+    appState.config.careerIncentive = e.target.value;
+  });
+
+  document.getElementById("mentorshipLevel").addEventListener("change", (e) => {
+    appState.config.mentorshipLevel = e.target.value;
+  });
+
+  document.getElementById("deliveryMode").addEventListener("change", (e) => {
+    appState.config.deliveryMode = e.target.value;
+  });
+
+  document.getElementById("responseTime").addEventListener("change", (e) => {
+    appState.config.responseTime = e.target.value;
+  });
+
+  document.getElementById("cohortSize").addEventListener("input", (e) => {
+    appState.config.cohortSize = parseInt(e.target.value || "0", 10);
+  });
+
+  document.getElementById("programmeDuration").addEventListener("input", (e) => {
+    appState.config.durationMonths = parseInt(e.target.value || "0", 10);
+  });
+
+  document.getElementById("numCohorts").addEventListener("input", (e) => {
+    appState.config.numCohorts = parseInt(e.target.value || "0", 10);
+  });
+
+  document.getElementById("scenarioNotes").addEventListener("input", (e) => {
+    appState.config.notes = e.target.value;
+  });
+
+  document.getElementById("applyConfigBtn").addEventListener("click", () => {
+    recomputeAndRender();
+  });
+
+  document.getElementById("currencyToggle").addEventListener("change", (e) => {
+    appState.currency = e.target.value;
+    renderAll();
+  });
+
+  document.getElementById("modelToggle").addEventListener("change", (e) => {
+    appState.model = e.target.value;
+    recomputeAndRender();
+  });
+
+  document.getElementById("saveScenarioBtn").addEventListener("click", () => {
+    saveCurrentScenario();
+  });
+
+  document
+    .getElementById("downloadBriefBtn")
+    .addEventListener("click", downloadPolicyBriefPDF);
+
+  document
+    .getElementById("downloadExcelBtn")
+    .addEventListener("click", downloadExcelData);
+}
+
+function applyTierDefaultDuration() {
+  const tier = appState.config.programmeTier;
+  let months = 3;
+  if (tier === "intermediate") months = 12;
+  if (tier === "advanced") months = 24;
+  appState.config.durationMonths = months;
+  document.getElementById("programmeDuration").value = months;
+}
+
+async function loadEpiConfig() {
+  try {
+    const resp = await fetch("epi_config.json");
+    if (!resp.ok) return;
+    const data = await resp.json();
+    appState.epiConfig = data;
+  } catch (e) {
+    // Fail quietly; epi benefits are optional
+  }
+}
+
+function recomputeAndRender() {
+  appState.results = computeMetrics(appState.config);
+  renderAll();
+}
+
+function renderAll() {
+  renderSummaryCards();
+  renderResultsTable();
+  renderCharts();
+  renderSavedScenariosTable();
+}
+
+/* -----------------------------------------------------
+   Rendering helpers
+----------------------------------------------------- */
+
+function renderSummaryCards() {
+  const r = appState.results;
+  if (!r) return;
+
+  document.getElementById("endorsementRate").textContent = formatPercent(
+    r.endorsement
   );
-  document.getElementById("summary-bcr").textContent = bcr.toFixed(2);
-  document.getElementById("summary-net-benefit").textContent =
-    formatINR(netBenefit);
-
-  const rec = getHeadlineRecommendation(uptakeProb, bcr);
-  document.getElementById("headline-recommendation").textContent = rec;
-}
-
-function updateFullResults(config, utility, benefits, costs) {
-  const { V_prog, V_opt, pProg } = utility;
-  const { perTraineeBenefitPerMonth, totalBenefit } = benefits;
-  const totalCost = costs;
-  const netBenefit = totalBenefit - totalCost;
-  const bcr = totalCost > 0 ? totalBenefit / totalCost : 0;
-
-  document.getElementById("res-utility").textContent = V_prog.toFixed(3);
-  document.getElementById("res-utility-optout").textContent = V_opt.toFixed(3);
-  document.getElementById("res-uptake").textContent = formatPercent(pProg * 100);
-  document.getElementById("res-benefit-per-trainee").textContent =
-    formatINR(perTraineeBenefitPerMonth);
-  document.getElementById("res-total-benefit").textContent =
-    formatINR(totalBenefit);
-  document.getElementById("res-total-cost").textContent = formatINR(totalCost);
-  document.getElementById("res-bcr").textContent = bcr.toFixed(2);
-  document.getElementById("res-net-benefit").textContent = formatINR(netBenefit);
-
-  const configList = document.getElementById("res-config-list");
-  configList.innerHTML = "";
-  const items = [
-    ["Preference model", config.preferenceModel === "lc_supporters" ? "Supportive group (latent class)" : "Average preferences (mixed logit)"],
-    ["Program type", config.program],
-    ["Career incentive", config.career],
-    ["Mentorship intensity", config.mentorship],
-    ["Delivery mode", config.delivery],
-    ["Response capacity", config.response + " days"],
-    ["Cohort size", String(config.cohortSize)],
-    ["Programme duration", config.durationMonths + " months"],
-    ["Cost per trainee per month", formatINR(config.costPerTrainee)],
-    ["Cost template", config.costSource],
-    [
-      "Include opportunity costs",
-      config.includeOpportunityCost ? "Yes" : "No",
-    ],
-  ];
-  for (const [label, value] of items) {
-    const li = document.createElement("li");
-    li.innerHTML = `<strong>${label}:</strong> ${value}`;
-    configList.appendChild(li);
-  }
-
-  document.getElementById("modal-uptake").textContent = formatPercent(
-    pProg * 100
+  document.getElementById("costPerCohort").textContent = formatCurrency(
+    r.costPerCohortINR
   );
-  document.getElementById(
-    "modal-benefit-per-trainee"
-  ).textContent = formatINR(perTraineeBenefitPerMonth);
-  document.getElementById("modal-total-benefit").textContent =
-    formatINR(totalBenefit);
-  document.getElementById("modal-total-cost").textContent =
-    formatINR(totalCost);
-  document.getElementById("modal-bcr").textContent = bcr.toFixed(2);
-  document.getElementById("modal-net-benefit").textContent =
-    formatINR(netBenefit);
-
-  const modalConfigList = document.getElementById("modal-config-list");
-  modalConfigList.innerHTML = configList.innerHTML;
+  document.getElementById("benefitPerCohort").textContent = formatCurrency(
+    r.benefitPerCohortINR
+  );
+  document.getElementById("bcrValue").textContent =
+    r.bcr == null ? "–" : r.bcr.toFixed(2);
 }
 
-function updateCharts(utility, benefits, costs) {
-  const { pProg } = utility;
-  const { totalBenefit } = benefits;
-  const totalCost = costs;
+function renderResultsTable() {
+  const cfg = appState.config;
+  const r = appState.results;
+  if (!r) return;
 
-  const ctxUptake = document.getElementById("chart-uptake-bar");
-  if (uptakeBarChart) uptakeBarChart.destroy();
-  uptakeBarChart = new Chart(ctxUptake, {
+  const modelName =
+    appState.model === "mxl"
+      ? "Average mixed logit"
+      : "Training supporters (LC Class 2)";
+
+  document.getElementById("resultsModelName").textContent = modelName;
+  document.getElementById("resultsTier").textContent = tierLabel(
+    cfg.programmeTier
+  );
+  document.getElementById("resultsMentorship").textContent =
+    cfg.mentorshipLevel;
+  document.getElementById("resultsDelivery").textContent = cfg.deliveryMode;
+  document.getElementById("resultsResponse").textContent =
+    cfg.responseTime + " days";
+  document.getElementById("resultsCostPerTrainee").textContent = formatCurrency(
+    cfg.costPerTraineeINR
+  );
+  document.getElementById("resultsCohortSize").textContent = cfg.cohortSize;
+  document.getElementById("resultsDuration").textContent =
+    cfg.durationMonths + " months";
+  document.getElementById("resultsNumCohorts").textContent = cfg.numCohorts;
+
+  document.getElementById("resultsEndorsement").textContent = formatPercent(
+    r.endorsement
+  );
+  document.getElementById("resultsCostCohort").textContent = formatCurrency(
+    r.costPerCohortINR
+  );
+  document.getElementById("resultsBenefitCohort").textContent = formatCurrency(
+    r.benefitPerCohortINR
+  );
+  document.getElementById("resultsBcr").textContent =
+    r.bcr == null ? "–" : r.bcr.toFixed(2);
+  document.getElementById("resultsNbCohort").textContent = formatCurrency(
+    r.nbPerCohortINR
+  );
+  document.getElementById("resultsTotalCost").textContent = formatCurrency(
+    r.totalCostINR
+  );
+  document.getElementById("resultsTotalBenefit").textContent = formatCurrency(
+    r.totalBenefitINR
+  );
+  document.getElementById("resultsTotalNb").textContent = formatCurrency(
+    r.totalNbINR
+  );
+}
+
+function renderCharts() {
+  const r = appState.results;
+  if (!r) return;
+
+  const ctxBcr = document.getElementById("bcrChart").getContext("2d");
+  const ctxCB = document.getElementById("costBenefitChart").getContext("2d");
+  const ctxU = document.getElementById("uptakeChart").getContext("2d");
+
+  if (appState.charts.bcrChart) appState.charts.bcrChart.destroy();
+  if (appState.charts.costBenefitChart) appState.charts.costBenefitChart.destroy();
+  if (appState.charts.uptakeChart) appState.charts.uptakeChart.destroy();
+
+  appState.charts.bcrChart = new Chart(ctxBcr, {
+    type: "bar",
+    data: {
+      labels: ["Benefit–cost ratio"],
+      datasets: [
+        {
+          label: "",
+          data: [r.bcr || 0],
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
+
+  appState.charts.costBenefitChart = new Chart(ctxCB, {
+    type: "bar",
+    data: {
+      labels: ["Cost per cohort", "Benefit per cohort"],
+      datasets: [
+        {
+          label: "",
+          data: [r.costPerCohortINR, r.benefitPerCohortINR],
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
+
+  appState.charts.uptakeChart = new Chart(ctxU, {
     type: "bar",
     data: {
       labels: ["Endorsement"],
       datasets: [
         {
-          label: "Endorsement probability",
-          data: [pProg * 100],
-        },
-      ],
+          label: "",
+          data: [r.endorsement * 100],
+          borderWidth: 1
+        }
+      ]
     },
     options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-      },
       scales: {
         y: {
           beginAtZero: true,
-          max: 100,
-          ticks: { callback: (v) => v + "%" },
-        },
+          max: 100
+        }
       },
-    },
-  });
-
-  const ctxBC = document.getElementById("chart-benefit-vs-cost");
-  if (benefitCostChart) benefitCostChart.destroy();
-  benefitCostChart = new Chart(ctxBC, {
-    type: "bar",
-    data: {
-      labels: ["Per cohort"],
-      datasets: [
-        {
-          label: "Total benefit",
-          data: [totalBenefit],
-        },
-        {
-          label: "Total cost",
-          data: [totalCost],
-        },
-      ],
-    },
-    options: {
-      responsive: true,
       plugins: {
-        legend: {
-          position: "bottom",
-        },
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            callback: (v) => "INR " + (v / 100000).toFixed(1) + " lakh",
-          },
-        },
-      },
-    },
+        legend: { display: false }
+      }
+    }
   });
 }
 
-function updateSensitivity(config) {
-  const ctx = document.getElementById("chart-sensitivity");
-  if (sensitivityChart) sensitivityChart.destroy();
+/* -----------------------------------------------------
+   Saved scenarios and export
+----------------------------------------------------- */
 
-  const baseCost = config.costPerTrainee;
-  const scenarios = [
-    { label: "-20%", multiplier: 0.8 },
-    { label: "Base", multiplier: 1.0 },
-    { label: "+20%", multiplier: 1.2 },
-  ];
+function saveCurrentScenario() {
+  const name = prompt("Scenario name:", "Scenario " + (appState.savedScenarios.length + 1));
+  if (!name) return;
 
-  const uptakeVals = [];
-  const bcrVals = [];
+  const entry = {
+    name,
+    model: appState.model,
+    config: { ...appState.config },
+    results: { ...appState.results },
+    timestamp: new Date().toISOString()
+  };
 
-  for (const s of scenarios) {
-    const c = { ...config, costPerTrainee: clampCostPerTrainee(baseCost * s.multiplier) };
-    const util = computeUtilityAndUptake(c);
-    const benefits = computeBenefits(c, util.pProg);
-    const cost = computeCost(c);
-    const bcr = cost > 0 ? benefits.totalBenefit / cost : 0;
+  appState.savedScenarios.push(entry);
+  localStorage.setItem("stepsSavedScenarios", JSON.stringify(appState.savedScenarios));
+  renderSavedScenariosTable();
+}
 
-    uptakeVals.push(util.pProg * 100);
-    bcrVals.push(bcr);
+function loadSavedScenarios() {
+  try {
+    const raw = localStorage.getItem("stepsSavedScenarios");
+    if (!raw) return;
+    appState.savedScenarios = JSON.parse(raw);
+  } catch (e) {
+    appState.savedScenarios = [];
   }
-
-  sensitivityChart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: scenarios.map((s) => s.label),
-      datasets: [
-        {
-          label: "Endorsement probability",
-          data: uptakeVals,
-          yAxisID: "y1",
-        },
-        {
-          label: "Benefit cost ratio",
-          data: bcrVals,
-          yAxisID: "y2",
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      interaction: {
-        mode: "index",
-        intersect: false,
-      },
-      plugins: {
-        legend: {
-          position: "bottom",
-        },
-      },
-      scales: {
-        y1: {
-          type: "linear",
-          position: "left",
-          beginAtZero: true,
-          max: 100,
-          ticks: { callback: (v) => v + "%" },
-        },
-        y2: {
-          type: "linear",
-          position: "right",
-          beginAtZero: true,
-          grid: { drawOnChartArea: false },
-        },
-      },
-    },
-  });
 }
 
-function updateSimulation(config, results) {
-  const numCohorts = Number(document.getElementById("num-cohorts").value) || 50;
-
-  const perCohortCost = results.totalCost;
-  const perCohortBenefit = results.totalBenefit;
-  const perCohortNet = results.netBenefit;
-
-  const totalCost = perCohortCost * numCohorts;
-  const totalBenefit = perCohortBenefit * numCohorts;
-  const totalNet = perCohortNet * numCohorts;
-
-  document.getElementById("sim-total-cost").textContent = formatINR(totalCost);
-  document.getElementById("sim-total-benefit").textContent =
-    formatINR(totalBenefit);
-  document.getElementById("sim-total-net-benefit").textContent =
-    formatINR(totalNet);
-
-  const fellowsPerDistrict =
-    Number(document.getElementById("fellows-per-district").value) || 1;
-  const valuePerGrad =
-    Number(document.getElementById("value-per-grad").value) || 0;
-  const outbreaksPer100 =
-    Number(document.getElementById("outbreaks-per-100-grad").value) || 0;
-  const valuePerOutbreak =
-    Number(document.getElementById("value-per-outbreak").value) || 0;
-
-  const effectiveGraduates =
-    numCohorts * config.cohortSize * results.uptakeProb;
-
-  const districtCoverage =
-    fellowsPerDistrict > 0 ? effectiveGraduates / fellowsPerDistrict : 0;
-
-  const outbreaksAverted =
-    (effectiveGraduates / 100) * outbreaksPer100;
-
-  const epiBenefitGraduates = effectiveGraduates * valuePerGrad;
-  const epiBenefitOutbreaks = outbreaksAverted * valuePerOutbreak;
-  const epiBenefitTotal = epiBenefitGraduates + epiBenefitOutbreaks;
-
-  document.getElementById("sim-total-graduates").textContent =
-    Math.round(effectiveGraduates).toLocaleString("en-IN");
-  document.getElementById("sim-district-coverage").textContent =
-    districtCoverage.toFixed(1);
-  document.getElementById("sim-outbreaks-averted").textContent =
-    outbreaksAverted.toFixed(1);
-  document.getElementById("sim-epi-benefit-total").textContent =
-    formatINR(epiBenefitTotal);
-
-  const ctx = document.getElementById("chart-simulation");
-  if (simulationChart) simulationChart.destroy();
-  simulationChart = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: ["National totals"],
-      datasets: [
-        { label: "Total benefit (DCE)", data: [totalBenefit] },
-        { label: "Total cost", data: [totalCost] },
-        { label: "Net benefit (DCE)", data: [totalNet] },
-      ],
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: "bottom" },
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            callback: (v) =>
-              "INR " + (v / 10000000).toFixed(1) + " crore",
-          },
-        },
-      },
-    },
-  });
-}
-
-function refreshSavedScenariosUI() {
-  const tbody = document.querySelector("#saved-table tbody");
+function renderSavedScenariosTable() {
+  const tbody = document.querySelector("#savedScenariosTable tbody");
+  if (!tbody) return;
   tbody.innerHTML = "";
 
-  const selectA = document.getElementById("compare-a");
-  const selectB = document.getElementById("compare-b");
-  selectA.innerHTML = "";
-  selectB.innerHTML = "";
-
-  savedScenarios.forEach((s, idx) => {
+  appState.savedScenarios.forEach((s) => {
     const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${s.name}</td>
-      <td>${s.config.program}</td>
-      <td>${formatPercent(s.results.uptakeProb * 100)}</td>
-      <td>${s.results.bcr.toFixed(2)}</td>
-      <td>${formatINR(s.results.netBenefit)}</td>
-    `;
+
+    const cells = [
+      s.name,
+      tierLabel(s.config.programmeTier),
+      s.config.mentorshipLevel,
+      s.config.deliveryMode,
+      s.config.responseTime + " days",
+      formatCurrency(s.config.costPerTraineeINR),
+      s.config.cohortSize.toString(),
+      formatPercent(s.results.endorsement),
+      s.results.bcr == null ? "–" : s.results.bcr.toFixed(2),
+      s.config.notes || ""
+    ];
+
+    cells.forEach((val) => {
+      const td = document.createElement("td");
+      td.textContent = val;
+      tr.appendChild(td);
+    });
+
     tbody.appendChild(tr);
-
-    const optA = document.createElement("option");
-    optA.value = idx;
-    optA.textContent = s.name;
-    selectA.appendChild(optA);
-
-    const optB = document.createElement("option");
-    optB.value = idx;
-    optB.textContent = s.name;
-    selectB.appendChild(optB);
   });
-
-  if (savedScenarios.length >= 2) {
-    selectA.value = "0";
-    selectB.value = "1";
-    updateCompareChart();
-  } else if (compareChart) {
-    compareChart.destroy();
-    compareChart = null;
-  }
 }
 
-function updateCompareChart() {
-  const idxA = Number(document.getElementById("compare-a").value);
-  const idxB = Number(document.getElementById("compare-b").value);
-  if (
-    !Number.isInteger(idxA) ||
-    !Number.isInteger(idxB) ||
-    !savedScenarios[idxA] ||
-    !savedScenarios[idxB]
-  ) {
+function downloadExcelData() {
+  const rows = appState.savedScenarios.map((s) => {
+    return {
+      Name: s.name,
+      PreferenceModel:
+        s.model === "mxl"
+          ? "Average mixed logit"
+          : "Training supporters (LC Class 2)",
+      Tier: tierLabel(s.config.programmeTier),
+      Mentorship: s.config.mentorshipLevel,
+      Delivery: s.config.deliveryMode,
+      ResponseDays: s.config.responseTime,
+      CostPerTraineeMonthINR: s.config.costPerTraineeINR,
+      CohortSize: s.config.cohortSize,
+      DurationMonths: s.config.durationMonths,
+      NumCohorts: s.config.numCohorts,
+      EndorsementShare: s.results.endorsement,
+      BenefitCostRatio: s.results.bcr,
+      NetBenefitPerCohortINR: s.results.nbPerCohortINR,
+      ScenarioNotes: s.config.notes || ""
+    };
+  });
+
+  if (rows.length === 0 && appState.results) {
+    const s = {
+      name: "Current scenario",
+      model: appState.model,
+      config: { ...appState.config },
+      results: { ...appState.results }
+    };
+    rows.push({
+      Name: s.name,
+      PreferenceModel:
+        s.model === "mxl"
+          ? "Average mixed logit"
+          : "Training supporters (LC Class 2)",
+      Tier: tierLabel(s.config.programmeTier),
+      Mentorship: s.config.mentorshipLevel,
+      Delivery: s.config.deliveryMode,
+      ResponseDays: s.config.responseTime,
+      CostPerTraineeMonthINR: s.config.costPerTraineeINR,
+      CohortSize: s.config.cohortSize,
+      DurationMonths: s.config.durationMonths,
+      NumCohorts: s.config.numCohorts,
+      EndorsementShare: s.results.endorsement,
+      BenefitCostRatio: s.results.bcr,
+      NetBenefitPerCohortINR: s.results.nbPerCohortINR,
+      ScenarioNotes: s.config.notes || ""
+    });
+  }
+
+  if (rows.length === 0) {
+    alert("No scenarios to export.");
     return;
   }
 
-  const sA = savedScenarios[idxA];
-  const sB = savedScenarios[idxB];
-
-  const ctx = document.getElementById("chart-compare");
-  if (compareChart) compareChart.destroy();
-  compareChart = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: ["Endorsement", "Benefit cost ratio", "Net benefit per cohort"],
-      datasets: [
-        {
-          label: sA.name,
-          data: [
-            sA.results.uptakeProb * 100,
-            sA.results.bcr,
-            sA.results.netBenefit,
-          ],
-        },
-        {
-          label: sB.name,
-          data: [
-            sB.results.uptakeProb * 100,
-            sB.results.bcr,
-            sB.results.netBenefit,
-          ],
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: "bottom" },
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    },
-  });
+  const ws = XLSX.utils.json_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "STEPS scenarios");
+  XLSX.writeFile(wb, "STEPS_FETP_scenarios.xlsx");
 }
 
-function exportPDFBrief() {
+function downloadPolicyBriefPDF() {
+  if (!appState.results) {
+    alert("Please apply a configuration first.");
+    return;
+  }
+
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({
-    unit: "mm",
-    format: "a4",
-  });
+  const doc = new jsPDF();
 
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(12);
+  const cfg = appState.config;
+  const r = appState.results;
+  const modelName =
+    appState.model === "mxl"
+      ? "Average mixed logit"
+      : "Training supporters (LC Class 2)";
 
-  const config = getCurrentConfig();
-  const util = computeUtilityAndUptake(config);
-  const benefits = computeBenefits(config, util.pProg);
-  const cost = computeCost(config);
-  const netBenefit = benefits.totalBenefit - cost;
-  const bcr = cost > 0 ? benefits.totalBenefit / cost : 0;
+  const currencyLabel = appState.currency === "USD" ? "USD" : "INR";
 
-  const header = "STEPS FETP scale up summary - India";
+  doc.setFont("helvetica", "bold");
   doc.setFontSize(14);
-  doc.text(header, 14, 18);
-  doc.setFontSize(11);
-  doc.setTextColor(80, 80, 80);
+  doc.text("STEPS FETP scale up brief – India", 14, 18);
+
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "normal");
   doc.text(
-    "This summary describes one Field Epidemiology Training Program configuration evaluated with STEPS.",
+    "This brief summarises a Field Epidemiology Training Programme (FETP) configuration evaluated with STEPS.",
     14,
-    26
+    26,
+    { maxWidth: 180 }
   );
   doc.text(
-    "Results combine discrete choice evidence on stakeholder preferences with your costing assumptions.",
+    "Results combine discrete choice experiment evidence on stakeholder preferences with a simple costing approach.",
     14,
-    31
+    32,
+    { maxWidth: 180 }
   );
 
-  doc.setTextColor(0, 0, 0);
+  const line1 =
+    "Scenario: " +
+    tierLabel(cfg.programmeTier) +
+    ", " +
+    cfg.cohortSize +
+    " trainees per cohort, " +
+    cfg.durationMonths +
+    " months, cost of " +
+    formatCurrency(cfg.costPerTraineeINR) +
+    " per trainee per month, using the " +
+    modelName +
+    " model.";
 
-  const programmeLine = `Programme: ${config.program} FETP, ${config.cohortSize} trainees per cohort, ` +
-    `${config.durationMonths} months, cost of about INR ${config.costPerTrainee.toLocaleString("en-IN")} per trainee per month.`;
+  doc.text(line1, 14, 40, { maxWidth: 180 });
 
-  const modelText =
-    config.preferenceModel === "lc_supporters"
-      ? "Preference model: supportive group only (latent class)."
-      : "Preference model: average preferences (mixed logit).";
+  const briefCost = formatCurrency(r.costPerCohortINR);
+  const briefBenefit = formatCurrency(r.benefitPerCohortINR);
+  const bcrText = r.bcr == null ? "not defined" : r.bcr.toFixed(2);
+  const nbText = formatCurrency(r.nbPerCohortINR);
 
-  const scenarioLine = programmeLine + " " + modelText;
+  const summary =
+    "Predicted endorsement for this configuration is " +
+    formatPercent(r.endorsement) +
+    ". The expected willingness to pay based benefit per cohort is " +
+    briefBenefit +
+    " against a cost of " +
+    briefCost +
+    ". This gives a benefit–cost ratio of " +
+    bcrText +
+    " and a net benefit of " +
+    nbText +
+    " per cohort.";
 
-  const uptakeText = `Predicted endorsement is about ${formatPercent(
-    util.pProg * 100
-  )}.`;
-  const benefitText =
-    `The estimated socio economic benefit per cohort is around ${formatINR(
-      benefits.totalBenefit
-    )} ` +
-    `against a cost of ${formatINR(cost)}. `;
-  const ratioText =
-    `This gives a benefit cost ratio of ${bcr.toFixed(
-      2
-    )} and a net benefit of about ${formatINR(netBenefit)}.`;
+  doc.text(summary, 14, 48, { maxWidth: 180 });
 
-  const summaryLine = uptakeText + " " + benefitText + ratioText;
-
-  const headline = getHeadlineRecommendation(util.pProg, bcr);
-
-  const linesScenario = doc.splitTextToSize(scenarioLine, 180);
-  const linesSummary = doc.splitTextToSize(summaryLine, 180);
-  const linesHeadline = doc.splitTextToSize(headline, 180);
-
-  let y = 40;
-  doc.text("Scenario description", 14, y);
-  y += 6;
-  doc.text(linesScenario, 14, y);
-  y += linesScenario.length * 5 + 4;
-
-  doc.text("Key results", 14, y);
-  y += 6;
-  doc.text(linesSummary, 14, y);
-  y += linesSummary.length * 5 + 4;
-
-  doc.text("Headline recommendation", 14, y);
-  y += 6;
-  doc.text(linesHeadline, 14, y);
-  y += linesHeadline.length * 5 + 6;
-
-  if (savedScenarios.length > 0) {
-    doc.text("Other saved STEPS scenarios (for comparison)", 14, y);
-    y += 6;
-    doc.setFontSize(10);
-
-    savedScenarios.slice(0, 6).forEach((s) => {
-      const line =
-        `${s.name}: ${s.config.program}, endorsement ${formatPercent(
-          s.results.uptakeProb * 100
-        )}, ` +
-        `benefit cost ratio ${s.results.bcr.toFixed(2)}, net benefit per cohort ${formatINR(
-          s.results.netBenefit
-        )}.`;
-      const wrapped = doc.splitTextToSize(line, 180);
-      doc.text(wrapped, 14, y);
-      y += wrapped.length * 4 + 2;
-    });
-  }
-
-  doc.save("STEPS_FETP_policy_summary.pdf");
-}
-
-function exportExcelFile() {
-  const rows = [];
-  rows.push([
-    "Scenario",
-    "Preference model",
-    "Programme",
-    "Career",
-    "Mentorship",
-    "Delivery",
-    "Response (days)",
-    "Cohort size",
-    "Duration (months)",
-    "Cost per trainee per month (INR)",
-    "Endorsement (%)",
-    "Total benefit per cohort (INR)",
-    "Total cost per cohort (INR)",
-    "Net benefit per cohort (INR)",
-    "Benefit cost ratio",
-  ]);
-
-  if (savedScenarios.length === 0) {
-    const config = getCurrentConfig();
-    const util = computeUtilityAndUptake(config);
-    const benefits = computeBenefits(config, util.pProg);
-    const cost = computeCost(config);
-    const netBenefit = benefits.totalBenefit - cost;
-    const bcr = cost > 0 ? benefits.totalBenefit / cost : 0;
-
-    rows.push([
-      "Current scenario",
-      config.preferenceModel,
-      config.program,
-      config.career,
-      config.mentorship,
-      config.delivery,
-      config.response,
-      config.cohortSize,
-      config.durationMonths,
-      config.costPerTrainee,
-      (util.pProg * 100).toFixed(1),
-      Math.round(benefits.totalBenefit),
-      Math.round(cost),
-      Math.round(netBenefit),
-      bcr.toFixed(2),
-    ]);
+  let recommendation;
+  if (r.bcr == null || r.bcr < 0.9 || r.endorsement < 0.4) {
+    recommendation =
+      "At current cost and design, this configuration looks relatively weak. Consider increasing mentorship intensity, improving response time targets or reducing costs before large scale expansion.";
+  } else if (r.bcr >= 0.9 && r.bcr < 1.1 && r.endorsement >= 0.4) {
+    recommendation =
+      "This configuration appears broadly acceptable, with benefits close to costs. Refinements to mentorship, delivery mode or response time could improve value without major changes in cost.";
   } else {
-    savedScenarios.forEach((s) => {
-      rows.push([
-        s.name,
-        s.config.preferenceModel,
-        s.config.program,
-        s.config.career,
-        s.config.mentorship,
-        s.config.delivery,
-        s.config.response,
-        s.config.cohortSize,
-        s.config.durationMonths,
-        s.config.costPerTrainee,
-        (s.results.uptakeProb * 100).toFixed(1),
-        Math.round(s.results.totalBenefit),
-        Math.round(s.results.totalCost),
-        Math.round(s.results.netBenefit),
-        s.results.bcr.toFixed(2),
-      ]);
-    });
+    recommendation =
+      "This configuration looks attractive, with a benefit–cost ratio above one and solid endorsement. It is a strong candidate for expansion, provided the underlying cost assumptions hold.";
   }
 
-  const worksheet = XLSX.utils.aoa_to_sheet(rows);
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, "STEPS scenarios");
-  XLSX.writeFile(workbook, "STEPS_FETP_scenarios.xlsx");
+  doc.text("Headline interpretation", 14, 60);
+  doc.text(recommendation, 14, 66, { maxWidth: 180 });
+
+  doc.text("National scaling", 14, 82);
+  const totalCost = formatCurrency(r.totalCostINR);
+  const totalBenefit = formatCurrency(r.totalBenefitINR);
+  const totalNb = formatCurrency(r.totalNbINR);
+
+  const scaleText =
+    "Scaling this configuration to " +
+    cfg.numCohorts +
+    " cohorts implies total programme costs of approximately " +
+    totalCost +
+    " and total benefits of around " +
+    totalBenefit +
+    ", giving a total net benefit of " +
+    totalNb +
+    " at the chosen assumptions.";
+
+  doc.text(scaleText, 14, 88, { maxWidth: 180 });
+
+  if (cfg.notes && cfg.notes.trim().length > 0) {
+    doc.text("Scenario notes", 14, 104);
+    doc.text(cfg.notes.trim(), 14, 110, { maxWidth: 180 });
+  }
+
+  doc.setFontSize(8);
+  doc.text(
+    "All monetary values are calculated internally in INR and displayed here in " +
+      currencyLabel +
+      ".",
+    14,
+    130
+  );
+  doc.text(
+    "For full technical details see the STEPS technical appendix.",
+    14,
+    136
+  );
+  doc.text(
+    "Prepared by Mesfin Genie, PhD, Newcastle Business School, The University of Newcastle, Australia.",
+    14,
+    142
+  );
+  doc.text("Contact: mesfin.genie@newcastle.edu.au", 14, 148);
+
+  doc.save("STEPS_FETP_brief.pdf");
 }
-
-function runAllUpdates() {
-  const config = getCurrentConfig();
-  const util = computeUtilityAndUptake(config);
-  const benefits = computeBenefits(config, util.pProg);
-  const cost = computeCost(config);
-
-  const netBenefit = benefits.totalBenefit - cost;
-  const bcr = cost > 0 ? benefits.totalBenefit / cost : 0;
-
-  const aggregateResults = {
-    uptakeProb: util.pProg,
-    totalBenefit: benefits.totalBenefit,
-    totalCost: cost,
-    netBenefit,
-    bcr,
-  };
-
-  updateSummaryCards(aggregateResults);
-  updateFullResults(config, util, benefits, cost);
-  updateCharts(util, benefits, cost);
-  updateSensitivity(config);
-  updateSimulation(config, aggregateResults);
-
-  return { config, util, benefits, cost, aggregateResults };
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById(
-    "cost-frontline-cohort"
-  ).textContent = formatINR(TEMPLATE_COHORT_COSTS.frontline);
-  document.getElementById(
-    "cost-intermediate-cohort"
-  ).textContent = formatINR(TEMPLATE_COHORT_COSTS.intermediate);
-  document.getElementById(
-    "cost-advanced-cohort"
-  ).textContent = formatINR(TEMPLATE_COHORT_COSTS.advanced);
-
-  document.querySelectorAll(".tab-button").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const target = btn.dataset.tab;
-      document
-        .querySelectorAll(".tab-button")
-        .forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      document
-        .querySelectorAll(".tab-pane")
-        .forEach((pane) => pane.classList.remove("active"));
-      document.getElementById(target).classList.add("active");
-    });
-  });
-
-  document.querySelectorAll(".tab-button-secondary").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const target = btn.dataset.tab;
-      document
-        .querySelectorAll(".tab-button-secondary")
-        .forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      document
-        .querySelectorAll(".tab-pane-secondary")
-        .forEach((pane) => pane.classList.remove("active"));
-      document.getElementById(target).classList.add("active");
-    });
-  });
-
-  document.getElementById("btn-apply").addEventListener("click", (e) => {
-    e.preventDefault();
-    runAllUpdates();
-    document.getElementById("results-modal").classList.remove("hidden");
-  });
-
-  document
-    .getElementById("btn-save-scenario")
-    .addEventListener("click", (e) => {
-      e.preventDefault();
-      const { config, aggregateResults } = runAllUpdates();
-      const name =
-        prompt(
-          "Name this scenario (for example: Advanced blended high mentorship)"
-        ) || `Scenario ${savedScenarios.length + 1}`;
-      savedScenarios.push({
-        name,
-        config: { ...config },
-        results: { ...aggregateResults },
-      });
-      refreshSavedScenariosUI();
-    });
-
-  document.getElementById("compare-a").addEventListener("change", () => {
-    updateCompareChart();
-  });
-  document.getElementById("compare-b").addEventListener("change", () => {
-    updateCompareChart();
-  });
-
-  document.getElementById("num-cohorts").addEventListener("input", () => {
-    const config = getCurrentConfig();
-    const util = computeUtilityAndUptake(config);
-    const benefits = computeBenefits(config, util.pProg);
-    const cost = computeCost(config);
-    const netBenefit = benefits.totalBenefit - cost;
-    const bcr = cost > 0 ? benefits.totalBenefit / cost : 0;
-    updateSimulation(config, {
-      uptakeProb: util.pProg,
-      totalBenefit: benefits.totalBenefit,
-      totalCost: cost,
-      netBenefit,
-      bcr,
-    });
-  });
-
-  [
-    "fellows-per-district",
-    "value-per-grad",
-    "outbreaks-per-100-grad",
-    "value-per-outbreak",
-  ].forEach((id) => {
-    document.getElementById(id).addEventListener("input", () => {
-      const config = getCurrentConfig();
-      const util = computeUtilityAndUptake(config);
-      const benefits = computeBenefits(config, util.pProg);
-      const cost = computeCost(config);
-      const netBenefit = benefits.totalBenefit - cost;
-      const bcr = cost > 0 ? benefits.totalBenefit / cost : 0;
-      updateSimulation(config, {
-        uptakeProb: util.pProg,
-        totalBenefit: benefits.totalBenefit,
-        totalCost: cost,
-        netBenefit,
-        bcr,
-      });
-    });
-  });
-
-  document
-    .querySelectorAll(
-      "#config-form select,#config-form input,#include-opportunity-cost"
-    )
-    .forEach((el) => {
-      el.addEventListener("change", () => {
-        runAllUpdates();
-      });
-    });
-
-  document.getElementById("btn-show-modal").addEventListener("click", () => {
-    runAllUpdates();
-    document.getElementById("results-modal").classList.remove("hidden");
-  });
-  document.getElementById("modal-close").addEventListener("click", () => {
-    document.getElementById("results-modal").classList.add("hidden");
-  });
-  document
-    .getElementById("results-modal")
-    .querySelector(".modal-backdrop")
-    .addEventListener("click", () => {
-      document.getElementById("results-modal").classList.add("hidden");
-    });
-
-  document
-    .getElementById("btn-export-pdf")
-    .addEventListener("click", exportPDFBrief);
-  document
-    .getElementById("btn-export-excel")
-    .addEventListener("click", exportExcelFile);
-
-  runAllUpdates();
-});
