@@ -1,0 +1,30 @@
+{
+  "currency": "INR",
+  "inr_per_usd": 89.5,
+  "tiers": {
+    "frontline": {
+      "label": "Frontline FETP",
+      "duration_months": 3,
+      "default_cohort_size": 20,
+      "value_per_grad_inr": 0,
+      "outbreaks_averted_per_100_grads": 0,
+      "value_per_outbreak_averted_inr": 0
+    },
+    "intermediate": {
+      "label": "Intermediate FETP",
+      "duration_months": 12,
+      "default_cohort_size": 20,
+      "value_per_grad_inr": 0,
+      "outbreaks_averted_per_100_grads": 0,
+      "value_per_outbreak_averted_inr": 0
+    },
+    "advanced": {
+      "label": "Advanced FETP",
+      "duration_months": 24,
+      "default_cohort_size": 20,
+      "value_per_grad_inr": 0,
+      "outbreaks_averted_per_100_grads": 0,
+      "value_per_outbreak_averted_inr": 0
+    }
+  }
+}
