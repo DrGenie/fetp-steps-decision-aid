@@ -1,348 +1,366 @@
-:root {
-  --bg-main: #0f172a;
-  --bg-card: #0b1220;
-  --bg-card-alt: #020617;
-  --accent: #14b8a6;
-  --accent-soft: rgba(20, 184, 166, 0.12);
-  --text-main: #e5e7eb;
-  --text-muted: #9ca3af;
-  --border-subtle: #1f2937;
-  --danger: #f97373;
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, sans-serif;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>STEPS - FETP Scale-up Decision Aid</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-title-group">
+      <h1>STEPS</h1>
+      <p class="app-subtitle">
+        Scalable Training Estimation and Planning System for FETP in India
+      </p>
+    </div>
+    <div class="app-meta">
+      <p><strong>Lead:</strong> Mesfin Genie, PhD</p>
+      <p>Newcastle Business School, The University of Newcastle, Australia</p>
+      <p><a href="mailto:mesfin.genie@newcastle.edu.au">mesfin.genie@newcastle.edu.au</a></p>
+    </div>
+  </header>
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+  <nav class="tab-nav">
+    <button class="tab-button active" data-tab="aboutTab">About</button>
+    <button class="tab-button" data-tab="configTab">Configure scenario</button>
+    <button class="tab-button" data-tab="resultsTab">Results</button>
+    <button class="tab-button" data-tab="libraryTab">Scenario library</button>
+    <button class="tab-button" data-tab="costTab">Cost templates</button>
+  </nav>
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  font-family: var(--font-sans);
-  color: var(--text-main);
-  background: radial-gradient(circle at top left, #1f2937 0, #020617 55%);
-}
+  <main class="app-main">
+    <!-- ABOUT / METHODS -->
+    <section id="aboutTab" class="tab-panel active">
+      <div class="card">
+        <h2>What STEPS does</h2>
+        <p>
+          STEPS is a planning tool to explore different Field Epidemiology Training Program (FETP) scale up options
+          in India. It combines:
+        </p>
+        <ul>
+          <li>Discrete choice experiment (DCE) evidence on stakeholder preferences for FETP design</li>
+          <li>Detailed cost templates for frontline, intermediate and advanced FETP tiers</li>
+          <li>Simple epidemiological and economic summary outputs for each scenario</li>
+        </ul>
+        <p>
+          The tool helps users compare alternative configurations in terms of expected endorsement,
+          costs, and social value, and to understand the implications of scaling up to multiple cohorts
+          at national level.
+        </p>
+      </div>
 
-/* Layout */
+      <div class="card">
+        <h2>How to use STEPS</h2>
+        <ol>
+          <li>Go to <strong>Configure scenario</strong> and select programme design, cost and scale.</li>
+          <li>Check the estimated endorsement, costs and benefit-cost ratio in <strong>Results</strong>.</li>
+          <li>Save configurations into the <strong>Scenario library</strong> for later comparison.</li>
+          <li>Download a short <strong>policy brief PDF</strong> or an <strong>Excel summary</strong> for reporting.</li>
+        </ol>
+        <p>
+          All DCE-based quantities are driven by the mixed logit (MXL) model and the latent class model.
+          Methods and coefficient tables are described in the technical appendix.
+        </p>
+        <p>
+          For full econometric and epidemiological details, including model equations, estimation methods
+          and references, see the technical appendix:
+        </p>
+        <p>
+          <a href="docs/STEPS_technical_appendix.pdf" target="_blank">
+            Download full technical appendix (PDF)
+          </a>
+        </p>
+      </div>
 
-.app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--border-subtle);
-  background: rgba(15, 23, 42, 0.9);
-  backdrop-filter: blur(16px);
-  position: sticky;
-  top: 0;
-  z-index: 20;
-}
+      <div class="card">
+        <h2>Important notes</h2>
+        <ul>
+          <li>
+            Cost templates are based on data provided by WHO, NIE and NCDC for frontline, intermediate
+            and advanced FETP in India. These define default cost ranges and breakdowns.
+          </li>
+          <li>
+            Benefit estimates based on DCE results reflect stakeholder willingness to pay for programme
+            improvements, not actual budget allocations.
+          </li>
+          <li>
+            Epidemiological multipliers and macroeconomic values are configurable in
+            <code>config/epi_config.json</code> and should be refined with national experts.
+          </li>
+        </ul>
+      </div>
+    </section>
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
+    <!-- CONFIGURATION -->
+    <section id="configTab" class="tab-panel">
+      <div class="grid-2">
+        <div class="card">
+          <h2>Programme configuration</h2>
 
-.brand-mark {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: radial-gradient(circle at 20% 20%, #22c55e, #14b8a6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  color: #0b1120;
-  font-size: 1.1rem;
-}
+          <label class="field-label">
+            Programme tier
+            <span class="info-pill" title="Frontline: 3 months, Intermediate: 12 months, Advanced: 24 months.">
+              i
+            </span>
+          </label>
+          <select id="tierSelect" class="select-input">
+            <option value="frontline">Frontline (3 months)</option>
+            <option value="intermediate">Intermediate (12 months)</option>
+            <option value="advanced">Advanced (24 months)</option>
+          </select>
 
-.brand h1 {
-  font-size: 1.3rem;
-  margin: 0;
-}
+          <label class="field-label">
+            Mentorship intensity
+            <span class="info-pill" title="Low, medium or high ongoing mentorship during training.">i</span>
+          </label>
+          <select id="mentorshipSelect" class="select-input">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
 
-.brand p {
-  margin: 0;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
+          <label class="field-label">
+            Trainee career incentives
+            <span class="info-pill" title="Certificate or more formal career pathway incentives.">i</span>
+          </label>
+          <select id="careerSelect" class="select-input">
+            <option value="certificate">Government and partner certificate</option>
+            <option value="university">University qualification</option>
+            <option value="gov_pathway">Government career pathway</option>
+          </select>
 
-.header-actions {
-  display: flex;
-  gap: 0.75rem;
-  align-items: center;
-}
+          <label class="field-label">
+            Mode of delivery
+            <span class="info-pill" title="Blended: mix of online and in person; others are fully in person or fully online.">i</span>
+          </label>
+          <select id="deliverySelect" class="select-input">
+            <option value="blended">Blended</option>
+            <option value="inperson">Fully in person</option>
+            <option value="online">Fully online</option>
+          </select>
 
-.currency-toggle,
-.model-toggle {
-  background: #020617;
-  border: 1px solid var(--border-subtle);
-  color: var(--text-main);
-  border-radius: 999px;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.8rem;
-}
+          <label class="field-label">
+            Outbreak response expectation
+            <span class="info-pill" title="Expected time to respond to outbreaks following training.">i</span>
+          </label>
+          <select id="responseSelect" class="select-input">
+            <option value="30">Respond within 30 days</option>
+            <option value="15">Respond within 15 days</option>
+            <option value="7">Respond within 7 days</option>
+          </select>
 
-.tabs {
-  display: flex;
-  gap: 0.25rem;
-  padding: 0.5rem 1.5rem;
-  border-bottom: 1px solid var(--border-subtle);
-  overflow-x: auto;
-}
+          <label class="field-label">
+            Programme duration (months)
+          </label>
+          <input type="number" id="durationInput" class="number-input" min="1" max="36" />
 
-.tab-button {
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  padding: 0.5rem 0.75rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  cursor: pointer;
-}
+        </div>
 
-.tab-button.active {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
+        <div class="card">
+          <h2>Costs and scale</h2>
 
-main {
-  padding: 1.5rem;
-  max-width: 1200px;
-  margin: 0 auto 3rem;
-}
+          <label class="field-label">
+            Cost template source
+            <span class="info-pill"
+                  title="Templates based on WHO, NIE and NCDC cost data for FETP in India. They set default cost levels and breakdowns.">
+              i
+            </span>
+          </label>
+          <select id="costTemplateSelect" class="select-input">
+            <!-- options are filled dynamically based on tier -->
+          </select>
 
-.tab-panel {
-  display: none;
-}
+          <div class="field-row">
+            <label class="field-label">
+              Include trainee opportunity cost
+              <span class="info-pill" title="If on, trainee salary foregone during training is counted as social cost.">
+                i
+              </span>
+            </label>
+            <label class="switch">
+              <input type="checkbox" id="oppCostToggle" checked />
+              <span class="slider-round"></span>
+            </label>
+          </div>
 
-.tab-panel.active {
-  display: block;
-}
+          <label class="field-label">
+            Cost per trainee per month (<span id="currencyLabel">INR</span>)
+            <span class="info-pill"
+                  title="Should stay within the DCE range of 75,000 to 400,000 rupees per trainee per month.">
+              i
+            </span>
+          </label>
+          <input type="range" id="costSlider" min="75000" max="400000" step="5000" />
+          <div class="slider-value-row">
+            <span id="costDisplay"></span>
+            <span class="hint-text" id="costTemplateHint"></span>
+          </div>
 
-.panel-grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-}
+          <div class="field-row mt-2">
+            <label class="field-label">Currency label</label>
+            <select id="currencySelect" class="select-input small">
+              <option value="INR">INR</option>
+              <option value="USD">USD (approximate)</option>
+            </select>
+            <span class="hint-text">
+              Internal calculations stay in INR. USD uses a fixed conversion factor from config.
+            </span>
+          </div>
 
-@media (max-width: 900px) {
-  .panel-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
+          <label class="field-label">
+            Trainees per cohort
+          </label>
+          <input type="number" id="cohortSizeInput" class="number-input" min="5" max="100" value="20" />
 
-/* Cards */
+          <label class="field-label">
+            Number of cohorts at national level
+          </label>
+          <input type="number" id="cohortsInput" class="number-input" min="1" max="200" value="10" />
 
-.card {
-  background: linear-gradient(145deg, #020617, #020617 40%, #020617 100%);
-  border-radius: 18px;
-  padding: 1.25rem 1.3rem;
-  border: 1px solid rgba(148, 163, 184, 0.1);
-  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.8);
-}
+          <div class="field-label">
+            Preference model
+            <span class="info-pill"
+                  title="Use either the average mixed logit model or the training supporters latent class (Class 2).">
+              i
+            </span>
+          </div>
+          <div class="pill-toggle">
+            <button type="button" class="pill-button active" data-model="mxl">Average mixed logit</button>
+            <button type="button" class="pill-button" data-model="lc2">Supportive group (LC Class 2)</button>
+          </div>
 
-.card h2 {
-  margin: 0 0 0.75rem;
-  font-size: 1.1rem;
-}
+          <label class="field-label mt-2">
+            Scenario notes (saved with this configuration)
+          </label>
+          <textarea id="scenarioNotes" class="text-input" rows="3"
+                    placeholder="Example: High mentorship advanced tier, targeting priority states, assumes full budget availability."></textarea>
 
-.card h3 {
-  margin: 1rem 0 0.4rem;
-  font-size: 0.95rem;
-}
+          <button id="runButton" class="primary-button">Run scenario</button>
+        </div>
+      </div>
+    </section>
 
-.card p {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-}
+    <!-- RESULTS -->
+    <section id="resultsTab" class="tab-panel">
+      <div class="grid-2">
+        <div class="card">
+          <h2>Key indicators</h2>
+          <div class="kpi-row">
+            <div class="kpi">
+              <div class="kpi-label">Endorsement probability</div>
+              <div class="kpi-value" id="endorsementKpi">–</div>
+              <div class="kpi-subtitle">Probability that stakeholders prefer this configuration over opting out</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Benefit - cost ratio</div>
+              <div class="kpi-value" id="bcrKpi">–</div>
+              <div class="kpi-subtitle">Based on DCE willingness to pay and total social cost</div>
+            </div>
+          </div>
 
-/* Fields */
+          <div class="kpi-row">
+            <div class="kpi">
+              <div class="kpi-label">Net benefit per cohort</div>
+              <div class="kpi-value" id="netBenefitKpi">–</div>
+              <div class="kpi-subtitle" id="netBenefitSubtitle"></div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Total cost (national scale)</div>
+              <div class="kpi-value" id="totalCostKpi">–</div>
+              <div class="kpi-subtitle">Includes training costs and opportunity costs if toggled on</div>
+            </div>
+          </div>
 
-.field-label {
-  display: block;
-  font-size: 0.8rem;
-  margin-top: 0.8rem;
-  margin-bottom: 0.25rem;
-  color: var(--text-muted);
-}
+          <div class="kpi-row">
+            <div class="kpi">
+              <div class="kpi-label">Total trainees (all cohorts)</div>
+              <div class="kpi-value" id="totalTraineesKpi">–</div>
+              <div class="kpi-subtitle">Across all cohorts at national level</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Approx. additional epidemiologists</div>
+              <div class="kpi-value" id="epiGainKpi">–</div>
+              <div class="kpi-subtitle">Based on epi multipliers in config</div>
+            </div>
+          </div>
+        </div>
 
-.field-input {
-  width: 100%;
-  background: #020617;
-  border-radius: 10px;
-  border: 1px solid var(--border-subtle);
-  padding: 0.5rem 0.6rem;
-  color: var(--text-main);
-  font-size: 0.9rem;
-}
+        <div class="card">
+          <h2>Visual summary</h2>
+          <canvas id="summaryChart"></canvas>
+          <p class="hint-text">
+            The chart shows costs and DCE-based benefits per cohort. Epidemiological gains are reported as separate counts.
+          </p>
 
-.field-input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 1px rgba(45, 212, 191, 0.4);
-}
+          <div class="button-row mt-2">
+            <button id="downloadPdfBtn" class="secondary-button">Download policy brief (PDF)</button>
+            <button id="downloadExcelBtn" class="secondary-button">Download summary (Excel)</button>
+          </div>
+        </div>
+      </div>
 
-textarea.field-input {
-  resize: vertical;
-}
+      <div class="card mt-3">
+        <h2>Interpretation and recommendation</h2>
+        <p id="headlineRecommendation" class="headline-text"></p>
+        <p id="detailedRecommendation"></p>
+      </div>
+    </section>
 
-/* Slider */
+    <!-- SCENARIO LIBRARY -->
+    <section id="libraryTab" class="tab-panel">
+      <div class="card">
+        <h2>Saved scenarios</h2>
+        <p class="hint-text">
+          Save multiple configurations and compare them side by side. Saved scenarios include notes, key outputs and whether
+          they use the average MXL model or the supportive group latent class.
+        </p>
+        <button id="saveScenarioBtn" class="secondary-button">Save current scenario</button>
+        <button id="clearScenariosBtn" class="ghost-button">Clear all saved scenarios</button>
 
-input[type="range"] {
-  width: 100%;
-  margin-top: 0.4rem;
-}
+        <div id="scenarioTableContainer" class="table-container mt-2"></div>
+      </div>
+    </section>
 
-.slider-values {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-top: 0.2rem;
-}
+    <!-- COST TEMPLATES -->
+    <section id="costTab" class="tab-panel">
+      <div class="card">
+        <h2>Cost templates and breakdown</h2>
+        <p>
+          Cost templates are derived from data provided by WHO, NIE and NCDC. They summarise the main cost components
+          for each tier and provide a baseline cost per trainee per month that is aligned with the DCE cost range.
+        </p>
+        <p>
+          When you change the programme tier and template source in the configuration tab, STEPS updates the suggested
+          cost per trainee per month and the breakdown below.
+        </p>
 
-/* Summary */
+        <label class="field-label">
+          Select tier and template to inspect
+        </label>
+        <div class="grid-2">
+          <select id="costTierInspectSelect" class="select-input">
+            <option value="frontline">Frontline</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
 
-.summary-grid {
-  display: grid;
-  gap: 0.75rem;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  margin-top: 0.75rem;
-}
+          <select id="costTemplateInspectSelect" class="select-input">
+            <!-- populated dynamically -->
+          </select>
+        </div>
 
-.summary-item h3 {
-  margin: 0 0 0.3rem;
-  font-size: 0.9rem;
-}
+        <div id="costBreakdownContainer" class="table-container mt-2"></div>
+      </div>
+    </section>
+  </main>
 
-.summary-item p {
-  font-size: 1.1rem;
-  margin: 0;
-  color: var(--accent);
-}
+  <!-- External libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
-/* Buttons *b/
-
-.button-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.primary-btn,
-.secondary-btn {
-  border-radius: 999px;
-  border: none;
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.primary-btn {
-  background: var(--accent);
-  color: #0b1120;
-  font-weight: 600;
-}
-
-.secondary-btn {
-  background: #020617;
-  color: var(--text-main);
-  border: 1px solid var(--border-subtle);
-}
-
-/* Tables */
-
-.results-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 0.5rem;
-  font-size: 0.85rem;
-}
-
-.results-table th,
-.results-table td {
-  padding: 0.4rem 0.5rem;
-  border-bottom: 1px solid rgba(31, 41, 55, 0.7);
-}
-
-.results-table th {
-  text-align: left;
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
-.results-table.small th,
-.results-table.small td {
-  font-size: 0.8rem;
-}
-
-.cost-table-wrapper {
-  max-height: 320px;
-  overflow: auto;
-}
-
-/* Intro list */
-
-.intro-list {
-  padding-left: 1.1rem;
-  margin: 0.5rem 0 0;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
-
-/* Info tags */
-
-.info-tag {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-size: 0.7rem;
-  margin-left: 0.35rem;
-  cursor: default;
-}
-
-/* Footer */
-
-.app-footer {
-  padding: 1rem 1.5rem 1.5rem;
-  border-top: 1px solid var(--border-subtle);
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  text-align: center;
-  background: #020617;
-}
-
-.app-footer a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-/* Charts */
-
-canvas {
-  margin-top: 0.8rem;
-}
-
-/* Notes */
-
-.small-note {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-top: 0.6rem;
-}
+  <!-- App logic -->
+  <script src="script.js"></script>
+</body>
+</html>
