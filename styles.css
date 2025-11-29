@@ -1,8 +1,7 @@
 :root {
     --bg-main: #020617;
-    --bg-main-alt: #020617;
     --bg-card: #020617;
-    --bg-card-alt: #0b1120;
+    --bg-card-alt: #020617;
     --border-subtle: #1f2937;
     --accent: #0ea5e9;
     --accent-soft: #38bdf8;
@@ -15,7 +14,7 @@
     --warning: #f97316;
 }
 
-/* Base layoutt */
+/* Base layout */
 
 *,
 *::before,
@@ -41,7 +40,7 @@ body {
     align-items: center;
     padding: 16px 20px;
     border-bottom: 1px solid var(--border-subtle);
-    background: linear-gradient(to right, #020617, #020617 40%, #0f172a 100%);
+    background: linear-gradient(to right, #020617, #020617 40%, #020617 100%);
     position: sticky;
     top: 0;
     z-index: 50;
@@ -87,7 +86,7 @@ body {
 .badge-primary {
     padding: 4px 10px;
     border-radius: 9999px;
-    background: rgba(56, 189, 248, 0.14);
+    background: rgba(56, 189, 248, 0.12);
     color: #e0f2fe;
     font-size: 11px;
     border: 1px solid rgba(56, 189, 248, 0.7);
@@ -99,7 +98,7 @@ body {
     border: 1px solid var(--border-subtle);
     font-size: 11px;
     color: var(--text-muted);
-    background: rgba(15, 23, 42, 0.8);
+    background: rgba(15, 23, 42, 0.9);
 }
 
 .app-shell {
@@ -218,7 +217,7 @@ p {
     border-radius: 10px;
     border: 1px dashed var(--border-subtle);
     padding: 8px 10px;
-    background: rgba(15, 23, 42, 0.7);
+    background: rgba(15, 23, 42, 0.9);
 }
 
 .hint {
@@ -279,7 +278,7 @@ textarea {
     border-radius: 10px;
     border: 1px solid var(--border-subtle);
     padding: 7px 9px;
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(15, 23, 42, 0.95);
     color: var(--text-main);
     font-size: 13px;
     outline: none;
@@ -337,7 +336,7 @@ input[type="range"] {
 }
 
 .btn-secondary {
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(15, 23, 42, 0.98);
     color: var(--text-main);
     border: 1px solid var(--border-subtle);
 }
@@ -349,11 +348,11 @@ input[type="range"] {
 .btn-ghost {
     background: transparent;
     color: var(--accent-soft);
-    border: 1px dashed rgba(148, 163, 184, 0.8);
+    border: 1px dashed rgba(148, 163, 184, 0.9);
 }
 
 .btn-ghost:hover {
-    background: rgba(15, 23, 42, 0.8);
+    background: rgba(15, 23, 42, 0.95);
 }
 
 /* Switch pill */
@@ -365,7 +364,7 @@ input[type="range"] {
     padding: 3px 9px 3px 3px;
     border-radius: 9999px;
     border: 1px solid var(--border-subtle);
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(15, 23, 42, 0.98);
     cursor: pointer;
     min-height: 30px;
     gap: 6px;
@@ -413,7 +412,7 @@ input[type="range"] {
 }
 
 .pill-toggle.active {
-    background: rgba(15, 23, 42, 0.95);
+    background: rgba(15, 23, 42, 0.98);
     color: #e5f3ff;
 }
 
@@ -445,7 +444,7 @@ input[type="range"] {
 
 .chart-block {
     margin-top: 8px;
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(15, 23, 42, 0.98);
     border-radius: 12px;
     border: 1px solid var(--border-subtle);
     padding: 8px;
@@ -510,7 +509,7 @@ input[type="range"] {
     justify-content: space-between;
     gap: 8px;
     padding: 4px 0;
-    border-bottom: 1px dotted rgba(31, 41, 55, 0.8);
+    border-bottom: 1px dotted rgba(31, 41, 55, 0.9);
     font-size: 12px;
 }
 
@@ -526,7 +525,7 @@ input[type="range"] {
 
 .attributes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
     gap: 12px;
     margin-top: 8px;
 }
@@ -535,7 +534,7 @@ input[type="range"] {
     padding: 10px 12px;
     border-radius: 12px;
     border: 1px solid var(--border-subtle);
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(15, 23, 42, 0.98);
 }
 
 /* Table */
@@ -563,7 +562,7 @@ th {
 }
 
 tbody tr:nth-child(even) {
-    background: rgba(15, 23, 42, 0.75);
+    background: rgba(15, 23, 42, 0.95);
 }
 
 /* Modal */
@@ -571,7 +570,7 @@ tbody tr:nth-child(even) {
 .modal {
     position: fixed;
     inset: 0;
-    background: rgba(15, 23, 42, 0.85);
+    background: rgba(15, 23, 42, 0.92);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -617,8 +616,37 @@ tbody tr:nth-child(even) {
     padding: 10px 12px;
     border-radius: 12px;
     border: 1px solid var(--border-subtle);
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(15, 23, 42, 0.98);
     font-size: 13px;
+}
+
+/* Toast */
+
+.toast {
+    position: fixed;
+    bottom: 18px;
+    right: 18px;
+    max-width: 260px;
+    padding: 10px 14px;
+    border-radius: 9999px;
+    background: rgba(15, 23, 42, 0.98);
+    border: 1px solid var(--border-subtle);
+    color: #e5e7eb;
+    font-size: 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
+    z-index: 120;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.toast.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast.hidden {
+    pointer-events: none;
 }
 
 /* Divider */
