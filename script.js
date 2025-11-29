@@ -3,7 +3,7 @@
 (() => {
     const { jsPDF } = window.jspdf || {};
 
-    // --- CORE CONSTANTS AND CONFIG -----------------------------------------
+    // Core constants
 
     let INR_PER_USD_DEFAULT = 89.5;
     let INR_PER_USD = INR_PER_USD_DEFAULT;
@@ -14,7 +14,7 @@
         advanced: { label: "Advanced (24 months)", months: 24 }
     };
 
-    // Final mixed logit and latent class parameters supplied by user
+    // Final mixed logit and latent class parameters
 
     const PREFERENCE_MODELS = {
         mxl: {
@@ -34,7 +34,7 @@
                 resp15: 0.546,
                 resp7: 0.610
             },
-            beta_cost: -0.005 // back transformed mean cost coefficient per 1,000 INR
+            beta_cost: -0.005
         },
         lc2: {
             key: "lc2",
@@ -53,11 +53,11 @@
                 resp15: 0.317,
                 resp7: 0.504
             },
-            beta_cost: -0.001 // cost coefficient per 1,000 INR
+            beta_cost: -0.001
         }
     };
 
-    // WTP in INR per trainee per month
+    // WTP (INR per trainee per month)
 
     const WTP_TABLE = {
         mxl: {
@@ -73,7 +73,6 @@
             resp7: 130460
         },
         lc2: {
-            // implied from LC class 2 betas with cost coefficient -0.001
             intermediate: 87000,
             advanced: 422000,
             uniqual: -24000,
@@ -87,7 +86,7 @@
         }
     };
 
-    // Default epidemiological multipliers (can be overridden by JSON or advanced settings)
+    // Default epidemiological multipliers
 
     const DEFAULT_EPI_MULTIPLIERS = {
         frontline: {
@@ -111,10 +110,9 @@
     };
 
     let epiConfig = JSON.parse(JSON.stringify(DEFAULT_EPI_MULTIPLIERS));
-
     const EPI_CONFIG_URL = "epi_config.json";
 
-    // Cost templates
+    // Cost templates (separate for each tier and source)
 
     const COST_TEMPLATES = {
         frontline: {
@@ -235,7 +233,7 @@
         }
     };
 
-    // --- STATE -------------------------------------------------------------
+    // State
 
     const state = {
         tab: "intro",
@@ -264,7 +262,7 @@
 
     let toastTimeout = null;
 
-    // --- UTILITY FUNCTIONS -------------------------------------------------
+    // Utility helpers
 
     function formatCurrencyINR(value) {
         if (!Number.isFinite(value)) return "-";
@@ -308,8 +306,7 @@
     }
 
     function getActiveCostTemplate() {
-        const tier = state.programTier;
-        const tierTemplates = COST_TEMPLATES[tier] || {};
+        const tierTemplates = COST_TEMPLATES[state.programTier] || {};
         return tierTemplates[state.costSourceKey] || Object.values(tierTemplates)[0];
     }
 
@@ -484,7 +481,7 @@
         };
     }
 
-    // --- UI UPDATE FUNCTIONS -----------------------------------------------
+    // UI updates
 
     function updateConfigSummary() {
         const el = document.getElementById("config-summary");
@@ -553,7 +550,7 @@
                 <span class="cost-summary-label">Total economic cost per cohort</span>
                 <span class="cost-summary-value">${totalDisplay}</span>
             </div>
-        ";
+        `;
 
         list.innerHTML = "";
         outputs.costComponents.forEach(c => {
@@ -586,7 +583,7 @@
         } else if (bcr < 1 && endorse >= 0.5) {
             el.textContent =
                 "Stakeholders are supportive, but the benefit cost ratio is below one. " +
-                "Use STEPS to test lower costs or incremental changes in mentorship and response time to improve value.";
+                "Test lower costs or incremental changes in mentorship and response time to improve value.";
         } else if (bcr >= 1 && endorse < 0.5) {
             el.textContent =
                 "The configuration offers good value in monetary terms, but endorsement is limited. " +
@@ -601,23 +598,14 @@
     function updateResultCards(outputs) {
         if (!outputs) return;
 
-        const endorseEl = document.getElementById("endorsement-rate");
-        const optoutEl = document.getElementById("optout-rate");
-        const totalCostEl = document.getElementById("total-cost");
-        const netBenefitEl = document.getElementById("net-benefit");
-        const bcrEl = document.getElementById("bcr");
-        const epiGradEl = document.getElementById("epi-graduates");
-        const epiOutEl = document.getElementById("epi-outbreaks");
-        const epiBenEl = document.getElementById("epi-benefit");
-
-        endorseEl.textContent = formatPercent(outputs.endorse);
-        optoutEl.textContent = formatPercent(outputs.optout);
-        totalCostEl.textContent = formatCurrencyDisplay(outputs.totalEconomic, state.currency);
-        netBenefitEl.textContent = formatCurrencyDisplay(outputs.netBenefit, state.currency);
-        bcrEl.textContent = Number.isFinite(outputs.bcr) ? outputs.bcr.toFixed(2) : "-";
-        epiGradEl.textContent = outputs.epi.graduates.toFixed(0);
-        epiOutEl.textContent = outputs.epi.outbreaksPerYear.toFixed(1);
-        epiBenEl.textContent = formatCurrencyDisplay(outputs.epi.epiBenefitPerCohort, state.currency);
+        document.getElementById("endorsement-rate").textContent = formatPercent(outputs.endorse);
+        document.getElementById("optout-rate").textContent = formatPercent(outputs.optout);
+        document.getElementById("total-cost").textContent = formatCurrencyDisplay(outputs.totalEconomic, state.currency);
+        document.getElementById("net-benefit").textContent = formatCurrencyDisplay(outputs.netBenefit, state.currency);
+        document.getElementById("bcr").textContent = Number.isFinite(outputs.bcr) ? outputs.bcr.toFixed(2) : "-";
+        document.getElementById("epi-graduates").textContent = outputs.epi.graduates.toFixed(0);
+        document.getElementById("epi-outbreaks").textContent = outputs.epi.outbreaksPerYear.toFixed(1);
+        document.getElementById("epi-benefit").textContent = formatCurrencyDisplay(outputs.epi.epiBenefitPerCohort, state.currency);
     }
 
     function updateCharts(outputs) {
@@ -664,9 +652,7 @@
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    y: { beginAtZero: true }
                 }
             }
         });
@@ -684,9 +670,7 @@
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                    y: { beginAtZero: true }
                 }
             }
         });
@@ -796,7 +780,7 @@
         }, 3000);
     }
 
-    // Export functions
+    // Export helpers
 
     function exportScenariosToExcel() {
         if (state.savedScenarios.length === 0) {
@@ -916,7 +900,7 @@
         showToast("Policy brief PDF downloaded.");
     }
 
-    // Technical appendix helpers
+    // Technical appendix
 
     function initTechnicalPreview() {
         const preview = document.getElementById("technical-preview");
@@ -941,9 +925,6 @@
     // Advanced settings
 
     function populateAdvancedSettingsForm() {
-        const f = document.getElementById("advanced-settings-form");
-        if (!f) return;
-
         document.getElementById("adv-inr-per-usd").value = INR_PER_USD.toFixed(1);
 
         document.getElementById("adv-frontline-grads").value = epiConfig.frontline.gradsPerCohort;
@@ -968,26 +949,26 @@
             INR_PER_USD = inrPerUsd;
         }
 
-        const readTier = (tierKey, fieldKey, parser) => {
+        const readTier = (tierKey, fieldKey) => {
             const id = `adv-${tierKey}-${fieldKey}`;
-            const val = parser(document.getElementById(id).value);
+            const val = parseFloat(document.getElementById(id).value);
             return Number.isFinite(val) ? val : epiConfig[tierKey][fieldKey];
         };
 
-        epiConfig.frontline.gradsPerCohort = readTier("frontline", "grads", parseFloat);
-        epiConfig.frontline.outbreaksPerCohortPerYear = readTier("frontline", "outbreaks", parseFloat);
-        epiConfig.frontline.valuePerGraduate = readTier("frontline", "vgrad", parseFloat);
-        epiConfig.frontline.valuePerOutbreak = readTier("frontline", "voutbreak", parseFloat);
+        epiConfig.frontline.gradsPerCohort = readTier("frontline", "grads");
+        epiConfig.frontline.outbreaksPerCohortPerYear = readTier("frontline", "outbreaks");
+        epiConfig.frontline.valuePerGraduate = readTier("frontline", "vgrad");
+        epiConfig.frontline.valuePerOutbreak = readTier("frontline", "voutbreak");
 
-        epiConfig.intermediate.gradsPerCohort = readTier("intermediate", "grads", parseFloat);
-        epiConfig.intermediate.outbreaksPerCohortPerYear = readTier("intermediate", "outbreaks", parseFloat);
-        epiConfig.intermediate.valuePerGraduate = readTier("intermediate", "vgrad", parseFloat);
-        epiConfig.intermediate.valuePerOutbreak = readTier("intermediate", "voutbreak", parseFloat);
+        epiConfig.intermediate.gradsPerCohort = readTier("intermediate", "grads");
+        epiConfig.intermediate.outbreaksPerCohortPerYear = readTier("intermediate", "outbreaks");
+        epiConfig.intermediate.valuePerGraduate = readTier("intermediate", "vgrad");
+        epiConfig.intermediate.valuePerOutbreak = readTier("intermediate", "voutbreak");
 
-        epiConfig.advanced.gradsPerCohort = readTier("advanced", "grads", parseFloat);
-        epiConfig.advanced.outbreaksPerCohortPerYear = readTier("advanced", "outbreaks", parseFloat);
-        epiConfig.advanced.valuePerGraduate = readTier("advanced", "vgrad", parseFloat);
-        epiConfig.advanced.valuePerOutbreak = readTier("advanced", "voutbreak", parseFloat);
+        epiConfig.advanced.gradsPerCohort = readTier("advanced", "grads");
+        epiConfig.advanced.outbreaksPerCohortPerYear = readTier("advanced", "outbreaks");
+        epiConfig.advanced.valuePerGraduate = readTier("advanced", "vgrad");
+        epiConfig.advanced.valuePerOutbreak = readTier("advanced", "voutbreak");
 
         rerun();
         showToast("Advanced settings applied.");
@@ -1000,8 +981,6 @@
         rerun();
         showToast("Advanced settings reset to defaults.");
     }
-
-    // Load external epi config JSON if present
 
     function loadExternalEpiConfig() {
         fetch(EPI_CONFIG_URL)
@@ -1021,7 +1000,7 @@
             });
     }
 
-    // --- EVENT HANDLERS ----------------------------------------------------
+    // Events
 
     function updateCostDisplay() {
         const label = document.getElementById("cost-display");
@@ -1044,7 +1023,7 @@
             });
         });
 
-        // Configuration inputs
+        // Config inputs
         document.getElementById("program-tier").addEventListener("change", e => {
             state.programTier = e.target.value;
             updateCostSourceOptions();
@@ -1119,7 +1098,7 @@
             });
         });
 
-        // Opportunity cost switch
+        // Opportunity cost
         document.getElementById("opp-toggle").addEventListener("click", e => {
             state.includeOppCost = !state.includeOppCost;
             const btn = e.currentTarget;
@@ -1139,7 +1118,7 @@
             rerun();
         });
 
-        // Buttons
+        // Main buttons
         document.getElementById("update-results").addEventListener("click", () => {
             rerun();
             showToast("Configuration applied. Open View results or go to the Results tab.");
@@ -1189,7 +1168,7 @@
         });
     }
 
-    // --- MAIN RERUN FUNCTION -----------------------------------------------
+    // Main rerun
 
     function rerun() {
         updateConfigSummary();
