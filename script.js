@@ -504,6 +504,16 @@
         `;
     }
 
+    function updateConfigEndorsement(outputs) {
+        const span = document.getElementById("config-endorsement-value");
+        if (!span) return;
+        if (!outputs) {
+            span.textContent = "Apply configuration";
+        } else {
+            span.textContent = formatPercent(outputs.endorse);
+        }
+    }
+
     function updateCostSourceOptions() {
         const select = document.getElementById("cost-source");
         const tierTemplates = COST_TEMPLATES[state.programTier] || {};
@@ -674,6 +684,30 @@
                 }
             }
         });
+    }
+
+    function updateNationalSimulation(outputs) {
+        const natTotalCostEl = document.getElementById("nat-total-cost");
+        const natTotalBenefitEl = document.getElementById("nat-total-benefit");
+        const natNetBenefitEl = document.getElementById("nat-net-benefit");
+        const natBcrEl = document.getElementById("nat-bcr");
+        const natGradsEl = document.getElementById("nat-graduates");
+        const natOutbreaksEl = document.getElementById("nat-outbreaks");
+
+        if (!outputs || !natTotalCostEl) return;
+
+        const totalCostNational = outputs.totalEconomic * state.cohorts;
+        const totalBenefitNational = outputs.benefitPerCohort * state.cohorts;
+        const netNational = totalBenefitNational - totalCostNational;
+        const bcrNat = totalCostNational > 0 ? totalBenefitNational / totalCostNational : null;
+
+        natTotalCostEl.textContent = formatCurrencyDisplay(totalCostNational, state.currency);
+        natTotalBenefitEl.textContent = formatCurrencyDisplay(totalBenefitNational, state.currency);
+        natNetBenefitEl.textContent = formatCurrencyDisplay(netNational, state.currency);
+        natBcrEl.textContent = Number.isFinite(bcrNat) ? bcrNat.toFixed(2) : "-";
+
+        natGradsEl.textContent = outputs.epi.graduates.toFixed(0);
+        natOutbreaksEl.textContent = outputs.epi.outbreaksPerYear.toFixed(1);
     }
 
     function openSnapshotModal(outputs) {
@@ -907,8 +941,8 @@
         if (!preview) return;
         preview.innerHTML =
             "<p>This appendix sets out the mixed logit and latent class models, the cost templates and the " +
-            "epidemiological multipliers used in STEPS. Use the button above to open the full document in a " +
-            "separate window for printing or detailed review.</p>";
+            "epidemiological multipliers used in STEPS. Worked examples show how endorsement, costs, benefits " +
+            "and national scale up results are calculated.</p>";
     }
 
     function openTechnicalWindow() {
@@ -1171,13 +1205,15 @@
     // Main rerun
 
     function rerun() {
-        updateConfigSummary();
         const outputs = computeOutputs();
         state.latestOutputs = outputs;
+        updateConfigSummary();
+        updateConfigEndorsement(outputs);
         updateCostBreakdown(outputs);
         updateResultCards(outputs);
         updateCharts(outputs);
         updateHeadline(outputs);
+        updateNationalSimulation(outputs);
     }
 
     function init() {
