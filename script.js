@@ -1,4 +1,4 @@
-/* global Chart, jspdf, XLSX */
+/* global Chartt, jspdf, XLSX */
 
 (() => {
     const { jsPDF } = window.jspdf || {};
