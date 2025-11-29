@@ -35,9 +35,10 @@
         <button class="tab-link" data-tab="config">Configuration</button>
         <button class="tab-link" data-tab="results">Results</button>
         <button class="tab-link" data-tab="costing">Costing details</button>
+        <button class="tab-link" data-tab="natsim">National simulation</button>
         <button class="tab-link" data-tab="scenarios">Saved scenarios</button>
         <button class="tab-link" data-tab="about">About STEPS</button>
-        <button class="tab-link" data-tab="technical">Technical appendix</button>
+        <button class="tab-link" data-tab="technical">Advanced and methods</button>
     </nav>
 
     <!-- INTRO TAB -->
@@ -50,7 +51,7 @@
                     Training Programs in India. It links three main inputs:
                 </p>
                 <ul class="plain-list">
-                    <li>Preferences from a discrete choice experiment with stakeholders.</li>
+                    <li>Preferences from a discrete choice experiment with 214 senior stakeholders.</li>
                     <li>Costing templates from WHO, NIE and NCDC for Frontline, Intermediate and Advanced programmes.</li>
                     <li>Simple epidemiological multipliers that translate training scale up into public health benefits.</li>
                 </ul>
@@ -66,13 +67,15 @@
                         response time, delivery mode, number of cohorts, cohort size and cost per trainee per month.
                     </li>
                     <li>Keep the cost slider within the range used in the experiment (75,000 to 400,000 rupees per trainee per month).</li>
-                    <li>Select the preference model: mixed logit or the supportive latent class group.</li>
+                    <li>Select the preference model: average mixed logit or the supportive latent class group.</li>
                     <li>Click <strong>Apply configuration</strong> and <strong>View results</strong> to see a modal
                         summary with headline recommendations.
                     </li>
                     <li>Save promising scenarios in the <strong>Saved scenarios</strong> tab and download them as
-                        Excel or a policy brief PDF for reporting.
-                    </li>
+                        Excel or a policy brief PDF for World Bank reporting.</li>
+                    <li>For workshops or sensitivity checks, use the <strong>Advanced and methods</strong> tab to adjust
+                        the display exchange rate and simple epidemiological multipliers. All calculations still remain
+                        in INR, but this allows scenario testing without changing the code.</li>
                 </ol>
                 <p class="note">
                     STEPS is designed for laptops, desktops, tablets and mobiles. It can be used live in workshops
@@ -171,7 +174,10 @@
                 <h2>Configure an FETP scale up option</h2>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="program-tier">Programme tier</label>
+                        <label for="program-tier">
+                            Programme tier
+                            <span class="info-icon" title="Decides whether the training is Frontline, Intermediate or Advanced. This controls the duration, level of skills and intensity of the programme.">i</span>
+                        </label>
                         <select id="program-tier">
                             <option value="frontline">Frontline (3 months)</option>
                             <option value="intermediate">Intermediate (12 months)</option>
@@ -180,7 +186,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="career-track">Career incentive</label>
+                        <label for="career-track">
+                            Career incentive
+                            <span class="info-icon" title="Formal recognition and career benefits that follow completion of FETP, such as certificates, university qualifications or clearer promotion pathways.">i</span>
+                        </label>
                         <select id="career-track">
                             <option value="certificate">Government and partner certificate</option>
                             <option value="uniqual">University qualification</option>
@@ -189,7 +198,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="mentorship">Mentorship intensity</label>
+                        <label for="mentorship">
+                            Mentorship intensity
+                            <span class="info-icon" title="How much support trainees receive from experienced epidemiologists during the programme, from low touch to highly intensive mentorship.">i</span>
+                        </label>
                         <select id="mentorship">
                             <option value="low">Low mentorship</option>
                             <option value="medium">Medium mentorship</option>
@@ -198,7 +210,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="delivery">Mode of delivery</label>
+                        <label for="delivery">
+                            Mode of delivery
+                            <span class="info-icon" title="Balance between face to face and online activities. This affects feasibility, travel requirements and interaction with mentors.">i</span>
+                        </label>
                         <select id="delivery">
                             <option value="blended">Blended</option>
                             <option value="inperson">Fully in person</option>
@@ -207,7 +222,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="response">Expected response time for events</label>
+                        <label for="response">
+                            Expected response time for events
+                            <span class="info-icon" title="How quickly trained staff are expected to respond to outbreaks and public health events, from within 30 days down to within 7 days.">i</span>
+                        </label>
                         <select id="response">
                             <option value="30">Within 30 days</option>
                             <option value="15">Within 15 days</option>
@@ -218,6 +236,7 @@
                     <div class="form-group">
                         <label for="cost-slider">
                             Cost per trainee per month (<span id="currency-label">INR</span>)
+                            <span class="info-icon" title="Total monthly cost per trainee for running the programme. The slider is kept inside the range used in the discrete choice experiment (75,000 to 400,000 INR).">i</span>
                         </label>
                         <input type="range" id="cost-slider" min="75000" max="400000" step="5000" value="250000">
                         <div class="slider-value">
@@ -229,13 +248,27 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="trainees">Trainees per cohort</label>
+                        <label for="trainees">
+                            Trainees per cohort
+                            <span class="info-icon" title="Number of trainees in one cohort. This controls cohort size and, together with programme length and cost, drives total programme cost.">i</span>
+                        </label>
                         <input type="number" id="trainees" min="5" max="60" value="20">
+                        <p class="hint">
+                            Use this to test smaller or larger cohort sizes. For example, moving from 20 to 30 trainees
+                            per cohort increases both costs and epidemiological benefits.
+                        </p>
                     </div>
 
                     <div class="form-group">
-                        <label for="cohorts">Number of cohorts</label>
+                        <label for="cohorts">
+                            Number of cohorts
+                            <span class="info-icon" title="Number of cohorts you plan to run nationally under this configuration. This scales up costs and benefits from one cohort to a national programme.">i</span>
+                        </label>
                         <input type="number" id="cohorts" min="1" max="100" value="10">
+                        <p class="hint">
+                            Increase this to explore national scale up (for example 30 or 50 cohorts). The National simulation tab
+                            shows how total costs and benefits change as you adjust this number.
+                        </p>
                     </div>
 
                     <div class="form-group">
@@ -249,7 +282,9 @@
                             </button>
                         </div>
                         <p class="hint">
-                            The supportive group uses the Class 2 parameters from the latent class model.
+                            The supportive group uses the Class 2 parameters from the latent class model. Class 1 represents
+                            training resisters who are largely cost insensitive, with imprecisely estimated willingness to pay,
+                            and is not recommended for policy targeting.
                         </p>
                     </div>
 
@@ -269,7 +304,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Include opportunity cost of trainee time</label>
+                        <label>
+                            Include opportunity cost of trainee time
+                            <span class="info-icon" title="Adds the value of trainee time to costs when templates include opportunity cost entries. Switching this off shows only direct financial costs.">i</span>
+                        </label>
                         <button type="button" id="opp-toggle" class="switch-pill on">
                             <span class="switch-knob"></span>
                             <span class="switch-label">Opportunity cost included</span>
@@ -302,6 +340,10 @@
                 <h2>Current configuration at a glance</h2>
                 <div id="config-summary" class="config-summary"></div>
                 <hr class="divider">
+                <div class="config-endorsement-row">
+                    <span class="metric-label">Endorsement (current model)</span>
+                    <span class="metric-value config-endorsement-value" id="config-endorsement-value">Apply configuration</span>
+                </div>
                 <h3>Headline recommendation</h3>
                 <p id="headline-recommendation" class="headline-text">
                     Apply a configuration to see a concise recommendation.
@@ -315,6 +357,11 @@
         <div class="grid-three">
             <div class="card">
                 <h2>Endorsement and opt out</h2>
+                <p class="hint">
+                    These percentages are obtained by plugging the chosen configuration into the mixed logit or latent class
+                    model and comparing the utility of any FETP option with the utility of opting out. They summarise how
+                    attractive the configuration is to stakeholders in the DCE.
+                </p>
                 <div class="metric-pair">
                     <div>
                         <span class="metric-label">Endorse FETP option</span>
@@ -332,6 +379,12 @@
 
             <div class="card">
                 <h2>Costs and benefits per cohort</h2>
+                <p class="hint">
+                    Total economic cost per cohort combines the cost slider, cohort size, programme duration and the selected
+                    cost template, with opportunity cost added when the switch is on. Benefits per cohort are based on
+                    willingness to pay for moving from the baseline design to the chosen configuration. Net benefit is the
+                    difference between benefits and costs. The benefit cost ratio is benefits divided by costs.
+                </p>
                 <div class="metric-pair">
                     <div>
                         <span class="metric-label">Total economic cost</span>
@@ -353,6 +406,12 @@
 
             <div class="card">
                 <h2>Epidemiological implications</h2>
+                <p class="hint">
+                    Graduates and outbreak responses are obtained by combining the endorsement level with simple multipliers
+                    on cohort size and number of cohorts. Indicative benefit per cohort converts additional graduates and
+                    outbreak responses into monetary terms using values that can be adjusted in the Advanced and methods tab
+                    or the external epi_config file.
+                </p>
                 <div class="metric-pair">
                     <div>
                         <span class="metric-label">FETP graduates (all cohorts)</span>
@@ -381,7 +440,10 @@
                 <h2>Cost templates and sources</h2>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="cost-source">Cost template source</label>
+                        <label for="cost-source">
+                            Cost template source
+                            <span class="info-icon" title="Choose whether to use WHO, NIE or NCDC cost templates for the selected tier. This affects the structure of costs but not the preference model.">i</span>
+                        </label>
                         <select id="cost-source"></select>
                     </div>
                 </div>
@@ -405,6 +467,67 @@
                 <h2>Cost components for this configuration</h2>
                 <div id="cost-breakdown-summary" class="cost-summary"></div>
                 <div class="cost-components-list" id="cost-components-list"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NATIONAL SIMULATION TAB -->
+    <section id="tab-natsim" class="tab-panel">
+        <div class="card">
+            <h2>National simulation and sensitivity</h2>
+            <p>
+                This view scales the current configuration to the national level using the number of cohorts you
+                have selected. It is intended for quick business case discussions and high level sensitivity checks.
+                To see how results change, adjust cost, cohort size, number of cohorts or the epidemiological
+                multipliers in the Advanced and methods tab.
+            </p>
+            <div class="grid-two">
+                <div>
+                    <h3>National economic picture</h3>
+                    <div class="metric-pair">
+                        <div>
+                            <span class="metric-label">Total economic cost (all cohorts)</span>
+                            <span class="metric-value" id="nat-total-cost">-</span>
+                        </div>
+                        <div>
+                            <span class="metric-label">Total benefit (all cohorts)</span>
+                            <span class="metric-value" id="nat-total-benefit">-</span>
+                        </div>
+                    </div>
+                    <div class="metric-pair">
+                        <div>
+                            <span class="metric-label">National net benefit</span>
+                            <span class="metric-value" id="nat-net-benefit">-</span>
+                        </div>
+                        <div>
+                            <span class="metric-label">National benefit cost ratio</span>
+                            <span class="metric-value" id="nat-bcr">-</span>
+                        </div>
+                    </div>
+                    <p class="hint">
+                        These values multiply the per cohort costs and benefits by the number of cohorts. The ratios
+                        stay the same, but the absolute costs and benefits grow with scale.
+                    </p>
+                </div>
+                <div>
+                    <h3>National epidemiological impact</h3>
+                    <div class="metric-pair">
+                        <div>
+                            <span class="metric-label">Total FETP graduates</span>
+                            <span class="metric-value" id="nat-graduates">-</span>
+                        </div>
+                        <div>
+                            <span class="metric-label">Outbreak responses supported per year</span>
+                            <span class="metric-value" id="nat-outbreaks">-</span>
+                        </div>
+                    </div>
+                    <p class="hint">
+                        Graduates and outbreak responses here are already national figures, combining endorsement,
+                        cohort size, number of cohorts and the epidemiological multipliers. To explore sensitivity,
+                        try increasing cohorts, testing different programme tiers or changing multipliers in
+                        Advanced and methods.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -450,7 +573,7 @@
             <h2>About STEPS</h2>
             <p>
                 The University of Newcastle is developing a business case for strengthening and scaling FETP
-                programmes in India. STEPS is one of the tools in
+                programmes in India, with particular emphasis on Advanced FETP. STEPS is one of the tools in
                 this work. It provides a structured way to test scale up options and explain cost and benefit
                 implications in policy discussions.
             </p>
@@ -471,69 +594,114 @@
         </div>
     </section>
 
-    <!-- TECHNICAL TAB -->
+    <!-- TECHNICAL / ADVANCED TAB -->
     <section id="tab-technical" class="tab-panel">
         <div class="card">
             <h2>Advanced settings for workshops</h2>
             <p>
                 This panel allows technical users to adjust key multipliers for workshops without editing code.
-                Changes affect calculations immediately in this browser session.
+                Changes affect calculations immediately in this browser session and are reflected in the Results
+                and National simulation tabs.
+            </p>
+            <p class="note">
+                Use these settings when you want to align STEPS assumptions with updated national estimates or
+                World Bank discussions. For example, you can change the indicative value per graduate or per outbreak
+                response, or match the INR to USD display rate to current exchange rates.
             </p>
             <form id="advanced-settings-form" class="form-grid">
                 <div class="form-group form-group-wide">
-                    <label for="adv-inr-per-usd">Exchange rate for display (INR per USD)</label>
+                    <label for="adv-inr-per-usd">
+                        Exchange rate for display (INR per USD)
+                        <span class="info-icon" title="Used only to convert INR values into USD for display. Changing this does not affect calculations, only the USD labels shown in the interface.">i</span>
+                    </label>
                     <input type="number" id="adv-inr-per-usd" step="0.1" min="10" max="500">
                     <p class="hint">Used only for currency display. All calculations are in INR.</p>
                 </div>
 
                 <div class="form-group">
-                    <label for="adv-frontline-grads">Frontline graduates per cohort (share of trainees)</label>
+                    <label for="adv-frontline-grads">
+                        Frontline graduates per cohort (share of trainees)
+                        <span class="info-icon" title="Share of trainees that successfully graduate from a Frontline cohort. For example 0.9 means 90 percent of trainees graduate.">i</span>
+                    </label>
                     <input type="number" id="adv-frontline-grads" step="0.01" min="0" max="1">
                 </div>
                 <div class="form-group">
-                    <label for="adv-frontline-outbreaks">Frontline outbreak responses per cohort per year</label>
+                    <label for="adv-frontline-outbreaks">
+                        Frontline outbreak responses per cohort per year
+                        <span class="info-icon" title="Approximate number of outbreak responses that a typical Frontline cohort supports each year once graduates are deployed.">i</span>
+                    </label>
                     <input type="number" id="adv-frontline-outbreaks" step="0.1" min="0">
                 </div>
                 <div class="form-group">
-                    <label for="adv-frontline-vgrad">Value per Frontline graduate (INR)</label>
+                    <label for="adv-frontline-vgrad">
+                        Value per Frontline graduate (INR)
+                        <span class="info-icon" title="Indicative monetary value placed on one additional trained Frontline graduate, capturing better surveillance and response capacity.">i</span>
+                    </label>
                     <input type="number" id="adv-frontline-vgrad" step="10000" min="0">
                 </div>
                 <div class="form-group">
-                    <label for="adv-frontline-voutbreak">Value per Frontline outbreak response (INR)</label>
+                    <label for="adv-frontline-voutbreak">
+                        Value per Frontline outbreak response (INR)
+                        <span class="info-icon" title="Indicative value per outbreak response supported by graduates, for example avoided cases or deaths monetised for business case purposes.">i</span>
+                    </label>
                     <input type="number" id="adv-frontline-voutbreak" step="100000" min="0">
                 </div>
 
                 <div class="form-group">
-                    <label for="adv-intermediate-grads">Intermediate graduates per cohort (share of trainees)</label>
+                    <label for="adv-intermediate-grads">
+                        Intermediate graduates per cohort (share of trainees)
+                        <span class="info-icon" title="Share of trainees that successfully graduate from an Intermediate cohort.">i</span>
+                    </label>
                     <input type="number" id="adv-intermediate-grads" step="0.01" min="0" max="1">
                 </div>
                 <div class="form-group">
-                    <label for="adv-intermediate-outbreaks">Intermediate outbreak responses per cohort per year</label>
+                    <label for="adv-intermediate-outbreaks">
+                        Intermediate outbreak responses per cohort per year
+                        <span class="info-icon" title="Approximate number of outbreak responses that an Intermediate cohort supports each year.">i</span>
+                    </label>
                     <input type="number" id="adv-intermediate-outbreaks" step="0.1" min="0">
                 </div>
                 <div class="form-group">
-                    <label for="adv-intermediate-vgrad">Value per Intermediate graduate (INR)</label>
+                    <label for="adv-intermediate-vgrad">
+                        Value per Intermediate graduate (INR)
+                        <span class="info-icon" title="Indicative value per additional Intermediate graduate.">i</span>
+                    </label>
                     <input type="number" id="adv-intermediate-vgrad" step="10000" min="0">
                 </div>
                 <div class="form-group">
-                    <label for="adv-intermediate-voutbreak">Value per Intermediate outbreak response (INR)</label>
+                    <label for="adv-intermediate-voutbreak">
+                        Value per Intermediate outbreak response (INR)
+                        <span class="info-icon" title="Indicative value per outbreak response supported by Intermediate graduates.">i</span>
+                    </label>
                     <input type="number" id="adv-intermediate-voutbreak" step="100000" min="0">
                 </div>
 
                 <div class="form-group">
-                    <label for="adv-advanced-grads">Advanced graduates per cohort (share of trainees)</label>
+                    <label for="adv-advanced-grads">
+                        Advanced graduates per cohort (share of trainees)
+                        <span class="info-icon" title="Share of trainees that successfully graduate from an Advanced cohort. Often assumed to be high given the selectiveness of Advanced programmes.">i</span>
+                    </label>
                     <input type="number" id="adv-advanced-grads" step="0.01" min="0" max="1">
                 </div>
                 <div class="form-group">
-                    <label for="adv-advanced-outbreaks">Advanced outbreak responses per cohort per year</label>
+                    <label for="adv-advanced-outbreaks">
+                        Advanced outbreak responses per cohort per year
+                        <span class="info-icon" title="Approximate number of outbreak responses that an Advanced cohort supports per year, reflecting the more strategic roles of graduates.">i</span>
+                    </label>
                     <input type="number" id="adv-advanced-outbreaks" step="0.1" min="0">
                 </div>
                 <div class="form-group">
-                    <label for="adv-advanced-vgrad">Value per Advanced graduate (INR)</label>
+                    <label for="adv-advanced-vgrad">
+                        Value per Advanced graduate (INR)
+                        <span class="info-icon" title="Indicative value per Advanced graduate, capturing leadership, analytic capacity and system wide impacts.">i</span>
+                    </label>
                     <input type="number" id="adv-advanced-vgrad" step="10000" min="0">
                 </div>
                 <div class="form-group">
-                    <label for="adv-advanced-voutbreak">Value per Advanced outbreak response (INR)</label>
+                    <label for="adv-advanced-voutbreak">
+                        Value per Advanced outbreak response (INR)
+                        <span class="info-icon" title="Indicative value per outbreak response supported by Advanced graduates, often higher due to more complex events.">i</span>
+                    </label>
                     <input type="number" id="adv-advanced-voutbreak" step="100000" min="0">
                 </div>
 
@@ -703,8 +871,9 @@
     <li>Cost coefficient: -0.001 per thousand rupees per trainee per month.</li>
 </ul>
 <p>
-    In STEPS these values are stored in the latent class preference model. Users can toggle between the
-    mixed logit average and the supportive class.
+    Class 1 is interpreted as a training resister group with a positive opt out constant and a cost coefficient
+    close to zero, implying very low responsiveness to cost. Because of this, willingness to pay in Class 1
+    is imprecisely estimated and is not used for policy guidance in STEPS.
 </p>
 
 <h2>4. Willingness to pay examples</h2>
@@ -747,6 +916,11 @@
 <div class="equation">
     P(endorse) = exp(ΔV) / (1 + exp(ΔV)).
 </div>
+<p>
+    In the Results tab this appears as “Endorse FETP option” and “Choose opt out”. A configuration that
+    strongly improves attributes and keeps costs reasonable will have a high ΔV and therefore a high
+    endorsement probability.
+</p>
 
 <h2>6. Cost templates and economic cost per cohort</h2>
 <p>
@@ -762,6 +936,26 @@
     economic cost per cohort.
 </p>
 
+<h3>Worked example: economic cost per cohort</h3>
+<p>
+    Suppose an Advanced programme is selected with 20 trainees, a duration of 24 months and a cost per trainee
+    per month of 250,000 INR. The programme cost per cohort excluding opportunity cost is:
+</p>
+<div class="equation">
+    C<sub>prog</sub> = 250,000 × 20 × 24 = 120,000,000 INR.
+</div>
+<p>
+    If the chosen cost template indicates that 20 percent of total cost is opportunity cost of trainee time,
+    then the economic cost per cohort becomes:
+</p>
+<div class="equation">
+    C<sub>economic</sub> = C<sub>prog</sub> × (1 + 0.2) = 144,000,000 INR.
+</div>
+<p>
+    In STEPS this is shown as “Total economic cost per cohort” in the Results tab and then scaled up in the
+    National simulation tab by multiplying by the number of cohorts.
+</p>
+
 <h2>7. Epidemiological multipliers</h2>
 <p>
     Epidemiological multipliers translate training outputs into simple public health metrics. For each tier,
@@ -774,20 +968,82 @@
     <li>Value per outbreak response supported (INR).</li>
 </ul>
 <p>
-    For example, with default settings an Advanced cohort with 20 trainees and endorsement of 60 percent
-    yields around 11 graduates. Each graduate and each outbreak response is assigned a monetary value to
-    construct an indicative benefit per cohort. The benefit cost ratio and net benefit shown in STEPS use
-    these values.
+    These multipliers can be adjusted in the Advanced settings panel or via the <code>epi_config.json</code>
+    file. For example, the default settings for Advanced training assume that 95 percent of trainees graduate,
+    each cohort supports roughly five outbreak responses per year, and each graduate and outbreak response
+    is assigned an indicative monetary value.
 </p>
 
-<h2>8. Recommended use</h2>
+<h3>Worked example: epidemiological benefit and benefit cost ratio</h3>
+<p>
+    Consider an Advanced programme with 30 trainees per cohort, 10 cohorts and an endorsement of 60 percent.
+    With a graduation share of 0.95, the expected number of Advanced graduates nationally is:
+</p>
+<div class="equation">
+    Graduates = 30 × 0.95 × 0.60 × 10 ≈ 171.
+</div>
+<p>
+    If the value per Advanced graduate is set to 400,000 INR, the graduate component of benefits is about
+    68.4 million INR. If each cohort supports five outbreak responses per year and the value per outbreak
+    response is set to 4,000,000 INR, then the outbreak component per cohort is:
+</p>
+<div class="equation">
+    5 × 4,000,000 = 20,000,000 INR.
+</div>
+<p>
+    With ten cohorts this adds another 200,000,000 INR. Total indicative benefits are therefore roughly
+    268.4 million INR. Comparing this with the total economic cost from the cost templates gives the net
+    benefit and benefit cost ratio presented on the Results and National simulation tabs.
+</p>
+
+<h2>8. From per cohort to national results</h2>
+<p>
+    The National simulation tab multiplies per cohort costs and benefits by the number of cohorts selected
+    in the Configuration tab. For example, if the economic cost per cohort is 144,000,000 INR and there are
+    20 cohorts, total economic cost is:
+</p>
+<div class="equation">
+    C<sub>national</sub> = 144,000,000 × 20 = 2,880,000,000 INR.
+</div>
+<p>
+    The benefit cost ratio does not change when scaling up, but the net benefit and absolute magnitude
+    of costs and benefits do. This provides a quick way to discuss national scale business cases.
+</p>
+
+<h2>9. Using advanced settings</h2>
+<p>
+    The Advanced settings panel exposes the key epidemiological multipliers and the display exchange rate.
+    These settings are used as follows:
+</p>
+<ul>
+    <li>The INR per USD field changes only the USD labels shown in the interface, not the underlying INR calculations.</li>
+    <li>The graduates per cohort fields set the share of trainees that are treated as graduates in each tier.</li>
+    <li>The outbreaks per cohort per year fields specify how many outbreak responses a typical cohort supports.</li>
+    <li>The value per graduate and value per outbreak response fields determine how the epidemiological metrics
+        are converted into monetary benefits.</li>
+</ul>
+<p>
+    Country teams can start from the default values and update them to match new evidence or assumptions used
+    in World Bank or Ministry of Health modelling. When advanced settings are changed, the Results and National
+    simulation tabs update immediately.
+</p>
+
+<h3>Worked example: adjusting advanced settings</h3>
+<p>
+    Suppose India decides that the value per Advanced graduate should be 500,000 INR instead of 400,000 INR,
+    and that Advanced cohorts now support on average six outbreak responses per year rather than five. These
+    new values can be entered in the Advanced settings panel. When the user clicks “Apply advanced settings”,
+    the indicative benefits and benefit cost ratios increase in line with the updated assumptions.
+</p>
+
+<h2>10. Recommended use</h2>
 <p>
     STEPS is a decision aid, not a full transmission model. It focuses on preferences, costs and simple
     benefit indicators that can be explained quickly in policy settings. For major investments, results
     should be cross checked against detailed burden of disease or health security models.
 </p>
 
-<h2>9. Authorship and contact</h2>
+<h2>11. Authorship and contact</h2>
 <p>
     STEPS and this technical appendix were prepared by Mesfin Genie, Newcastle Business School, The University
     of Newcastle, Australia. For technical questions or requests to adapt the tool for other countries,
