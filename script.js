@@ -73,16 +73,16 @@
             resp7: 130460
         },
         lc2: {
-            intermediate: 87000,
-            advanced: 422000,
-            uniqual: -24000,
-            career_path: -123000,
-            mentor_medium: 342000,
-            mentor_high: 486000,
-            inperson: -17000,
-            online: -700000,
-            resp15: 317000,
-            resp7: 504000
+            intermediate: 63000,
+            advanced: 303000,
+            uniqual: -18000,
+            career_path: -88000,
+            mentor_medium: 245000,
+            mentor_high: 349000,
+            inperson: -12000,
+            online: -503000,
+            resp15: 228000,
+            resp7: 362000
         }
     };
 
