@@ -1,12 +1,20 @@
 {
-  "currency": "INR",
-  "discountRate": 0.03,
-  "workingYearsPerGraduate": 5,
-  "benefitPerGraduateINR": {
-    "frontline": 800000,
-    "intermediate": 1500000,
-    "advanced": 2500000
+  "frontline": {
+    "gradsPerCohort": 0.9,
+    "outbreaksPerCohortPerYear": 2,
+    "valuePerGraduate": 200000,
+    "valuePerOutbreak": 3000000
   },
-  "outbreaksAvertedPer100AdvancedGraduatesPerYear": 0.5,
-  "economicLossPerModerateOutbreakINR": 2000000000
+  "intermediate": {
+    "gradsPerCohort": 0.9,
+    "outbreaksPerCohortPerYear": 3,
+    "valuePerGraduate": 250000,
+    "valuePerOutbreak": 3500000
+  },
+  "advanced": {
+    "gradsPerCohort": 0.95,
+    "outbreaksPerCohortPerYear": 5,
+    "valuePerGraduate": 400000,
+    "valuePerOutbreak": 4000000
+  }
 }
