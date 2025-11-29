@@ -1,12 +1,10 @@
 :root {
     --bg-main: #020617;
     --bg-card: #020617;
-    --bg-card-alt: #020617;
     --border-subtle: #1f2937;
     --accent: #0ea5e9;
     --accent-soft: #38bdf8;
     --accent-strong: #0284c7;
-    --accent-muted: #075985;
     --text-main: #f9fafb;
     --text-muted: #9ca3af;
     --danger: #ef4444;
@@ -700,7 +698,6 @@ tbody tr:nth-child(even) {
     .btn-secondary,
     .btn-ghost {
         width: 100%;
-        justify-content: center;
         text-align: center;
     }
 }
