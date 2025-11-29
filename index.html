@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>STEPS – FETP Scale Up Decision Aid</title>
+    <title>STEPS FETP Scale Up Decision Aid</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
 
@@ -19,7 +19,7 @@
         <div class="app-logo-circle">S</div>
         <div>
             <h1 class="app-title">STEPS</h1>
-            <p class="app-subtitle">Scalable Training Estimation and Planning System – FETP India</p>
+            <p class="app-subtitle">Scalable Training Estimation and Planning System for FETP India</p>
         </div>
     </div>
     <div class="app-header-right">
@@ -46,47 +46,37 @@
             <div class="card">
                 <h2>What STEPS does</h2>
                 <p>
-                    STEPS helps policy makers explore different ways to scale Field Epidemiology Training Programs
-                    (FETPs) in India. It combines evidence on stakeholder preferences from a discrete choice
-                    experiment, costing information from Indian FETP partners, and simple epidemiological
-                    multipliers based on evaluations of FETP programmes in other settings.
-                </p>
-                <p>
-                    Users can adjust key program features such as FETP tier, mentorship intensity, mode of delivery,
-                    response time expectations, number of cohorts, cohort size, and cost per trainee per month.
-                    STEPS then summarises:
+                    STEPS helps policy makers and partners explore different options for scaling Field Epidemiology
+                    Training Programs (FETPs) in India. It links three main inputs:
                 </p>
                 <ul class="plain-list">
-                    <li>Expected endorsement of the configuration by decision makers.</li>
-                    <li>Programme and economic cost, with the option to include opportunity costs.</li>
-                    <li>Simple indicators of epidemiological impact and benefit cost ratios.</li>
-                    <li>Side by side comparison of saved scenarios for use in policy dialogues.</li>
+                    <li>Preferences from a discrete choice experiment with 214 senior stakeholders.</li>
+                    <li>Detailed costing templates from WHO, NIE and NCDC for Frontline, Intermediate and Advanced FETPs.</li>
+                    <li>Simple epidemiological multipliers that translate training scale up into public health benefits.</li>
                 </ul>
                 <p>
-                    The tool is designed for laptops, tablets, and mobile devices so that it can be used in
-                    workshops and meetings with central and state level stakeholders.
+                    Users can set a programme configuration, see expected endorsement rates, costs and benefit
+                    cost ratios, and compare saved scenarios side by side for business case discussions.
                 </p>
             </div>
             <div class="card">
-                <h2>Quick start</h2>
+                <h2>How to use the tool</h2>
                 <ol class="plain-list numbered">
-                    <li>Go to the <strong>Configuration</strong> tab and choose a programme tier, mentorship level,
-                        response time, delivery mode, number of cohorts, and cohort size.
+                    <li>Go to the <strong>Configuration</strong> tab and choose programme tier, mentorship,
+                        response time, delivery mode, number of cohorts, cohort size and cost per trainee per month.
                     </li>
-                    <li>Use the slider for <strong>Cost per trainee per month</strong> to keep values inside the
-                        range used in the discrete choice experiment (₹75,000 to ₹400,000).
+                    <li>Keep the cost slider within the range used in the experiment (75,000 to 400,000 rupees per trainee per month).</li>
+                    <li>Select the preference model: average mixed logit or the supportive latent class group.</li>
+                    <li>Click <strong>Apply configuration</strong> and <strong>View results</strong> to see a modal
+                        summary with headline recommendations.
                     </li>
-                    <li>Select the preference model: average mixed logit or the more supportive latent class group.</li>
-                    <li>Click <strong>Update results</strong> to see endorsement, costs, and benefits, and open the
-                        snapshot window for a concise summary.
-                    </li>
-                    <li>Save interesting options in the <strong>Saved scenarios</strong> tab for side by side
-                        comparison or download to Excel and PDF for reporting.
+                    <li>Save promising scenarios in the <strong>Saved scenarios</strong> tab, and download them to
+                        Excel or as a policy brief PDF for World Bank reporting.
                     </li>
                 </ol>
                 <p class="note">
-                    For a fuller description of the methods, including econometric models and epidemiological
-                    assumptions, see the <strong>Technical appendix</strong> tab.
+                    STEPS is designed for laptops, desktops, tablets and mobiles. It can be used live in workshops
+                    with central and state level partners.
                 </p>
             </div>
         </div>
@@ -95,65 +85,84 @@
     <!-- ATTRIBUTES TAB -->
     <section id="tab-attributes" class="tab-panel">
         <div class="card">
-            <h2>Attributes and levels used in the DCE</h2>
+            <h2>Attributes and levels in the FETP DCE</h2>
             <p>
-                The discrete choice experiment asked senior stakeholders to choose between alternative FETP
-                configurations. The main attributes and levels were:
+                The discrete choice experiment asked respondents to choose between two FETP training options
+                and an opt out. Each training option was defined by the attributes below. These descriptions
+                are written in simple terms for policy audiences.
             </p>
             <div class="attributes-grid">
                 <div class="attr-card">
                     <h3>Programme tier</h3>
+                    <p>
+                        The depth and duration of training. Frontline is short and basic. Intermediate is
+                        longer and part time. Advanced is a full fellowship.
+                    </p>
                     <ul class="plain-list">
-                        <li><strong>Frontline</strong>: short entry level surveillance training.</li>
-                        <li><strong>Intermediate</strong>: one year part time training with field projects.</li>
-                        <li><strong>Advanced</strong>: two year full time fellowship at national or state level.</li>
+                        <li><strong>Frontline</strong>: about three months, focused on basic surveillance tasks.</li>
+                        <li><strong>Intermediate</strong>: around twelve months, usually while staff stay in post.</li>
+                        <li><strong>Advanced</strong>: two year fellowship for national and state level epidemiologists.</li>
                     </ul>
                 </div>
                 <div class="attr-card">
                     <h3>Career incentives</h3>
+                    <p>
+                        The formal recognition and career consequences of completing FETP.
+                    </p>
                     <ul class="plain-list">
-                        <li><strong>Government and partner certificate</strong> (reference).</li>
-                        <li><strong>University qualification</strong>.</li>
-                        <li><strong>Government career pathway</strong>.</li>
+                        <li><strong>Government and partner certificate</strong> (reference option).</li>
+                        <li><strong>University qualification</strong> such as a diploma or degree.</li>
+                        <li><strong>Government career pathway</strong> with clearer promotion prospects.</li>
                     </ul>
                 </div>
                 <div class="attr-card">
                     <h3>Mentorship intensity</h3>
+                    <p>
+                        How much support trainees receive from experienced epidemiologists.
+                    </p>
                     <ul class="plain-list">
-                        <li><strong>Low</strong> mentorship (reference).</li>
-                        <li><strong>Medium</strong> mentorship.</li>
-                        <li><strong>High</strong> mentorship.</li>
+                        <li><strong>Low mentorship</strong> (reference): limited one to one support.</li>
+                        <li><strong>Medium mentorship</strong>: regular support and feedback.</li>
+                        <li><strong>High mentorship</strong>: close supervision and frequent field guidance.</li>
                     </ul>
                 </div>
                 <div class="attr-card">
                     <h3>Mode of delivery</h3>
+                    <p>
+                        How teaching and supervision are delivered to trainees.
+                    </p>
                     <ul class="plain-list">
-                        <li><strong>Blended</strong> (mix of in person and online, reference).</li>
-                        <li><strong>In person</strong>.</li>
-                        <li><strong>Fully online</strong>.</li>
+                        <li><strong>Blended</strong> (reference): mix of face to face and online sessions.</li>
+                        <li><strong>Fully in person</strong>: training and mentoring mainly on site.</li>
+                        <li><strong>Fully online</strong>: training delivered virtually.</li>
                     </ul>
                 </div>
                 <div class="attr-card">
-                    <h3>Outbreak response capacity</h3>
+                    <h3>Response capacity</h3>
+                    <p>
+                        How quickly the system is expected to respond to a public health event.
+                    </p>
                     <ul class="plain-list">
-                        <li>Respond within <strong>30 days</strong> (reference).</li>
-                        <li>Respond within <strong>15 days</strong>.</li>
-                        <li>Respond within <strong>7 days</strong>.</li>
+                        <li><strong>Within 30 days</strong> (reference).</li>
+                        <li><strong>Within 15 days</strong>.</li>
+                        <li><strong>Within 7 days</strong>.</li>
                     </ul>
                 </div>
                 <div class="attr-card">
                     <h3>Cost per trainee per month</h3>
                     <p>
-                        Monthly programme cost per trainee, expressed in Indian Rupees and varied between
-                        ₹75,000 and ₹400,000 in the experiment.
+                        Total programme cost per trainee per month. In the experiment this varied from
+                        75,000 to 400,000 rupees per trainee per month. STEPS keeps the slider within this
+                        range to ensure that outputs remain inside the values used in the model.
                     </p>
                 </div>
             </div>
             <p class="note">
-                In the model specification, one alternative specific constant captured any left right bias
-                for the first training option, while a separate constant captured the general tendency to
-                choose the opt out alternative. Only the opt out constant is used when predicting overall
-                endorsement of any FETP option versus no programme.
+                In the mixed logit and latent class models, Training B is the reference training option.
+                The alternative specific constant for Training A captures any left right layout effect.
+                The alternative specific constant for the opt out captures a general tendency to reject
+                both training options. STEPS uses the opt out constant when predicting overall endorsement
+                of any FETP option versus no FETP.
             </p>
         </div>
     </section>
@@ -195,17 +204,17 @@
                         <label for="delivery">Mode of delivery</label>
                         <select id="delivery">
                             <option value="blended">Blended</option>
-                            <option value="inperson">In person</option>
+                            <option value="inperson">Fully in person</option>
                             <option value="online">Fully online</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="response">Expected outbreak response time</label>
+                        <label for="response">Expected response time for events</label>
                         <select id="response">
-                            <option value="30">Respond within 30 days</option>
-                            <option value="15">Respond within 15 days</option>
-                            <option value="7">Respond within 7 days</option>
+                            <option value="30">Within 30 days</option>
+                            <option value="15">Within 15 days</option>
+                            <option value="7">Within 7 days</option>
                         </select>
                     </div>
 
@@ -217,7 +226,7 @@
                         <div class="slider-value">
                             <span id="cost-display">INR 250,000</span>
                             <span class="slider-hint">
-                                Range used in DCE: ₹75,000 to ₹400,000 per trainee per month.
+                                Within the range used in the discrete choice experiment (75,000 to 400,000 rupees).
                             </span>
                         </div>
                     </div>
@@ -243,8 +252,7 @@
                             </button>
                         </div>
                         <p class="hint">
-                            The supportive group option uses coefficients from the class that strongly favours
-                            FETP scale up.
+                            The supportive group uses the Class 2 parameters from the latent class model.
                         </p>
                     </div>
 
@@ -259,7 +267,7 @@
                             </button>
                         </div>
                         <p class="hint">
-                            All internal calculations remain in INR. USD values use a fixed rate for display only.
+                            All calculations are in INR. USD values use a simple exchange rate for display only.
                         </p>
                     </div>
 
@@ -270,39 +278,38 @@
                             <span class="switch-label">Opportunity cost included</span>
                         </button>
                         <p class="hint">
-                            For templates where opportunity cost estimates are available (frontline and intermediate
-                            WHO), this option adds the value of trainee time to economic costs.
+                            Where the cost template has opportunity cost, this option adds it to economic costs.
                         </p>
                     </div>
 
                     <div class="form-group form-group-wide">
                         <label for="scenario-name">Scenario name</label>
-                        <input type="text" id="scenario-name" placeholder="For example: Advanced, high mentorship, 20 cohorts">
+                        <input type="text" id="scenario-name" placeholder="For example: Advanced high mentorship 20 cohorts">
                     </div>
 
                     <div class="form-group form-group-wide">
                         <label for="scenario-notes">Scenario notes</label>
                         <textarea id="scenario-notes" rows="3"
-                                  placeholder="Optional notes for the World Bank report or internal documentation"></textarea>
+                                  placeholder="Optional notes to support the World Bank business case and the STEPS report."></textarea>
                     </div>
                 </div>
 
                 <div class="button-row">
-                    <button id="update-results" class="btn-primary">Update results</button>
-                    <button id="open-snapshot" class="btn-secondary">Open snapshot</button>
+                    <button id="update-results" class="btn-primary">Apply configuration</button>
+                    <button id="open-snapshot" class="btn-secondary">View results</button>
                     <button id="save-scenario" class="btn-ghost">Save scenario</button>
                 </div>
             </div>
 
             <div class="card card-secondary">
-                <h2>Current configuration summary</h2>
+                <h2>Current configuration at a glance</h2>
                 <div id="config-summary" class="config-summary">
                     <!-- Filled by script -->
                 </div>
                 <hr class="divider">
                 <h3>Headline recommendation</h3>
                 <p id="headline-recommendation" class="headline-text">
-                    Adjust the configuration and click Update results to see a recommendation.
+                    Apply a configuration to see a concise recommendation.
                 </p>
             </div>
         </div>
@@ -312,15 +319,15 @@
     <section id="tab-results" class="tab-panel">
         <div class="grid-three">
             <div class="card">
-                <h2>Endorsement and choice behaviour</h2>
+                <h2>Endorsement and opt out</h2>
                 <div class="metric-pair">
                     <div>
                         <span class="metric-label">Endorse FETP option</span>
-                        <span class="metric-value" id="endorsement-rate">–</span>
+                        <span class="metric-value" id="endorsement-rate">-</span>
                     </div>
                     <div>
                         <span class="metric-label">Choose opt out</span>
-                        <span class="metric-value" id="optout-rate">–</span>
+                        <span class="metric-value" id="optout-rate">-</span>
                     </div>
                 </div>
                 <div class="chart-block">
@@ -333,16 +340,16 @@
                 <div class="metric-pair">
                     <div>
                         <span class="metric-label">Total economic cost</span>
-                        <span class="metric-value" id="total-cost">–</span>
+                        <span class="metric-value" id="total-cost">-</span>
                     </div>
                     <div>
                         <span class="metric-label">Net benefit</span>
-                        <span class="metric-value" id="net-benefit">–</span>
+                        <span class="metric-value" id="net-benefit">-</span>
                     </div>
                 </div>
                 <div class="metric-single">
                     <span class="metric-label">Benefit cost ratio</span>
-                    <span class="metric-value" id="bcr">–</span>
+                    <span class="metric-value" id="bcr">-</span>
                 </div>
                 <div class="chart-block">
                     <canvas id="chart-bcr"></canvas>
@@ -353,17 +360,17 @@
                 <h2>Epidemiological implications</h2>
                 <div class="metric-pair">
                     <div>
-                        <span class="metric-label">Additional FETP graduates</span>
-                        <span class="metric-value" id="epi-graduates">–</span>
+                        <span class="metric-label">FETP graduates (all cohorts)</span>
+                        <span class="metric-value" id="epi-graduates">-</span>
                     </div>
                     <div>
-                        <span class="metric-label">Outbreak responses supported (per year)</span>
-                        <span class="metric-value" id="epi-outbreaks">–</span>
+                        <span class="metric-label">Outbreak responses per year</span>
+                        <span class="metric-value" id="epi-outbreaks">-</span>
                     </div>
                 </div>
                 <div class="metric-single">
-                    <span class="metric-label">Indicative economic benefit per cohort</span>
-                    <span class="metric-value" id="epi-benefit">–</span>
+                    <span class="metric-label">Indicative benefit per cohort</span>
+                    <span class="metric-value" id="epi-benefit">-</span>
                 </div>
                 <div class="chart-block">
                     <canvas id="chart-epi"></canvas>
@@ -376,36 +383,38 @@
     <section id="tab-costing" class="tab-panel">
         <div class="grid-two-stretch">
             <div class="card">
-                <h2>Cost template and sources</h2>
+                <h2>Cost templates and sources</h2>
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="cost-source">Cost template source</label>
                         <select id="cost-source">
-                            <!-- Populated dynamically based on programme tier -->
+                            <!-- Filled by script -->
                         </select>
                     </div>
                 </div>
                 <p>
-                    Cost templates are drawn from detailed costings supplied by FETP partners in India. For
-                    Frontline training, costs are based on estimates from WHO. For Intermediate training, separate
-                    templates are provided for WHO, NIE, and NCDC. For Advanced training, templates reflect NIE
-                    and NCDC cost structures. For Intermediate and Advanced programmes, costs from different
-                    institutions are not combined; instead, they can be used as alternative cost structures.
+                    Cost templates are based on detailed submissions from WHO, NIE and NCDC. For Frontline training,
+                    WHO supplies a template based on six cohorts. For Intermediate training, templates are available
+                    from WHO, NIE and NCDC. For Advanced training, templates are available from NIE and NCDC.
+                </p>
+                <p>
+                    Templates are used as alternative settings rather than being combined. Policy makers can
+                    switch between templates to see how cost structure affects total economic cost, while keeping
+                    the programme design constant.
                 </p>
                 <p class="note">
-                    STEPS uses these templates to allocate the total cohort cost across direct and indirect
-                    components. Opportunity cost of trainee time is estimated where this was provided in the
-                    original cost templates.
+                    For templates that include opportunity cost of trainee time, STEPS can add this to programme
+                    costs when the opportunity cost option is switched on.
                 </p>
             </div>
 
             <div class="card card-secondary">
-                <h2>Cost components for current configuration</h2>
+                <h2>Cost components for this configuration</h2>
                 <div id="cost-breakdown-summary" class="cost-summary">
                     <!-- Filled by script -->
                 </div>
                 <div class="cost-components-list" id="cost-components-list">
-                    <!-- Detailed component rows inserted here -->
+                    <!-- Detailed rows inserted by script -->
                 </div>
             </div>
         </div>
@@ -414,10 +423,10 @@
     <!-- SCENARIOS TAB -->
     <section id="tab-scenarios" class="tab-panel">
         <div class="card">
-            <h2>Saved scenarios</h2>
+            <h2>Saved scenarios for comparison</h2>
             <p>
-                Use this table to compare alternative FETP scale up options. Saved scenarios can be downloaded
-                to Excel for further analysis. The World Bank report can draw directly on these configurations.
+                Use this table to compare FETP options and support the business case for the World Bank and other
+                partners. Saved scenarios are also used for downloads.
             </p>
             <div class="button-row">
                 <button id="export-excel" class="btn-secondary">Download scenarios to Excel</button>
@@ -453,21 +462,20 @@
         <div class="card">
             <h2>About STEPS</h2>
             <p>
-                STEPS has been developed to support the Government of India and partners in planning the scale up
-                of Field Epidemiology Training Programmes. It is designed as a practical decision aid that links
-                stakeholder preferences from a discrete choice experiment with costing data and simple epidemiological
-                assumptions.
+                The University of Newcastle is developing a business case for strengthening and scaling FETP
+                programmes in India, with particular emphasis on Advanced FETP. STEPS is one of the core tools
+                in this work. It provides a structured way to test scale up options and to explain the cost and
+                benefit implications to policy makers.
             </p>
             <p>
-                The business case focuses on advanced FETPs, with a secondary focus on intermediate FETPs, and
-                recognises the need for a skilled public health workforce to meet national and international
-                commitments on health security. The tool allows decision makers to test what happens to costs,
-                benefits, and endorsement when they alter programme design features or expand the number of cohorts.
+                The tool is designed to support the Government of India, WHO, the World Bank and other partners
+                as they plan investments in epidemiology training. It helps answer questions such as:
             </p>
-            <p>
-                All calculations are transparent and traceable. Users can inspect the cost templates, review
-                the main modelling assumptions, and download a technical appendix with full methodological detail.
-            </p>
+            <ul class="plain-list">
+                <li>How do costs and benefits change when we move from Frontline to Intermediate or Advanced tiers?</li>
+                <li>What happens to endorsement when mentorship intensity is increased?</li>
+                <li>How many cohorts and trainees are needed to reach a given scale?</li>
+            </ul>
             <p class="note">
                 Prepared by <strong>Mesfin Genie, PhD</strong>, Newcastle Business School, The University of
                 Newcastle, Australia. For questions or clarifications please contact
@@ -479,17 +487,93 @@
     <!-- TECHNICAL TAB -->
     <section id="tab-technical" class="tab-panel">
         <div class="card">
+            <h2>Advanced settings for workshops</h2>
+            <p>
+                This panel allows technical users to adjust key multipliers for workshops without editing code.
+                Changes affect calculations immediately in this browser session.
+            </p>
+            <form id="advanced-settings-form" class="form-grid">
+                <div class="form-group form-group-wide">
+                    <label for="adv-inr-per-usd">Exchange rate for display (INR per USD)</label>
+                    <input type="number" id="adv-inr-per-usd" step="0.1" min="10" max="500">
+                    <p class="hint">Used only for currency display. All calculations are in INR.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="adv-frontline-grads">Frontline graduates per cohort (share of trainees)</label>
+                    <input type="number" id="adv-frontline-grads" step="0.01" min="0" max="1">
+                </div>
+                <div class="form-group">
+                    <label for="adv-frontline-outbreaks">Frontline outbreak responses per cohort per year</label>
+                    <input type="number" id="adv-frontline-outbreaks" step="0.1" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="adv-frontline-vgrad">Value per Frontline graduate (INR)</label>
+                    <input type="number" id="adv-frontline-vgrad" step="10000" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="adv-frontline-voutbreak">Value per Frontline outbreak response (INR)</label>
+                    <input type="number" id="adv-frontline-voutbreak" step="100000" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label for="adv-intermediate-grads">Intermediate graduates per cohort (share of trainees)</label>
+                    <input type="number" id="adv-intermediate-grads" step="0.01" min="0" max="1">
+                </div>
+                <div class="form-group">
+                    <label for="adv-intermediate-outbreaks">Intermediate outbreak responses per cohort per year</label>
+                    <input type="number" id="adv-intermediate-outbreaks" step="0.1" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="adv-intermediate-vgrad">Value per Intermediate graduate (INR)</label>
+                    <input type="number" id="adv-intermediate-vgrad" step="10000" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="adv-intermediate-voutbreak">Value per Intermediate outbreak response (INR)</label>
+                    <input type="number" id="adv-intermediate-voutbreak" step="100000" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label for="adv-advanced-grads">Advanced graduates per cohort (share of trainees)</label>
+                    <input type="number" id="adv-advanced-grads" step="0.01" min="0" max="1">
+                </div>
+                <div class="form-group">
+                    <label for="adv-advanced-outbreaks">Advanced outbreak responses per cohort per year</label>
+                    <input type="number" id="adv-advanced-outbreaks" step="0.1" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="adv-advanced-vgrad">Value per Advanced graduate (INR)</label>
+                    <input type="number" id="adv-advanced-vgrad" step="10000" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="adv-advanced-voutbreak">Value per Advanced outbreak response (INR)</label>
+                    <input type="number" id="adv-advanced-voutbreak" step="100000" min="0">
+                </div>
+
+                <div class="form-group form-group-wide">
+                    <div class="button-row">
+                        <button type="button" id="advanced-apply" class="btn-primary">Apply advanced settings</button>
+                        <button type="button" id="advanced-reset" class="btn-ghost">Reset to defaults</button>
+                    </div>
+                </div>
+            </form>
+            <p class="note">
+                Country teams can also supply an <code>epi_config.json</code> file with multipliers that STEPS
+                will load automatically. The form above then reflects those values.
+            </p>
+        </div>
+
+        <div class="card">
             <h2>Technical appendix</h2>
             <p>
-                The technical appendix describes in more detail how STEPS links discrete choice experiment results,
-                costing templates, and epidemiological multipliers. It includes worked examples of the mixed logit
-                and latent class models, the way cost coefficients are used for willingness to pay, and the logic
-                behind the epidemiological impact calculations.
+                The technical appendix explains how STEPS uses discrete choice experiment estimates, cost
+                templates and epidemiological multipliers. It includes numerical examples based on the final
+                mixed logit and latent class models and the willingness to pay results.
             </p>
             <p>
-                You can open the full technical appendix in a separate window for easier reading.
+                Open the full appendix in a separate window for easier reading or printing.
             </p>
-            <button id="open-technical-window" class="btn-primary">Open full technical appendix</button>
+            <button id="open-technical-window" class="btn-secondary">Open full technical appendix</button>
             <div id="technical-preview" class="technical-preview">
                 <!-- Short preview inserted by script -->
             </div>
@@ -501,12 +585,15 @@
 <div id="results-modal" class="modal hidden">
     <div class="modal-content">
         <button class="modal-close" id="close-modal" aria-label="Close snapshot">&times;</button>
-        <h2>Scenario snapshot</h2>
+        <h2>Scenario summary</h2>
         <div id="modal-body">
             <!-- Filled by script -->
         </div>
     </div>
 </div>
+
+<!-- TOAST -->
+<div id="toast" class="toast hidden"></div>
 
 <!-- Hidden template for full technical appendix HTML -->
 <script type="text/plain" id="technical-appendix-template">
@@ -525,13 +612,13 @@
         h1, h2, h3 {
             color: #0b1120;
         }
-        h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        h1 { font-size: 1.8rem; margin-bottom: 0.6rem; }
         h2 { font-size: 1.4rem; margin-top: 1.8rem; }
         h3 { font-size: 1.15rem; margin-top: 1.2rem; }
         code {
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             background: #e5e7eb;
-            padding: 0.1rem 0.25rem;
+            padding: 0.1rem 0.3rem;
             border-radius: 4px;
         }
         .equation {
@@ -552,242 +639,199 @@
 <body>
 <h1>STEPS Technical Appendix</h1>
 <p>
-    This appendix explains how the STEPS tool combines discrete choice experiment (DCE) estimates, costing
-    templates, and simple epidemiological multipliers to support planning for the scale up of FETP programmes
-    in India. It is written for technical users who wish to understand or adapt the underlying calculations.
+    This appendix explains how STEPS uses discrete choice experiment (DCE) estimates, costing information
+    and simple epidemiological multipliers to support decisions on scaling Field Epidemiology Training
+    Programs (FETPs) in India. It is written for technical readers who need transparency on the underlying
+    calculations.
 </p>
 
-<h2>1. Discrete choice experiment and utility specification</h2>
+<h2>1. Discrete choice experiment and model specification</h2>
 <p>
-    The DCE presented respondents with pairs of FETP training options, labelled Training A and Training B,
-    plus an opt out alternative. Each training option was defined by programme tier, career incentives,
-    mentorship intensity, delivery mode, outbreak response time and cost per trainee per month. The systematic
-    component of utility for individual <em>n</em>, alternative <em>j</em> in choice task <em>t</em> is:
+    The DCE presented three options in each task: Training A, Training B and an opt out. Each training option
+    was defined by programme type (Frontline, Intermediate, Advanced), trainee career incentives (certificate,
+    university qualification, government career pathway), mentorship intensity (low, medium, high), mode of
+    delivery (blended, fully in person, fully online), response capacity (within 30, 15 or 7 days), and cost
+    per trainee per month. Training B and the reference attribute levels form the baseline.
+</p>
+<p>
+    The systematic part of utility for individual <em>n</em>, alternative <em>j</em> and task <em>t</em> is:
 </p>
 <div class="equation">
-    U<sub>njt</sub> = α<sub>A,n</sub> ASC<sub>A,jt</sub> + α<sub>O,n</sub> ASC<sub>OptOut,jt</sub>
-    + β<sub>1,n</sub> Intermediate<sub>jt</sub> + β<sub>2,n</sub> Advanced<sub>jt</sub> + β<sub>3,n</sub> UniQual<sub>jt</sub>
-    + β<sub>4,n</sub> GovCareer<sub>jt</sub> + β<sub>5,n</sub> MentorMedium<sub>jt</sub> + β<sub>6,n</sub> MentorHigh<sub>jt</sub>
-    + β<sub>7,n</sub> InPerson<sub>jt</sub> + β<sub>8,n</sub> Online<sub>jt</sub> + β<sub>9,n</sub> Resp15<sub>jt</sub>
-    + β<sub>10,n</sub> Resp7<sub>jt</sub> + β<sub>11,n</sub> Cost<sub>njt</sub>.
+    U<sub>njt</sub> =
+    α<sub>A,n</sub> ASC<sub>A,jt</sub> +
+    α<sub>O,n</sub> ASC<sub>OptOut,jt</sub> +
+    β<sub>1,n</sub> Intermediate<sub>jt</sub> +
+    β<sub>2,n</sub> Advanced<sub>jt</sub> +
+    β<sub>3,n</sub> UniQual<sub>jt</sub> +
+    β<sub>4,n</sub> GovCareer<sub>jt</sub> +
+    β<sub>5,n</sub> MentorMedium<sub>jt</sub> +
+    β<sub>6,n</sub> MentorHigh<sub>jt</sub> +
+    β<sub>7,n</sub> InPerson<sub>jt</sub> +
+    β<sub>8,n</sub> Online<sub>jt</sub> +
+    β<sub>9,n</sub> Resp15<sub>jt</sub> +
+    β<sub>10,n</sub> Resp7<sub>jt</sub> +
+    β<sub>11,n</sub> Cost<sub>njt</sub>.
 </div>
 <p>
-    Indicator variables take the value one when a level is present and zero otherwise. Training B is the
-    reference training alternative. Programme type is coded relative to frontline, career incentives relative
-    to government and partner certificate, mentorship intensity relative to low mentorship, delivery mode
-    relative to blended, and response time relative to 30 days. Cost is measured in thousands of Indian
-    Rupees per trainee per month. The parameter α<sub>A,n</sub> captures any consistent tendency to choose
-    the left hand option, while α<sub>O,n</sub> captures the propensity to choose the opt out alternative.
-</p>
-<p>
-    In STEPS, only the opt out constant is used when predicting endorsement of any FETP option versus opting out.
-    The left right constant is treated as a design artefact that does not have direct policy meaning once
-    Training A and Training B are combined into a single "some FETP" versus "no FETP" decision.
+    ASC<sub>A,jt</sub> is one for Training A and zero otherwise. ASC<sub>OptOut,jt</sub> is one for the opt out.
+    Cost is measured in thousands of rupees per trainee per month. Training B and the reference levels
+    (Frontline, certificate, low mentorship, blended, response within 30 days) are omitted from the equation.
 </p>
 
-<h2>2. Mixed logit model</h2>
+<h2>2. Mixed logit model and final estimates</h2>
 <p>
-    To capture preference heterogeneity among stakeholders, a mixed logit (MXL) model was estimated. The
-    individual parameter vector
-    θ<sub>n</sub> = (α<sub>A,n</sub>, α<sub>O,n</sub>, β<sub>1,n</sub>, …, β<sub>11,n</sub>) is assumed to follow
-    a continuous distribution with density f(θ<sub>n</sub> | ψ), where ψ collects the means and standard
-    deviations of the random coefficients.
+    To allow for preference heterogeneity, a mixed logit model was estimated. Non cost coefficients follow
+    independent normal distributions. The cost coefficient follows a log normal distribution:
+</p>
+<div class="equation">
+    β<sub>11,n</sub> = -exp( μ<sub>cost</sub> + σ<sub>cost</sub> η<sub>n</sub> ), with η<sub>n</sub> ~ N(0,1),
+</div>
+<p>
+    which ensures that higher cost always reduces utility.
+</p>
+<p>
+    The main mixed logit results used in STEPS are:
 </p>
 <ul>
-    <li>All non cost coefficients and both alternative specific constants are assumed to follow independent
-        normal distributions.</li>
-    <li>The cost coefficient is constrained to be negative by specifying a log normal distribution.</li>
+    <li>Alternative specific constant for Training A (ASC A): 0.168 (fixed in the random part).</li>
+    <li>Alternative specific constant for opt out: -0.601.</li>
+    <li>Programme type: Intermediate 0.220, Advanced 0.487.</li>
+    <li>Career incentives: university qualification 0.017, government career pathway -0.122.</li>
+    <li>Mentorship: medium 0.453, high 0.640.</li>
+    <li>Delivery: fully in person -0.232, fully online -1.073.</li>
+    <li>Response capacity: within 15 days 0.546, within 7 days 0.610.</li>
+    <li>Back transformed mean cost coefficient: -0.005 per thousand rupees per trainee per month.</li>
 </ul>
 <p>
-    For the cost coefficient the parametrisation is:
-</p>
-<div class="equation">
-    β<sub>11,n</sub> = −exp(μ<sub>cost</sub> + σ<sub>cost</sub> η<sub>n</sub>),
-    with η<sub>n</sub> ~ N(0,1).
-</div>
-<p>
-    This ensures that higher costs always reduce utility and produces a positively skewed distribution of
-    cost sensitivity, which is consistent with many health and transport DCE applications.
-</p>
-<p>
-    Conditional on θ<sub>n</sub>, the probability that individual <em>n</em> chooses alternative <em>i</em> in
-    task <em>t</em> is standard multinomial logit:
-</p>
-<div class="equation">
-    P(y<sub>nt</sub> = i | θ<sub>n</sub>) =
-    exp(V<sub>nit</sub>) / Σ<sub>j</sub> exp(V<sub>njt</sub>).
-</div>
-<p>
-    The unconditional probability integrates over the distribution of random parameters. In practice this
-    integral is approximated by simulated maximum likelihood using quasi random draws. In the original
-    analysis 1,000 Halton draws were used, which is a standard choice in DCE applications (Hensher and Greene, 2003).
+    In STEPS these values are stored in the <code>PREFERENCE_MODELS.mxl</code> object. Only the opt out constant
+    is used for endorsement predictions, since the left right constant is a layout effect rather than a policy
+    feature.
 </p>
 
-<h2>3. Latent class model</h2>
+<h2>3. Latent class model and supportive group</h2>
 <p>
-    A latent class (LC) model was estimated in parallel with the MXL specification. The LC model segments
-    respondents into a small number of classes with distinct preference patterns. For STEPS, the main focus
-    is on the class that strongly supports FETP expansion (Class 2). This class generally places higher value
-    on mentorship intensity and stronger outbreak response capacity and exhibits a more negative cost
-    coefficient, which implies a higher willingness to pay for improvements.
+    A two class latent class model distinguishes between training resisters (Class 1) and training supporters
+    (Class 2). STEPS uses the Class 2 parameters to represent a more supportive stakeholder group.
 </p>
 <p>
-    In the current code, the structure required to use the final Class 2 parameter estimates is fully in place.
-    Before final deployment, the mean coefficients and cost coefficients from the final LC estimation should
-    be copied into the <code>PREFERENCE_MODELS.lc2</code> object in <code>script.js</code>.
+    For Class 2, key estimates are:
+</p>
+<ul>
+    <li>ASC for Training A: 0.098.</li>
+    <li>ASC for opt out: -2.543.</li>
+    <li>Advanced programme: 0.422.</li>
+    <li>Mentorship medium and high: 0.342 and 0.486.</li>
+    <li>Response capacity within 15 and 7 days: 0.317 and 0.504.</li>
+    <li>Cost coefficient: -0.001 per thousand rupees per trainee per month.</li>
+</ul>
+<p>
+    In STEPS these values are stored in <code>PREFERENCE_MODELS.lc2</code>. This option can be selected under
+    Preference model in the configuration panel.
 </p>
 
-<h2>4. Predicting endorsement in STEPS</h2>
+<h2>4. Willingness to pay examples</h2>
 <p>
-    STEPS simplifies the three alternative choice into a decision between "any FETP configuration" and
-    "opt out". For a given configuration, STEPS constructs the systematic utility difference:
+    For a DCE with a linear cost term the willingness to pay (WTP) for moving from the reference level to
+    level <em>k</em> is:
 </p>
 <div class="equation">
-    ΔV = −α<sub>O</sub> + Σ β<sub>k</sub> x<sub>k</sub> + β<sub>cost</sub> · (C / 1000),
+    WTP<sub>k</sub> = - β<sub>k</sub> / β<sub>cost</sub>.
 </div>
 <p>
-    where C is the monthly cost per trainee in INR and x<sub>k</sub> are indicators for the selected attribute
-    levels. The endorsement probability is then:
+    For the mixed logit model, with mean cost coefficient -0.005, the main WTP estimates are:
+</p>
+<ul>
+    <li>Intermediate programme: about 47,060 INR per trainee per month.</li>
+    <li>Advanced programme: about 103,990 INR per trainee per month.</li>
+    <li>Medium mentorship: about 96,870 INR per trainee per month.</li>
+    <li>High mentorship: about 136,790 INR per trainee per month.</li>
+    <li>Fully in person delivery: about -49,560 INR per trainee per month.</li>
+    <li>Fully online delivery: about -229,330 INR per trainee per month.</li>
+    <li>Response within 15 days: about 116,700 INR per trainee per month.</li>
+    <li>Response within 7 days: about 130,460 INR per trainee per month.</li>
+</ul>
+<p>
+    These values are stored in <code>WTP_TABLE.mxl</code> and are used to construct an indicative monetary
+    benefit per trainee per month for a configuration.
+</p>
+<p>
+    For Class 2 of the latent class model, STEPS calculates implied WTP values using the same formula and
+    the Class 2 cost coefficient of -0.001. For example, the WTP for Advanced training for the supportive
+    group is roughly 422,000 INR per trainee per month.
+</p>
+
+<h2>5. From model outputs to endorsement</h2>
+<p>
+    To move from model coefficients to a simple endorsement probability, STEPS aggregates the relevant
+    parameters into a single index. For a given configuration, the difference in systematic utility between
+    "some FETP" and "no FETP" is:
+</p>
+<div class="equation">
+    ΔV = -α<sub>O</sub> + Σ β<sub>k</sub> x<sub>k</sub> + β<sub>cost</sub> · (C / 1000),
+</div>
+<p>
+    where α<sub>O</sub> is the opt out constant, x<sub>k</sub> are the chosen attribute levels and C is the cost
+    per trainee per month in rupees. The endorsement probability is given by the logistic function:
 </p>
 <div class="equation">
     P(endorse FETP) = exp(ΔV) / (1 + exp(ΔV)).
 </div>
 <p>
-    STEPS implements this expression twice: once using the average parameter values from the mixed logit model
-    and once using the parameters for the supportive latent class group. This allows users to see how endorsement
-    changes when focusing on the more supportive segment of decision makers.
+    STEPS implements this for the mixed logit mean parameters and, when selected, for the Class 2 parameters.
 </p>
 
-<h2>5. Willingness to pay and monetary benefits</h2>
+<h2>6. Cost templates and economic cost per cohort</h2>
 <p>
-    In a DCE with linear cost, the willingness to pay (WTP) for a change in attribute <em>k</em> from the
-    reference level to an alternative level is:
-</p>
-<div class="equation">
-    WTP<sub>k</sub> = −β<sub>k</sub> / β<sub>cost</sub>,
-</div>
-<p>
-    which yields the change in monthly cost per trainee (in INR) that compensates for the attribute change.
-    In the original analysis, WTP values were calculated for each non cost attribute and reported in INR per
-    trainee per month.
-</p>
-<p>
-    STEPS reconstructs an indicative monetary benefit per trainee per month for a configuration by:
-</p>
-<ul>
-    <li>Identifying the levels chosen for programme tier, career incentive, mentorship, delivery, and response time.</li>
-    <li>Summing the corresponding WTP values relative to the baseline configuration (frontline, certificate,
-        low mentorship, blended, 30 day response).</li>
-</ul>
-<p>
-    The result is an indicative willingness to pay per trainee per month for moving from the baseline to the
-    selected configuration. Multiplying by the number of trainees per cohort and the number of months in the
-    programme gives an indicative benefit per cohort. Dividing this by the total economic cost yields a
-    benefit cost ratio (BCR) and a net benefit measure.
-</p>
-<p>
-    In the current code, the structure is set up so that the final WTP values from the empirical analysis can
-    be inserted directly in the <code>WTP_TABLE</code> constants. Until those values are inserted, the default
-    numbers should be treated as placeholders for demonstration and user interface testing rather than final
-    decision inputs.
-</p>
-
-<h2>6. Cost templates and allocation of costs</h2>
-<p>
-    Costing information for FETP programmes was obtained from WHO, NIE, and NCDC. For Frontline training,
-    WHO costed six cohorts, providing estimates for direct and indirect costs as well as opportunity cost of
-    trainee time. For Intermediate training, cost templates were available from WHO, NIE, and NCDC. For
-    Advanced training, templates were available from NIE and NCDC.
-</p>
-<p>
-    The cost templates are imported into STEPS as total amounts for each component (for example in country
-    staff salaries, office equipment, software, rent and utilities, training materials, workshops, travel,
-    management and oversight, office maintenance, facility upgrades, depreciation, utilities, staff
-    development, and opportunity cost where provided). For each template the tool:
-</p>
-<ul>
-    <li>Computes the share of each component in the total cost.</li>
-    <li>Separates the opportunity cost component where it exists.</li>
-    <li>Normalises the non opportunity shares so that they sum to one.</li>
-</ul>
-<p>
-    For a given configuration, the direct and indirect programme cost per cohort
-    (excluding opportunity cost) is computed as:
+    For each cost template, STEPS takes the component totals and normalises them to shares of total cost.
+    Opportunity cost of trainee time is identified where present. For a given configuration, the programme
+    cost per cohort is:
 </p>
 <div class="equation">
     C<sub>prog</sub> = CostPerTraineePerMonth × TraineesPerCohort × DurationMonths.
 </div>
 <p>
-    This is then allocated across components using the non opportunity shares. If the user chooses to include
-    opportunity cost and the template contains an opportunity cost estimate, the tool scales the opportunity
-    cost in proportion to the non opportunity cost, preserving the original ratio between programme costs and
-    the value of trainee time.
+    This is allocated across cost components using the template shares, excluding opportunity cost. If the
+    opportunity cost toggle is on and the template contains an opportunity cost estimate, STEPS adds a
+    separate opportunity cost term to yield a total economic cost per cohort.
 </p>
 
 <h2>7. Epidemiological multipliers</h2>
 <p>
-    Evidence from FETP evaluations in several countries suggests that FETP graduates contribute to outbreak
-    investigations, routine surveillance, and early warning systems. For example, evaluations from Egypt
-    and Yemen report that FETP residents and graduates participate in multiple outbreak investigations each
-    year and contribute to the detection and control of priority diseases (for example Kandeel et al., 2011;
-    Al Nsour et al., 2010). These studies do not provide a single definitive multiplier but indicate that
-    each cohort of FETP graduates supports several outbreak responses and contributes to broader system
-    strengthening. 
-</p>
-<p>
-    STEPS therefore uses simple stylised multipliers that can be tuned for the Indian context:
+    Epidemiological multipliers translate training outputs into simple public health metrics. For each
+    tier STEPS uses four multipliers:
 </p>
 <ul>
-    <li>Each Frontline cohort produces a certain number of graduates who mainly support local surveillance.</li>
-    <li>Each Intermediate cohort supports an intermediate number of outbreak investigations per year.</li>
-    <li>Each Advanced cohort is assumed to support the largest number of outbreak investigations and system
-        strengthening activities.</li>
+    <li>Graduates per cohort as a share of trainees.</li>
+    <li>Outbreak responses per cohort per year.</li>
+    <li>Value per additional graduate (in INR).</li>
+    <li>Value per outbreak response supported (in INR).</li>
 </ul>
 <p>
-    By default, these multipliers are stored in a configuration object (<code>EPI_MULTIPLIERS</code>) and can
-    be edited without changing the core code. The technical team in India can update these values based on
-    further evidence or country specific modelling.
+    For example, with default settings an Advanced cohort with 20 trainees and an endorsement rate of 60 percent
+    yields about 11 or 12 graduates. If each Advanced graduate is assigned a monetary value and each cohort
+    is assumed to support several outbreak investigations per year, STEPS converts these into an indicative
+    benefit per cohort. The benefit cost ratio and net benefit shown in the tool use these values.
 </p>
 <p>
-    Monetary benefits are derived by assigning a value per additional FETP graduate and a value per outbreak
-    response supported. These values reflect avoided health care costs and productivity losses due to improved
-    detection and response. In this version of STEPS, they are simple default parameters that should be
-    refined during country consultation.
+    The multipliers can be updated either by editing <code>epi_config.json</code> or by adjusting the numbers
+    in the advanced settings panel in the Technical tab.
 </p>
 
-<h2>8. Currency conversion</h2>
+<h2>8. Limitations and recommended use</h2>
 <p>
-    All calculations are carried out in Indian Rupees. For user convenience STEPS can also display values in
-    United States Dollars using a fixed exchange rate. The default exchange rate is based on recent Reserve
-    Bank of India and Federal Reserve data on INR per USD (approximately 89.5 INR per USD in late 2025). :contentReference[oaicite:1]{index=1}
-    Users should update this value in the configuration if a different rate is required for reporting.
+    STEPS is a decision aid, not a full transmission model. It focuses on preferences, costs and simple
+    benefit indicators that can be understood in policy discussions. The epidemiological multipliers and
+    monetary valuations are stylised. For major investment decisions they should be cross checked against
+    detailed burden of disease or health security models.
 </p>
 
-<h2>9. Limitations and next steps</h2>
+<h2>9. Authorship and contact</h2>
 <p>
-    The present version of STEPS is designed as a decision aid rather than a full economic evaluation model.
-    The epidemiological multipliers are stylised, and the monetary benefit calculations focus on the value
-    implied by stakeholder preferences rather than disease burden modelling. Before using STEPS as the sole
-    basis for investment decisions, the following steps are recommended:
+    STEPS and this technical appendix were prepared for the business case for FETP scale up in India by
+    Mesfin Genie, Newcastle Business School, The University of Newcastle, Australia. For technical questions
+    or requests to adapt the tool for other countries, please contact
+    <a href="mailto:mesfin.genie@newcastle.edu.au">mesfin.genie@newcastle.edu.au</a>.
 </p>
-<ul>
-    <li>Insert the final mixed logit and latent class parameter estimates and WTP values from the empirical
-        FETP India DCE.</li>
-    <li>Refine the epidemiological multipliers and monetary valuations in consultation with national experts.</li>
-    <li>Cross check cost allocations against the latest cost data for FETP cohorts.</li>
-    <li>Document any country specific changes to parameters in an updated technical appendix.</li>
-</ul>
-
-<h2>10. References (selected)</h2>
-<ul class="ref-list">
-    <li>Hensher DA, Greene WH. The mixed logit model. In: Hensher DA, Button KJ (eds). Handbook of Transport
-        Modelling. Elsevier; 2003.</li>
-    <li>Hole AR, Kolstad JR. Mixed logit estimation of health state values. Health Economics. 2012;21(4):377–392.</li>
-    <li>Kandeel A, et al. The Egypt Field Epidemiology Training Program: A pathway for strengthening public
-        health capacity. [Example reference for FETP impact and outbreak investigations]. </li>
-    <li>Al Nsour M, et al. Strengthening field epidemiology training programmes in the Eastern Mediterranean Region.
-        Eastern Mediterranean Health Journal. [Example reference for FETP contributions]. </li>
-</ul>
 </body>
 </html>
 </script>
