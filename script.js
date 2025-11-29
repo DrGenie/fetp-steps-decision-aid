@@ -1,11 +1,12 @@
-/* global Chartt, jspdf, XLSX */
+/* global Chart, jspdf, XLSX */
 
 (() => {
     const { jsPDF } = window.jspdf || {};
 
-    // --- CORE CONSTANTS ----------------------------------------------------
+    // --- CORE CONSTANTS AND CONFIG -----------------------------------------
 
-    const INR_PER_USD = 89.5; // Approximate late 2025 rate, for display only
+    let INR_PER_USD_DEFAULT = 89.5;
+    let INR_PER_USD = INR_PER_USD_DEFAULT;
 
     const PROGRAM_META = {
         frontline: { label: "Frontline (3 months)", months: 3 },
@@ -13,85 +14,87 @@
         advanced: { label: "Advanced (24 months)", months: 24 }
     };
 
-    // Mixed logit and latent class coefficient structures.
-    // IMPORTANT: replace these default values with the final estimates from the DCE.
+    // Final mixed logit and latent class parameters supplied by user
+
     const PREFERENCE_MODELS = {
         mxl: {
             key: "mxl",
             label: "Average mixed logit",
-            // Approximate structure; values are placeholders to be replaced.
-            asc_optout: -0.60,
+            asc_a: 0.168,
+            asc_optout: -0.601,
             beta: {
-                intermediate: 0.20,
-                advanced: 0.50,
-                uniqual: 0.25,
-                career_path: 0.30,
-                mentor_medium: 0.40,
-                mentor_high: 0.70,
-                inperson: -0.10,
-                online: -0.90,
-                resp15: 0.45,
-                resp7: 0.55
+                intermediate: 0.220,
+                advanced: 0.487,
+                uniqual: 0.017,
+                career_path: -0.122,
+                mentor_medium: 0.453,
+                mentor_high: 0.640,
+                inperson: -0.232,
+                online: -1.073,
+                resp15: 0.546,
+                resp7: 0.610
             },
-            beta_cost: -0.005 // per 1,000 INR per trainee per month
+            beta_cost: -0.005 // back transformed mean cost coefficient per 1,000 INR
         },
         lc2: {
             key: "lc2",
-            label: "Supportive latent class",
-            // Structure ready for final Class 2 parameters.
-            asc_optout: -2.50,
+            label: "Supportive latent class (Class 2)",
+            asc_a: 0.098,
+            asc_optout: -2.543,
             beta: {
-                intermediate: 0.25,
-                advanced: 0.80,
-                uniqual: 0.35,
-                career_path: 0.55,
-                mentor_medium: 0.85,
-                mentor_high: 1.25,
-                inperson: 0.00,
-                online: -0.60,
-                resp15: 0.80,
-                resp7: 1.10
+                intermediate: 0.087,
+                advanced: 0.422,
+                uniqual: -0.024,
+                career_path: -0.123,
+                mentor_medium: 0.342,
+                mentor_high: 0.486,
+                inperson: -0.017,
+                online: -0.700,
+                resp15: 0.317,
+                resp7: 0.504
             },
-            beta_cost: -0.002 // per 1,000 INR per trainee per month
+            beta_cost: -0.001 // cost coefficient per 1,000 INR
         }
     };
 
-    // WTP values in INR per trainee per month for each attribute level, relative to baseline.
-    // Replace with final WTP values from the empirical analysis for production use.
+    // WTP in INR per trainee per month
+
     const WTP_TABLE = {
         mxl: {
-            intermediate: 47000,
-            advanced: 104000,
-            uniqual: 40000,
-            career_path: 60000,
-            mentor_medium: 97000,
-            mentor_high: 137000,
-            inperson: -50000,
-            online: -230000,
-            resp15: 117000,
-            resp7: 130000
+            intermediate: 47060,
+            advanced: 103990,
+            uniqual: 3690,
+            career_path: -26170,
+            mentor_medium: 96870,
+            mentor_high: 136790,
+            inperson: -49560,
+            online: -229330,
+            resp15: 116700,
+            resp7: 130460
         },
         lc2: {
-            intermediate: 65000,
-            advanced: 210000,
-            uniqual: 80000,
-            career_path: 120000,
-            mentor_medium: 140000,
-            mentor_high: 220000,
-            inperson: 0,
-            online: -150000,
-            resp15: 150000,
-            resp7: 210000
+            // implied from LC class 2 betas with cost coefficient -0.001
+            intermediate: 87000,
+            advanced: 422000,
+            uniqual: -24000,
+            career_path: -123000,
+            mentor_medium: 342000,
+            mentor_high: 486000,
+            inperson: -17000,
+            online: -700000,
+            resp15: 317000,
+            resp7: 504000
         }
     };
 
-    // Epidemiological multipliers and valuations (stylised, adjustable)
-    const EPI_MULTIPLIERS = {
+    // Default epidemiological multipliers (can be overridden by JSON or advanced settings)
+
+    const DEFAULT_EPI_MULTIPLIERS = {
         frontline: {
-            gradsPerCohort: 0.9,               // fraction of trainees who complete
-            outbreaksPerCohortPerYear: 2,      // investigations supported per cohort
-            valuePerGraduate: 200000,          // INR
-            valuePerOutbreak: 3000000          // INR
+            gradsPerCohort: 0.9,
+            outbreaksPerCohortPerYear: 2,
+            valuePerGraduate: 200000,
+            valuePerOutbreak: 3000000
         },
         intermediate: {
             gradsPerCohort: 0.9,
@@ -107,19 +110,23 @@
         }
     };
 
-    // Cost templates: all figures in INR, as provided.
-    // Frontline: WHO only
+    let epiConfig = JSON.parse(JSON.stringify(DEFAULT_EPI_MULTIPLIERS));
+
+    const EPI_CONFIG_URL = "epi_config.json";
+
+    // Cost templates
+
     const COST_TEMPLATES = {
         frontline: {
             WHO: {
-                label: "Frontline – WHO template (6 cohorts)",
+                label: "Frontline - WHO template (6 cohorts)",
                 source: "WHO",
                 total: 104482758,
                 components: [
-                    { key: "In-country programme staff (salary and benefits)", amount: 10694704 },
-                    { key: "Office equipment (staff/faculty)", amount: 200000 },
-                    { key: "Office software (staff/faculty)", amount: 20000 },
-                    { key: "Rent and utilities (staff/faculty)", amount: 1200000 },
+                    { key: "In country programme staff (salary and benefits)", amount: 10694704 },
+                    { key: "Office equipment (staff and faculty)", amount: 200000 },
+                    { key: "Office software (staff and faculty)", amount: 20000 },
+                    { key: "Rent and utilities (staff and faculty)", amount: 1200000 },
                     { key: "Training materials", amount: 30000 },
                     { key: "Workshops and seminars", amount: 5340700 },
                     { key: "In country travel", amount: 32462500 },
@@ -136,14 +143,14 @@
         },
         intermediate: {
             WHO: {
-                label: "Intermediate – WHO template",
+                label: "Intermediate - WHO template",
                 source: "WHO",
                 total: 70300369,
                 components: [
-                    { key: "In-country programme staff (salary and benefits)", amount: 6571500 },
-                    { key: "Office equipment (staff/faculty)", amount: 200000 },
-                    { key: "Office software (staff/faculty)", amount: 20000 },
-                    { key: "Rent and utilities (staff/faculty)", amount: 600000 },
+                    { key: "In country programme staff (salary and benefits)", amount: 6571500 },
+                    { key: "Office equipment (staff and faculty)", amount: 200000 },
+                    { key: "Office software (staff and faculty)", amount: 20000 },
+                    { key: "Rent and utilities (staff and faculty)", amount: 600000 },
                     { key: "Training materials", amount: 45000 },
                     { key: "Workshops and seminars", amount: 2280000 },
                     { key: "In country travel", amount: 11758000 },
@@ -159,26 +166,26 @@
                 ]
             },
             NIE: {
-                label: "Intermediate – NIE template",
+                label: "Intermediate - NIE template",
                 source: "NIE",
                 total: 208739950,
                 components: [
-                    { key: "In-country programme staff (salary and benefits)", amount: 18180000 },
-                    { key: "Office equipment (staff/faculty)", amount: 1520000 },
-                    { key: "Office software (staff/faculty)", amount: 7110000 },
-                    { key: "Rent and utilities (staff/faculty)", amount: 3995000 },
+                    { key: "In country programme staff (salary and benefits)", amount: 18180000 },
+                    { key: "Office equipment (staff and faculty)", amount: 1520000 },
+                    { key: "Office software (staff and faculty)", amount: 7110000 },
+                    { key: "Rent and utilities (staff and faculty)", amount: 3995000 },
                     { key: "Workshops and seminars", amount: 4119950 },
                     { key: "In country travel", amount: 138998875 },
                     { key: "International travel", amount: 34816125 }
                 ]
             },
             NCDC: {
-                label: "Intermediate – NCDC template",
+                label: "Intermediate - NCDC template",
                 source: "NCDC",
                 total: 9000000,
                 components: [
-                    { key: "Other programme staff (consultants, advisors)", amount: 100000 },
-                    { key: "Office software (staff/faculty)", amount: 100000 },
+                    { key: "Other programme staff (consultants and advisors)", amount: 100000 },
+                    { key: "Office software (staff and faculty)", amount: 100000 },
                     { key: "Training materials", amount: 100000 },
                     { key: "Workshops and seminars", amount: 500000 },
                     { key: "In country travel", amount: 2000000 },
@@ -190,14 +197,14 @@
         },
         advanced: {
             NIE: {
-                label: "Advanced – NIE template",
+                label: "Advanced - NIE template",
                 source: "NIE",
                 total: 254539700,
                 components: [
-                    { key: "In-country programme staff (salary and benefits)", amount: 15660000 },
-                    { key: "Office equipment (staff/faculty)", amount: 1020000 },
-                    { key: "Office software (staff/faculty)", amount: 4310000 },
-                    { key: "Rent and utilities (staff/faculty)", amount: 6375000 },
+                    { key: "In country programme staff (salary and benefits)", amount: 15660000 },
+                    { key: "Office equipment (staff and faculty)", amount: 1020000 },
+                    { key: "Office software (staff and faculty)", amount: 4310000 },
+                    { key: "Rent and utilities (staff and faculty)", amount: 6375000 },
                     { key: "Workshops and seminars", amount: 2441200 },
                     { key: "In country travel", amount: 97499500 },
                     { key: "International travel", amount: 83300000 },
@@ -205,13 +212,13 @@
                 ]
             },
             NCDC: {
-                label: "Advanced – NCDC template",
+                label: "Advanced - NCDC template",
                 source: "NCDC",
                 total: 73600000,
                 components: [
-                    { key: "In-country programme staff (salary and benefits)", amount: 12000000 },
-                    { key: "Office equipment (staff/faculty)", amount: 2000000 },
-                    { key: "Office software (staff/faculty)", amount: 1000000 },
+                    { key: "In country programme staff (salary and benefits)", amount: 12000000 },
+                    { key: "Office equipment (staff and faculty)", amount: 2000000 },
+                    { key: "Office software (staff and faculty)", amount: 1000000 },
                     { key: "Trainee allowances", amount: 25000000 },
                     { key: "Trainee equipment", amount: 1000000 },
                     { key: "Trainee software", amount: 500000 },
@@ -255,15 +262,17 @@
         }
     };
 
+    let toastTimeout = null;
+
     // --- UTILITY FUNCTIONS -------------------------------------------------
 
     function formatCurrencyINR(value) {
-        if (!Number.isFinite(value)) return "–";
+        if (!Number.isFinite(value)) return "-";
         return "INR " + Math.round(value).toLocaleString("en-US");
     }
 
     function formatCurrencyDisplay(valueINR, currency) {
-        if (!Number.isFinite(valueINR)) return "–";
+        if (!Number.isFinite(valueINR)) return "-";
         if (currency === "USD") {
             const usd = valueINR / INR_PER_USD;
             return "USD " + usd.toFixed(1).toLocaleString("en-US");
@@ -272,7 +281,7 @@
     }
 
     function formatPercent(p) {
-        if (!Number.isFinite(p)) return "–";
+        if (!Number.isFinite(p)) return "-";
         return (p * 100).toFixed(1) + "%";
     }
 
@@ -282,6 +291,22 @@
         return 1 / (1 + Math.exp(-x));
     }
 
+    function capitalize(x) {
+        return x.charAt(0).toUpperCase() + x.slice(1);
+    }
+
+    function formatCareerTrack(val) {
+        if (val === "uniqual") return "University qualification";
+        if (val === "career_path") return "Government career pathway";
+        return "Government and partner certificate";
+    }
+
+    function formatDelivery(val) {
+        if (val === "inperson") return "Fully in person";
+        if (val === "online") return "Fully online";
+        return "Blended";
+    }
+
     function getActiveCostTemplate() {
         const tier = state.programTier;
         const tierTemplates = COST_TEMPLATES[tier] || {};
@@ -289,12 +314,14 @@
     }
 
     function splitCostTemplate(template, programmeCostExOpp) {
-        if (!template) return {
-            programmeCostExOpp,
-            opportunityCost: 0,
-            totalEconomic: programmeCostExOpp,
-            components: []
-        };
+        if (!template) {
+            return {
+                programmeCostExOpp,
+                opportunityCost: 0,
+                totalEconomic: programmeCostExOpp,
+                components: []
+            };
+        }
 
         const total = template.total || 1;
         const nonOppComponents = template.components.filter(c => !c.isOpportunity);
@@ -398,7 +425,7 @@
     }
 
     function computeEpiOutputs(endorse) {
-        const meta = EPI_MULTIPLIERS[state.programTier];
+        const meta = epiConfig[state.programTier];
         if (!meta) {
             return {
                 graduates: 0,
@@ -457,6 +484,8 @@
         };
     }
 
+    // --- UI UPDATE FUNCTIONS -----------------------------------------------
+
     function updateConfigSummary() {
         const el = document.getElementById("config-summary");
         if (!el) return;
@@ -476,22 +505,6 @@
             <div><span>Cost per trainee per month</span><br><strong>${formatCurrencyDisplay(state.costPerTraineeMonthINR, state.currency)}</strong></div>
             <div><span>Cost template</span><br><strong>${getActiveCostTemplate()?.label || "Not available"}</strong></div>
         `;
-    }
-
-    function formatCareerTrack(val) {
-        if (val === "uniqual") return "University qualification";
-        if (val === "career_path") return "Government career pathway";
-        return "Government and partner certificate";
-    }
-
-    function formatDelivery(val) {
-        if (val === "inperson") return "In person";
-        if (val === "online") return "Fully online";
-        return "Blended";
-    }
-
-    function capitalize(x) {
-        return x.charAt(0).toUpperCase() + x.slice(1);
     }
 
     function updateCostSourceOptions() {
@@ -540,7 +553,7 @@
                 <span class="cost-summary-label">Total economic cost per cohort</span>
                 <span class="cost-summary-value">${totalDisplay}</span>
             </div>
-        `;
+        ";
 
         list.innerHTML = "";
         outputs.costComponents.forEach(c => {
@@ -569,21 +582,19 @@
         if (bcr < 1 && endorse < 0.5) {
             el.textContent =
                 "At current cost and design, both net benefits and endorsement are modest. " +
-                "Consider shifting towards intermediate or advanced training with higher mentorship " +
-                "or lowering programme costs before scaling up.";
+                "Consider moving towards Intermediate or Advanced with stronger mentorship or reducing costs before scaling up.";
         } else if (bcr < 1 && endorse >= 0.5) {
             el.textContent =
-                "Stakeholders are reasonably supportive of this configuration, but the benefit cost ratio " +
-                "is below one. Use STEPS to test modest cost reductions or incremental changes in mentorship " +
-                "and response time to improve value.";
+                "Stakeholders are supportive, but the benefit cost ratio is below one. " +
+                "Use STEPS to test lower costs or incremental changes in mentorship and response time to improve value.";
         } else if (bcr >= 1 && endorse < 0.5) {
             el.textContent =
-                "The configuration offers good value in monetary terms but endorsement is limited. " +
-                "Consider adjusting programme tier or career incentives to move closer to what decision makers prefer.";
+                "The configuration offers good value in monetary terms, but endorsement is limited. " +
+                "Consider adjusting programme tier or career incentives to align more closely with stakeholder preferences.";
         } else {
             el.textContent =
-                "This configuration appears attractive: endorsement is strong and the benefit cost ratio is above one. " +
-                "It is a strong candidate for priority scale up, subject to budget feasibility and implementation capacity.";
+                "This configuration looks attractive, with strong endorsement and a benefit cost ratio above one. " +
+                "It is a strong candidate for priority scale up, subject to budget and implementation feasibility.";
         }
     }
 
@@ -603,7 +614,7 @@
         optoutEl.textContent = formatPercent(outputs.optout);
         totalCostEl.textContent = formatCurrencyDisplay(outputs.totalEconomic, state.currency);
         netBenefitEl.textContent = formatCurrencyDisplay(outputs.netBenefit, state.currency);
-        bcrEl.textContent = Number.isFinite(outputs.bcr) ? outputs.bcr.toFixed(2) : "–";
+        bcrEl.textContent = Number.isFinite(outputs.bcr) ? outputs.bcr.toFixed(2) : "-";
         epiGradEl.textContent = outputs.epi.graduates.toFixed(0);
         epiOutEl.textContent = outputs.epi.outbreaksPerYear.toFixed(1);
         epiBenEl.textContent = formatCurrencyDisplay(outputs.epi.epiBenefitPerCohort, state.currency);
@@ -621,7 +632,7 @@
         state.charts.uptake = new Chart(uptakeCtx, {
             type: "bar",
             data: {
-                labels: ["Endorse FETP", "Choose opt out"],
+                labels: ["Endorse FETP", "Opt out"],
                 datasets: [{
                     data: [outputs.endorse * 100, outputs.optout * 100]
                 }]
@@ -629,9 +640,7 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
+                plugins: { legend: { display: false } },
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -645,7 +654,7 @@
         state.charts.bcr = new Chart(bcrCtx, {
             type: "bar",
             data: {
-                labels: ["BCR"],
+                labels: ["Benefit cost ratio"],
                 datasets: [{
                     data: [outputs.bcr || 0]
                 }]
@@ -653,9 +662,7 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
+                plugins: { legend: { display: false } },
                 scales: {
                     y: {
                         beginAtZero: true
@@ -675,9 +682,7 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
+                plugins: { legend: { display: false } },
                 scales: {
                     y: {
                         beginAtZero: true
@@ -697,24 +702,26 @@
         body.innerHTML = `
             <p><strong>Scenario:</strong> ${state.scenarioName || "Untitled scenario"}</p>
             <p>
-                <strong>Programme tier:</strong> ${meta.label}; 
-                <strong>Mentorship:</strong> ${capitalize(state.mentorship)}; 
-                <strong>Delivery:</strong> ${formatDelivery(state.delivery)}; 
-                <strong>Response:</strong> within ${state.response} days.
+                <strong>Programme tier:</strong> ${meta.label};
+                <strong>Career incentive:</strong> ${formatCareerTrack(state.careerTrack)};
+                <strong>Mentorship:</strong> ${capitalize(state.mentorship)};
+                <strong>Delivery:</strong> ${formatDelivery(state.delivery)};
+                <strong>Response time:</strong> within ${state.response} days.
             </p>
             <p>
-                <strong>Cohorts:</strong> ${state.cohorts}; 
-                <strong>Trainees per cohort:</strong> ${state.trainees}; 
+                <strong>Cohorts:</strong> ${state.cohorts};
+                <strong>Trainees per cohort:</strong> ${state.trainees};
                 <strong>Cost per trainee per month:</strong> ${formatCurrencyDisplay(state.costPerTraineeMonthINR, state.currency)}.
             </p>
             <p>
-                <strong>Endorsement:</strong> ${formatPercent(outputs.endorse)}; 
-                <strong>Benefit cost ratio:</strong> ${Number.isFinite(outputs.bcr) ? outputs.bcr.toFixed(2) : "not defined"}; 
+                <strong>Endorsement:</strong> ${formatPercent(outputs.endorse)};
+                <strong>Benefit cost ratio:</strong> ${Number.isFinite(outputs.bcr) ? outputs.bcr.toFixed(2) : "not defined"};
                 <strong>Net benefit per cohort:</strong> ${formatCurrencyDisplay(outputs.netBenefit, state.currency)}.
             </p>
             <p>
-                <strong>Graduates supported:</strong> ${outputs.epi.graduates.toFixed(0)} across all cohorts; 
-                <strong>Outbreak responses per year:</strong> ${outputs.epi.outbreaksPerYear.toFixed(1)}.
+                <strong>Graduates across all cohorts:</strong> ${outputs.epi.graduates.toFixed(0)};
+                <strong>Outbreak responses per year:</strong> ${outputs.epi.outbreaksPerYear.toFixed(1)};
+                <strong>Indicative benefit per cohort:</strong> ${formatCurrencyDisplay(outputs.epi.epiBenefitPerCohort, state.currency)}.
             </p>
             <p><strong>Scenario notes:</strong> ${state.scenarioNotes || "None"}</p>
         `;
@@ -769,17 +776,33 @@
                 <td>${formatCurrencyDisplay(s.costPerTraineeMonthINR, s.currency)}</td>
                 <td>${s.modelLabel}</td>
                 <td>${formatPercent(s.endorsement)}</td>
-                <td>${Number.isFinite(s.bcr) ? s.bcr.toFixed(2) : "–"}</td>
+                <td>${Number.isFinite(s.bcr) ? s.bcr.toFixed(2) : "-"}</td>
                 <td>${formatCurrencyDisplay(s.netBenefit, s.currency)}</td>
             `;
             tbody.appendChild(tr);
         });
     }
 
+    function showToast(message) {
+        const toast = document.getElementById("toast");
+        if (!toast) return;
+        toast.textContent = message;
+        toast.classList.remove("hidden");
+        toast.classList.add("visible");
+        if (toastTimeout) clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+            toast.classList.remove("visible");
+            toast.classList.add("hidden");
+        }, 3000);
+    }
+
     // Export functions
 
     function exportScenariosToExcel() {
-        if (state.savedScenarios.length === 0) return;
+        if (state.savedScenarios.length === 0) {
+            showToast("Save at least one scenario before exporting.");
+            return;
+        }
 
         const sheetData = [
             [
@@ -811,6 +834,7 @@
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "STEPS scenarios");
         XLSX.writeFile(wb, "STEPS_FETP_scenarios.xlsx");
+        showToast("Excel file downloaded.");
     }
 
     function addWrappedText(doc, text, x, y, maxWidth, lineHeight) {
@@ -819,6 +843,8 @@
             if (y > 280) {
                 doc.addPage();
                 y = 20;
+                doc.setFont("helvetica", "normal");
+                doc.setFontSize(10);
             }
             doc.text(line, x, y);
             y += lineHeight;
@@ -827,13 +853,16 @@
     }
 
     function exportPolicyBriefPDF() {
-        if (!jsPDF || state.savedScenarios.length === 0) return;
+        if (!jsPDF || state.savedScenarios.length === 0) {
+            showToast("Save at least one scenario before downloading the PDF.");
+            return;
+        }
 
         const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
 
         doc.setFont("helvetica", "bold");
         doc.setFontSize(14);
-        doc.text("STEPS FETP scale up brief – India", 20, 20);
+        doc.text("STEPS FETP scale up brief for India", 20, 20);
 
         doc.setFont("helvetica", "normal");
         doc.setFontSize(10);
@@ -841,8 +870,9 @@
 
         y = addWrappedText(
             doc,
-            "This brief summarises key Field Epidemiology Training Programme (FETP) configurations evaluated with STEPS. " +
-            "Results combine discrete choice experiment evidence on stakeholder preferences with costing assumptions for each scenario.",
+            "This brief summarises Field Epidemiology Training Programme configurations evaluated with STEPS. " +
+            "Results link discrete choice experiment evidence on stakeholder preferences with costing assumptions " +
+            "and simple epidemiological multipliers.",
             20, y, 170, 5
         );
 
@@ -871,7 +901,7 @@
             doc.setFontSize(10);
 
             const scenarioText =
-                `Programme tier: ${s.programme}; mentorship: ${s.mentorship}; delivery and response time as configured in STEPS.\n` +
+                `Programme tier: ${s.programme}; mentorship: ${s.mentorship}; response time: ${s.response}.\n` +
                 `Cohorts: ${s.cohorts}; trainees per cohort: ${s.trainees}; ` +
                 `cost per trainee per month (INR): ${Math.round(s.costPerTraineeMonthINR).toLocaleString("en-US")}.\n` +
                 `Endorsement: ${(s.endorsement * 100).toFixed(1)} percent; benefit cost ratio: ` +
@@ -883,17 +913,18 @@
         });
 
         doc.save("STEPS_FETP_policy_brief.pdf");
+        showToast("Policy brief PDF downloaded.");
     }
 
-    // Technical appendix window
+    // Technical appendix helpers
 
     function initTechnicalPreview() {
         const preview = document.getElementById("technical-preview");
         if (!preview) return;
         preview.innerHTML =
-            "<p>This appendix explains the mixed logit and latent class models, cost templates, " +
-            "and epidemiological multipliers used in STEPS. Use the button above to open the full " +
-            "technical document in a separate window for printing or detailed review.</p>";
+            "<p>This appendix sets out the mixed logit and latent class models, the cost templates and the " +
+            "epidemiological multipliers used in STEPS. Use the button above to open the full document in a " +
+            "separate window for printing or detailed review.</p>";
     }
 
     function openTechnicalWindow() {
@@ -907,7 +938,96 @@
         w.document.close();
     }
 
+    // Advanced settings
+
+    function populateAdvancedSettingsForm() {
+        const f = document.getElementById("advanced-settings-form");
+        if (!f) return;
+
+        document.getElementById("adv-inr-per-usd").value = INR_PER_USD.toFixed(1);
+
+        document.getElementById("adv-frontline-grads").value = epiConfig.frontline.gradsPerCohort;
+        document.getElementById("adv-frontline-outbreaks").value = epiConfig.frontline.outbreaksPerCohortPerYear;
+        document.getElementById("adv-frontline-vgrad").value = epiConfig.frontline.valuePerGraduate;
+        document.getElementById("adv-frontline-voutbreak").value = epiConfig.frontline.valuePerOutbreak;
+
+        document.getElementById("adv-intermediate-grads").value = epiConfig.intermediate.gradsPerCohort;
+        document.getElementById("adv-intermediate-outbreaks").value = epiConfig.intermediate.outbreaksPerCohortPerYear;
+        document.getElementById("adv-intermediate-vgrad").value = epiConfig.intermediate.valuePerGraduate;
+        document.getElementById("adv-intermediate-voutbreak").value = epiConfig.intermediate.valuePerOutbreak;
+
+        document.getElementById("adv-advanced-grads").value = epiConfig.advanced.gradsPerCohort;
+        document.getElementById("adv-advanced-outbreaks").value = epiConfig.advanced.outbreaksPerCohortPerYear;
+        document.getElementById("adv-advanced-vgrad").value = epiConfig.advanced.valuePerGraduate;
+        document.getElementById("adv-advanced-voutbreak").value = epiConfig.advanced.valuePerOutbreak;
+    }
+
+    function applyAdvancedSettings() {
+        const inrPerUsd = parseFloat(document.getElementById("adv-inr-per-usd").value);
+        if (Number.isFinite(inrPerUsd) && inrPerUsd > 0) {
+            INR_PER_USD = inrPerUsd;
+        }
+
+        const readTier = (tierKey, fieldKey, parser) => {
+            const id = `adv-${tierKey}-${fieldKey}`;
+            const val = parser(document.getElementById(id).value);
+            return Number.isFinite(val) ? val : epiConfig[tierKey][fieldKey];
+        };
+
+        epiConfig.frontline.gradsPerCohort = readTier("frontline", "grads", parseFloat);
+        epiConfig.frontline.outbreaksPerCohortPerYear = readTier("frontline", "outbreaks", parseFloat);
+        epiConfig.frontline.valuePerGraduate = readTier("frontline", "vgrad", parseFloat);
+        epiConfig.frontline.valuePerOutbreak = readTier("frontline", "voutbreak", parseFloat);
+
+        epiConfig.intermediate.gradsPerCohort = readTier("intermediate", "grads", parseFloat);
+        epiConfig.intermediate.outbreaksPerCohortPerYear = readTier("intermediate", "outbreaks", parseFloat);
+        epiConfig.intermediate.valuePerGraduate = readTier("intermediate", "vgrad", parseFloat);
+        epiConfig.intermediate.valuePerOutbreak = readTier("intermediate", "voutbreak", parseFloat);
+
+        epiConfig.advanced.gradsPerCohort = readTier("advanced", "grads", parseFloat);
+        epiConfig.advanced.outbreaksPerCohortPerYear = readTier("advanced", "outbreaks", parseFloat);
+        epiConfig.advanced.valuePerGraduate = readTier("advanced", "vgrad", parseFloat);
+        epiConfig.advanced.valuePerOutbreak = readTier("advanced", "voutbreak", parseFloat);
+
+        rerun();
+        showToast("Advanced settings applied.");
+    }
+
+    function resetAdvancedSettings() {
+        INR_PER_USD = INR_PER_USD_DEFAULT;
+        epiConfig = JSON.parse(JSON.stringify(DEFAULT_EPI_MULTIPLIERS));
+        populateAdvancedSettingsForm();
+        rerun();
+        showToast("Advanced settings reset to defaults.");
+    }
+
+    // Load external epi config JSON if present
+
+    function loadExternalEpiConfig() {
+        fetch(EPI_CONFIG_URL)
+            .then(resp => {
+                if (!resp.ok) throw new Error("No external epi config");
+                return resp.json();
+            })
+            .then(json => {
+                epiConfig = Object.assign({}, epiConfig, json);
+                populateAdvancedSettingsForm();
+                rerun();
+                showToast("External epidemiological configuration loaded.");
+            })
+            .catch(() => {
+                populateAdvancedSettingsForm();
+                rerun();
+            });
+    }
+
     // --- EVENT HANDLERS ----------------------------------------------------
+
+    function updateCostDisplay() {
+        const label = document.getElementById("cost-display");
+        if (!label) return;
+        label.textContent = formatCurrencyDisplay(state.costPerTraineeMonthINR, state.currency);
+    }
 
     function attachEvents() {
         // Tabs
@@ -1020,14 +1140,31 @@
         });
 
         // Buttons
-        document.getElementById("update-results").addEventListener("click", () => rerun());
-        document.getElementById("open-snapshot").addEventListener("click", () => {
-            if (state.latestOutputs) openSnapshotModal(state.latestOutputs);
+        document.getElementById("update-results").addEventListener("click", () => {
+            rerun();
+            showToast("Configuration applied. Open View results or go to the Results tab.");
         });
+
+        document.getElementById("open-snapshot").addEventListener("click", () => {
+            if (state.latestOutputs) {
+                openSnapshotModal(state.latestOutputs);
+                document.querySelectorAll(".tab-link").forEach(b => b.classList.remove("active"));
+                document.querySelector('[data-tab="results"]').classList.add("active");
+                document.querySelectorAll(".tab-panel").forEach(panel => {
+                    panel.classList.toggle("active", panel.id === "tab-results");
+                });
+            } else {
+                showToast("Apply a configuration first.");
+            }
+        });
+
         document.getElementById("save-scenario").addEventListener("click", () => {
             if (state.latestOutputs) {
                 saveScenario(state.latestOutputs);
                 openSnapshotModal(state.latestOutputs);
+                showToast("Scenario saved for comparison and reporting.");
+            } else {
+                showToast("Apply a configuration first.");
             }
         });
 
@@ -1040,13 +1177,19 @@
         });
 
         document.getElementById("open-technical-window").addEventListener("click", openTechnicalWindow);
+
+        document.getElementById("advanced-apply").addEventListener("click", e => {
+            e.preventDefault();
+            applyAdvancedSettings();
+        });
+
+        document.getElementById("advanced-reset").addEventListener("click", e => {
+            e.preventDefault();
+            resetAdvancedSettings();
+        });
     }
 
-    function updateCostDisplay() {
-        const label = document.getElementById("cost-display");
-        if (!label) return;
-        label.textContent = formatCurrencyDisplay(state.costPerTraineeMonthINR, state.currency);
-    }
+    // --- MAIN RERUN FUNCTION -----------------------------------------------
 
     function rerun() {
         updateConfigSummary();
@@ -1063,7 +1206,7 @@
         updateCostDisplay();
         updateConfigSummary();
         initTechnicalPreview();
-        rerun();
+        loadExternalEpiConfig();
     }
 
     document.addEventListener("DOMContentLoaded", () => {
