@@ -15,8 +15,11 @@
     <!-- SheetJS for Excel export -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
-<body>
-<header class="app-header" data-tour-step="header" data-tour-title="STEPS header" data-tour-content="This header shows the STEPS decision aid, the focus on FETP India and the partnership context.">
+<body data-theme="worldbank-light">
+<header class="app-header"
+        data-tour-step="header"
+        data-tour-title="STEPS header and branding"
+        data-tour-content="This header shows the STEPS decision aid branding, the focus on FETP India and the World Bank partnership context.">
     <div class="app-header-left">
         <div class="app-logo-circle">S</div>
         <div class="app-title-block">
@@ -31,11 +34,24 @@
     <div class="app-header-right">
         <span class="badge badge-primary">Policy decision aid</span>
         <span class="badge badge-outline">Version 1.0</span>
-        <button id="btn-start-tour" class="btn-ghost-small" type="button">
+        <button id="btn-start-tour"
+                class="btn-ghost-small tour-trigger"
+                type="button"
+                aria-haspopup="dialog"
+                aria-controls="tour-popover"
+                aria-expanded="false"
+                data-tour-step="start-tour"
+                data-tour-title="Quick guided tour"
+                data-tour-content="Click here for a short guided tour of the STEPS interface, moving through the main tabs and panels.">
             <span class="tour-icon">?</span>
             Quick tour
         </button>
-        <a href="technical-appendix.html" target="_blank" class="btn-link-small">
+        <a href="technical-appendix.html"
+           target="_blank"
+           class="btn-link-small"
+           data-tour-step="tech-appendix-link"
+           data-tour-title="Technical appendix"
+           data-tour-content="Open the full technical appendix with detailed methods, numerical examples and model documentation in a separate window.">
             Technical appendix
         </a>
     </div>
@@ -43,7 +59,10 @@
 
 <main class="app-shell">
     <!-- TAB BAR -->
-    <nav class="tab-bar" data-tour-step="tabs" data-tour-title="Navigation tabs" data-tour-content="Use these tabs to move between configuration, results, costing, national simulation, saved scenarios, and methods.">
+    <nav class="tab-bar"
+         data-tour-step="tabs"
+         data-tour-title="Navigation tabs"
+         data-tour-content="Use these tabs to move between configuration, results, costing, national simulation, saved scenarios, about and advanced methods.">
         <button class="tab-link active" data-tab="intro" type="button">Introduction</button>
         <button class="tab-link" data-tab="attributes" type="button">Attributes and levels</button>
         <button class="tab-link" data-tab="config" type="button">Configuration</button>
@@ -57,7 +76,10 @@
 
     <!-- INTRO TAB -->
     <section id="tab-intro" class="tab-panel active">
-        <div class="grid-two" data-tour-step="intro" data-tour-title="Welcome to STEPS" data-tour-content="This introduction explains what STEPS does and how to use it in policy meetings and workshops.">
+        <div class="grid-two"
+             data-tour-step="intro"
+             data-tour-title="Welcome to STEPS"
+             data-tour-content="This introduction explains the purpose of STEPS and how to use it in policy meetings, workshops and business case discussions.">
             <div class="card">
                 <h2>What STEPS does</h2>
                 <p>
@@ -65,21 +87,18 @@
                     Training Programmes in India. It links three main inputs:
                 </p>
                 <ul class="plain-list">
-                    <li>Preferences from a discrete choice experiment with stakeholders, estimated using a mixed logit model and a two-class latent class model (supporters and resisters).</li>
+                    <li>Preferences from a discrete choice experiment with stakeholders.</li>
                     <li>Costing templates from WHO, NIE and NCDC for Frontline, Intermediate and Advanced programmes.</li>
                     <li>Simple epidemiological multipliers that translate training scale-up into public health benefits.</li>
                 </ul>
                 <p>
                     Users can set a programme configuration, see endorsement rates, costs and benefit–cost ratios,
-                    and compare saved scenarios side by side for business case discussions. The tool highlights both
-                    where configurations are attractive to the supportive group and where the resister group remains
-                    unconvinced, which is important when anticipating implementation challenges.
+                    and compare saved scenarios side by side for business case discussions.
                 </p>
                 <p>
                     The tool is designed to support rapid, transparent conversations with the Government of India,
                     WHO, the World Bank and other partners. It keeps all assumptions visible and connects preference
-                    evidence directly to programme design and economic summaries so that results can be scrutinised,
-                    challenged and refined in real time.
+                    evidence directly to programme design and economic summaries.
                 </p>
             </div>
             <div class="card">
@@ -89,23 +108,20 @@
                         mentorship intensity, response time, delivery mode, number of cohorts, cohort size and cost per trainee per month.
                     </li>
                     <li>Keep the cost slider within the range used in the experiment (75,000 to 400,000 rupees per trainee per month).</li>
-                    <li>Select the preference model: average mixed logit or the supportive latent class group. Use the supportive group for target-setting and the full mixed logit for a more conservative view that incorporates resisters.</li>
+                    <li>Select the preference model: average mixed logit or the supportive latent class group.</li>
                     <li>Click <strong>Apply configuration</strong> to update all calculations, then use
-                        <strong>View results summary</strong> to open a scenario summary with headline recommendations
-                        that can be copied into concept notes or slides.
+                        <strong>View results</strong> to open a scenario summary with headline recommendations.
                     </li>
                     <li>Save promising scenarios in the <strong>Saved scenarios</strong> tab and download them as
                         Excel or a policy brief PDF for reporting and World Bank documentation.
                     </li>
                     <li>For workshops or sensitivity checks, use the <strong>Advanced and methods</strong> tab to adjust
-                        epidemiological multipliers and display currency, and to open the full technical appendix in a new window.
+                        epidemiological multipliers and display currency, and to open the full technical appendix.
                     </li>
                 </ol>
                 <p class="note">
                     STEPS is designed for laptops, desktops, tablets and mobiles. It can be used live in workshops
                     with central and state level partners, with results projected on screen or shared via remote meetings.
-                    The structure and language are intentionally business-case ready so that outputs can flow straight into
-                    briefs and formal documents.
                 </p>
             </div>
         </div>
@@ -113,7 +129,10 @@
 
     <!-- ATTRIBUTES TAB -->
     <section id="tab-attributes" class="tab-panel">
-        <div class="card" data-tour-step="attributes" data-tour-title="Attributes and levels" data-tour-content="This section explains how FETP options are described in the discrete choice experiment and how STEPS uses those attributes.">
+        <div class="card"
+             data-tour-step="attributes"
+             data-tour-title="Attributes and levels"
+             data-tour-content="This section explains how FETP options are described in the discrete choice experiment and how STEPS uses those attributes in the preference models.">
             <h2>Attributes and levels in the FETP preference study</h2>
             <p>
                 The discrete choice experiment asked stakeholders to choose between alternative FETP programme designs
@@ -138,8 +157,7 @@
                         </div>
                         <div class="attr-cell-expl">
                             Indicates whether the programme is Frontline, Intermediate or Advanced. Duration reflects
-                            the typical length of training and field work for each tier and drives differences in cost
-                            and epidemiological impact.
+                            the typical length of training and field work for each tier.
                         </div>
                     </div>
                     <div class="attr-table-row">
@@ -151,8 +169,7 @@
                         </div>
                         <div class="attr-cell-expl">
                             Shows the main career benefit for completing the programme. Incentives influence how attractive
-                            training is for potential trainees and their organisations and are key drivers of endorsement
-                            in both the mixed logit and latent class models.
+                            training is for potential trainees and their organisations.
                         </div>
                     </div>
                     <div class="attr-table-row">
@@ -164,8 +181,7 @@
                         </div>
                         <div class="attr-cell-expl">
                             Captures the amount of hands-on mentoring support. Higher intensity mentoring is more
-                            attractive but increases programme cost. The resister class is relatively less responsive
-                            to changes here than the supportive class, which is documented in the technical appendix.
+                            attractive but increases programme cost.
                         </div>
                     </div>
                     <div class="attr-table-row">
@@ -177,8 +193,7 @@
                         </div>
                         <div class="attr-cell-expl">
                             Describes how teaching is delivered. Blended delivery combines classroom, online and field
-                            components. Fully online options lower some costs but may reduce endorsement, particularly
-                            among the supportive group.
+                            components. Fully online options lower some costs but may reduce endorsement.
                         </div>
                     </div>
                     <div class="attr-table-row">
@@ -190,8 +205,7 @@
                         </div>
                         <div class="attr-cell-expl">
                             Summarises how quickly graduates help the system detect and respond to outbreaks or public
-                            health events once training is complete. Faster response times are particularly valued in
-                            the supportive class and feed directly into the epidemiological multipliers.
+                            health events once training is complete.
                         </div>
                     </div>
                     <div class="attr-table-row">
@@ -202,15 +216,13 @@
                         <div class="attr-cell-expl">
                             Total programme cost per trainee per month. In the experiment this varied from 75,000 to
                             400,000 rupees per trainee per month. STEPS keeps the cost slider inside this range so that
-                            outputs remain consistent with the values used in the models. The supportive class shows
-                            clear cost sensitivity; the resister class is more cost-insensitive, which is why its
-                            willingness-to-pay estimates are treated cautiously.
+                            outputs remain consistent with the values used in the models.
                         </div>
                     </div>
                 </div>
             </div>
 
-            <h3>Opt-out, latent classes and cost templates</h3>
+            <h3>Opt-out and cost templates</h3>
             <div class="attributes-layout attributes-layout-secondary">
                 <div class="attr-table-card">
                     <div class="attr-table-header">
@@ -226,22 +238,7 @@
                         <div class="attr-cell-expl">
                             The discrete choice experiment included an explicit opt-out option. STEPS uses this as the
                             benchmark when calculating endorsement. Endorsement is the predicted share choosing the
-                            programme configuration rather than opting out and can be computed either for the overall
-                            mixed logit model or for the supportive class alone.
-                        </div>
-                    </div>
-                    <div class="attr-table-row">
-                        <div class="attr-cell-title">Latent classes (supporters and resisters)</div>
-                        <div class="attr-cell-levels">
-                            Class 1: training resisters with low endorsement and weak, often imprecise cost sensitivity.<br>
-                            Class 2: training supporters with structured trade-offs across attributes and clear cost sensitivity.
-                        </div>
-                        <div class="attr-cell-expl">
-                            The two-class latent class model separates respondents into a majority supporter group and a
-                            smaller resister group. STEPS exposes the supporter class as a preference model option for
-                            policy analysis and uses the existence of the resister class to explain why even attractive
-                            designs may not reach full endorsement. Detailed latent class results, including coefficient
-                            tables and interpretation, are reported in the technical appendix.
+                            programme configuration rather than opting out.
                         </div>
                     </div>
                     <div class="attr-table-row">
@@ -263,8 +260,7 @@
                         </div>
                         <div class="attr-cell-expl">
                             When the opportunity cost toggle is on, STEPS adds this to programme cost, yielding total
-                            economic cost. When off, outputs focus on budgetary cost only. The technical appendix includes
-                            worked examples showing how total economic cost is built up from the template.
+                            economic cost. When off, outputs focus on budgetary cost only.
                         </div>
                     </div>
                     <div class="attr-table-row">
@@ -275,8 +271,6 @@
                         <div class="attr-cell-expl">
                             Users can switch between the average mixed logit model and the supportive latent class group.
                             Endorsement and willingness-to-pay values change accordingly, which is useful for sensitivity analysis.
-                            The resister class estimates are reported for completeness but are not offered as a separate
-                            policy scenario because their implied willingness to pay is unstable.
                         </div>
                     </div>
                 </div>
@@ -286,15 +280,17 @@
                 Training B and reference attribute levels form the baseline. The alternative specific constant
                 for Training A captures a layout effect. The opt-out constant captures the general
                 tendency to choose neither training option. STEPS uses the opt-out constant when predicting
-                overall endorsement of any FETP option versus no FETP, and the latent class structure to
-                highlight where a substantial resister group remains even when designs are attractive.
+                overall endorsement of any FETP option versus no FETP.
             </p>
         </div>
     </section>
 
     <!-- CONFIG TAB -->
     <section id="tab-config" class="tab-panel">
-        <div class="grid-two-stretch" data-tour-step="config" data-tour-title="Configure a scenario" data-tour-content="Use these controls to set up an FETP configuration. The summary on the right updates once you apply the configuration.">
+        <div class="grid-two-stretch"
+             data-tour-step="config"
+             data-tour-title="Configure a scenario"
+             data-tour-content="Use these controls to set up an FETP configuration. After applying, the summary panel on the right updates with endorsement and a headline recommendation.">
             <div class="card card-config">
                 <h2>Configure an FETP scale-up option</h2>
                 <div class="form-grid">
@@ -409,8 +405,7 @@
                         <p class="hint">
                             The supportive group uses the Class 2 parameters from the latent class model. Class 1 represents
                             training resisters who are largely cost insensitive, with imprecisely estimated willingness to pay.
-                            It is not recommended for policy targeting but is reported in the technical appendix as part of
-                            the full preference structure.
+                            It is not recommended for policy targeting.
                         </p>
                     </div>
 
@@ -457,7 +452,12 @@
                 </div>
 
                 <div class="button-row button-row-main">
-                    <button id="update-results" class="btn-primary" type="button" data-tour-step="apply" data-tour-title="Apply configuration" data-tour-content="Click here after you set the configuration. This updates endorsement, costs, benefits and national results.">
+                    <button id="update-results"
+                            class="btn-primary"
+                            type="button"
+                            data-tour-step="apply"
+                            data-tour-title="Apply configuration"
+                            data-tour-content="Click here after you set the configuration. This updates endorsement, costs, benefits and national results.">
                         Apply configuration
                     </button>
                     <button id="open-snapshot" class="btn-secondary" type="button">
@@ -469,7 +469,10 @@
                 </div>
             </div>
 
-            <div class="card card-secondary config-summary-card" data-tour-step="config-summary" data-tour-title="Configuration summary" data-tour-content="This summary shows the current configuration, endorsement and a headline recommendation once you apply the configuration.">
+            <div class="card card-secondary config-summary-card"
+                 data-tour-step="config-summary"
+                 data-tour-title="Configuration summary"
+                 data-tour-content="This summary shows the current configuration, endorsement and a headline recommendation once you apply the configuration.">
                 <div class="config-summary-header">
                     <h2>Current configuration at a glance</h2>
                     <button type="button" class="info-icon" data-tooltip="Snapshot of the configuration you have selected. Use this when presenting to summarise the scenario in words." aria-label="Current configuration information">i</button>
@@ -496,9 +499,7 @@
                     <h4>Briefing text (copy into emails or reports)</h4>
                     <p id="headline-briefing-text">
                         Once a configuration is applied, this box will provide a short narrative summary that you can copy
-                        into briefing notes, World Bank documents or meeting minutes. The summary draws explicitly on
-                        endorsement levels, the presence of a resister group and the benefit–cost ratio to give a
-                        clear recommendation in plain language.
+                        into briefing notes, World Bank documents or meeting minutes.
                     </p>
                 </div>
             </div>
@@ -507,7 +508,10 @@
 
     <!-- RESULTS TAB -->
     <section id="tab-results" class="tab-panel">
-        <div class="results-grid" data-tour-step="results" data-tour-title="Results and interpretation" data-tour-content="This view brings together endorsement, willingness to pay, costs, benefits and epidemiological results for the current configuration.">
+        <div class="results-grid"
+             data-tour-step="results"
+             data-tour-title="Results and interpretation"
+             data-tour-content="This view brings together endorsement, willingness to pay, costs, benefits and epidemiological implications for the current configuration.">
             <div class="card">
                 <div class="card-header-with-info">
                     <h2>Endorsement and opt-out</h2>
@@ -516,9 +520,7 @@
                 <p class="hint">
                     These percentages are obtained by plugging the chosen configuration into the mixed logit or latent class
                     model and comparing the utility of any FETP option with the utility of opting out. They summarise how
-                    attractive the configuration is to stakeholders in the preference study. Large gaps between the supportive
-                    class and the mixed logit results indicate a substantial resister group that may require additional
-                    engagement or complementary interventions.
+                    attractive the configuration is to stakeholders in the preference study.
                 </p>
                 <div class="metric-pair metric-pair-tight">
                     <div class="metric-block">
@@ -549,9 +551,7 @@
                 <p class="hint">
                     Willingness to pay (WTP) per trainee per month is derived from the preference model by dividing attribute
                     coefficients by the cost coefficient. It indicates how much value stakeholders attach to the bundle of
-                    attributes in this configuration relative to a baseline. WTP is primarily interpreted for the mixed logit
-                    and supportive class; WTP estimates for the resister class are reported in the appendix but are not used
-                    for headline decision support because of their instability.
+                    attributes in this configuration relative to a baseline.
                 </p>
                 <div class="metric-pair metric-pair-tight">
                     <div class="metric-block">
@@ -589,7 +589,7 @@
                     <span class="metric-label">Benefit–cost ratio (per cohort)</span>
                     <span class="metric-value" id="bcr">-</span>
                     <p class="metric-caption">
-                        Total indicative benefit per cohort divided by total economic cost per cohort. Values above one suggest that benefits exceed costs on the assumptions used. The technical appendix provides worked numerical examples that trace this ratio from raw inputs.
+                        Total indicative benefit per cohort divided by total economic cost per cohort. Values above one suggest that benefits exceed costs on the assumptions used.
                     </p>
                 </div>
                 <div class="chart-block">
@@ -606,8 +606,6 @@
                     Graduates and outbreak responses are obtained by combining endorsement with simple multipliers
                     on cohort size and number of cohorts. Indicative benefit per cohort converts additional graduates and
                     outbreak responses into monetary terms using values that can be adjusted in the Advanced and methods tab.
-                    The technical appendix shows step-by-step calculations for typical configurations so that country teams
-                    can replicate or adapt them.
                 </p>
                 <div class="metric-pair metric-pair-tight">
                     <div class="metric-block">
@@ -641,7 +639,10 @@
 
     <!-- COSTING TAB -->
     <section id="tab-costing" class="tab-panel">
-        <div class="grid-two-stretch" data-tour-step="costing" data-tour-title="Costing details" data-tour-content="This view shows how total programme and economic costs for the configuration are constructed from the chosen cost template.">
+        <div class="grid-two-stretch"
+             data-tour-step="costing"
+             data-tour-title="Costing details"
+             data-tour-content="This view shows how programme and economic costs are constructed from the chosen cost template, including opportunity cost where relevant.">
             <div class="card">
                 <div class="card-header-with-info">
                     <h2>Cost templates and sources</h2>
@@ -669,8 +670,6 @@
                 <p class="note">
                     Templates that include the opportunity cost of trainee time feed into total economic cost
                     when the opportunity cost switch is on. When it is off, results focus on budgetary costs only.
-                    Worked examples in the technical appendix show how individual cost lines aggregate to the per trainee
-                    per month figures used in the configuration tab.
                 </p>
             </div>
 
@@ -704,7 +703,10 @@
 
     <!-- NATIONAL SIMULATION TAB -->
     <section id="tab-natsim" class="tab-panel">
-        <div class="card" data-tour-step="natsim" data-tour-title="National simulation" data-tour-content="Here you can see how the configuration scales up nationally: total cost, total benefit, net benefit, graduates and outbreak responses.">
+        <div class="card"
+             data-tour-step="natsim"
+             data-tour-title="National simulation"
+             data-tour-content="Here you can see how the configuration scales up nationally: total cost, total benefit, net benefit, graduates and outbreak responses.">
             <div class="card-header-with-info">
                 <h2>National simulation and sensitivity</h2>
                 <button type="button" class="info-icon" data-tooltip="Scales the current configuration to the national level using the number of cohorts. Useful for high level business case discussions." aria-label="National simulation information">i</button>
@@ -713,8 +715,7 @@
                 This view scales the current configuration to the national level using the number of cohorts you
                 have selected. It is intended for business case discussions and high level sensitivity checks.
                 To see how results change, adjust cost, cohort size, number of cohorts or the epidemiological
-                multipliers in the Advanced and methods tab. The same logic is documented step by step in the
-                technical appendix so that national teams can reproduce calculations.
+                multipliers in the Advanced and methods tab.
             </p>
             <div class="grid-two">
                 <div class="natsim-column">
@@ -775,8 +776,7 @@
                 <p id="natsim-summary-text">
                     Once a configuration is applied, this section will summarise national graduates, total economic cost,
                     total indicative benefit, net benefit and annual outbreak responses in plain language that can be dropped
-                    directly into concept notes or project documents, including references to the presence of a resister group
-                    where relevant.
+                    directly into concept notes or project documents.
                 </p>
             </div>
         </div>
@@ -784,7 +784,10 @@
 
     <!-- SCENARIOS TAB -->
     <section id="tab-scenarios" class="tab-panel">
-        <div class="card" data-tour-step="scenarios" data-tour-title="Saved scenarios" data-tour-content="Save and compare scenarios here, then export them to Excel or a PDF policy brief.">
+        <div class="card"
+             data-tour-step="scenarios"
+             data-tour-title="Saved scenarios"
+             data-tour-content="Save and compare scenarios here, then export them to Excel or a PDF policy brief for external reporting.">
             <div class="card-header-with-info">
                 <h2>Saved scenarios for comparison</h2>
                 <button type="button" class="info-icon" data-tooltip="Use this table to compare configurations that look promising and to export them for external reporting." aria-label="Saved scenarios information">i</button>
@@ -833,7 +836,10 @@
 
     <!-- ABOUT TAB -->
     <section id="tab-about" class="tab-panel">
-        <div class="card" data-tour-step="about" data-tour-title="About STEPS" data-tour-content="Background on how STEPS fits into a broader business case for FETP investment in India.">
+        <div class="card"
+             data-tour-step="about"
+             data-tour-title="About STEPS"
+             data-tour-content="Background on how STEPS fits into a broader business case for FETP investment in India.">
             <h2>About STEPS</h2>
             <p>
                 The University of Newcastle is developing a business case for strengthening and scaling FETP
@@ -849,7 +855,6 @@
                 <li>How do costs and benefits change when moving from Frontline to Intermediate or Advanced tiers?</li>
                 <li>What happens to endorsement when mentorship intensity is increased?</li>
                 <li>How many cohorts and trainees are needed to reach target scale?</li>
-                <li>How large is the resister group for a given configuration, and what does that imply for communication and implementation strategies?</li>
             </ul>
             <p class="note">
                 Prepared by <strong>Mesfin Genie, PhD</strong>, Newcastle Business School, The University of
@@ -861,7 +866,10 @@
 
     <!-- TECHNICAL / ADVANCED TAB -->
     <section id="tab-technical" class="tab-panel">
-        <div class="grid-two-stretch" data-tour-step="advanced" data-tour-title="Advanced settings and methods" data-tour-content="Use these settings to align STEPS assumptions with country estimates and to access the detailed technical appendix.">
+        <div class="grid-two-stretch"
+             data-tour-step="advanced"
+             data-tour-title="Advanced settings and methods"
+             data-tour-content="Use these settings to align STEPS assumptions with country estimates and to access the detailed technical appendix. Changes apply within this browser session.">
             <div class="card">
                 <h2>Advanced settings and assumptions</h2>
                 <p>
@@ -872,9 +880,7 @@
                 <p class="note">
                     Use these settings when you want to align STEPS assumptions with updated national estimates or
                     discussions with partner organisations. For example, you can change the indicative value per graduate or per outbreak
-                    response, or match the INR to USD display rate to current exchange rates. All underlying logic and
-                    step-by-step numerical examples are documented in the technical appendix, which opens in a dedicated
-                    window for easier reading and printing.
+                    response, or match the INR to USD display rate to current exchange rates.
                 </p>
                 <form id="advanced-settings-form" class="form-grid">
                     <div class="form-group form-group-wide">
@@ -1004,13 +1010,11 @@ STEPS assumption log will appear here after advanced settings and a configuratio
                 <p>
                     The technical appendix explains how STEPS uses discrete choice experiment estimates, cost
                     templates and epidemiological multipliers. It includes numerical examples based on the final
-                    mixed logit and latent class models (supporters and resisters) and the willingness-to-pay results.
+                    mixed logit and latent class models and the willingness-to-pay results.
                 </p>
                 <p>
                     Open the full appendix in a separate window for easier reading or printing. The appendix is written
-                    for policy audiences but also contains enough detail for technical reviewers in ministries, WHO or the World Bank,
-                    with annotated examples for each tab: configuration, results, costing, national simulation and
-                    scenario exports.
+                    for policy audiences but also contains enough detail for technical reviewers in ministries, WHO or the World Bank.
                 </p>
                 <div class="button-row">
                     <a id="open-technical-window" href="technical-appendix.html" target="_blank" class="btn-secondary">
@@ -1021,9 +1025,7 @@ STEPS assumption log will appear here after advanced settings and a configuratio
                     <p>
                         The appendix covers the preference model, endorsement probabilities, willingness to pay,
                         cost templates, epidemiological multipliers and national simulation logic. It includes step-by-step
-                        worked examples that match typical configurations such as Advanced programmes with high mentorship,
-                        and shows explicitly how the resister class results are used for interpretation and sensitivity
-                        rather than headline recommendations.
+                        worked examples that match typical configurations such as Advanced programmes with high mentorship.
                     </p>
                 </div>
             </div>
@@ -1047,7 +1049,11 @@ STEPS assumption log will appear here after advanced settings and a configuratio
 
 <!-- GUIDED TOUR OVERLAY -->
 <div id="tour-overlay" class="tour-overlay hidden" aria-hidden="true"></div>
-<div id="tour-popover" class="tour-popover hidden" role="dialog" aria-modal="false" aria-labelledby="tour-title">
+<div id="tour-popover"
+     class="tour-popover hidden"
+     role="dialog"
+     aria-modal="false"
+     aria-labelledby="tour-title">
     <div class="tour-popover-header">
         <h3 id="tour-title">Tour step</h3>
         <button type="button" id="tour-close" class="tour-close-btn" aria-label="Close tour">&times;</button>
