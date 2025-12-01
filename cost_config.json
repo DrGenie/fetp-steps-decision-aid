@@ -1,0 +1,1536 @@
+{
+  "frontline": {
+    "WHO": {
+      "label": "Frontline – WHO template (6 cohorts)",
+      "cohortsRepresented": 6,
+      "notes": "WHO cost template for Frontline FETP covering six cohorts. Amounts are total across six cohorts and are used to derive percentage shares by cost component.",
+      "components": [
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "In-country programme staff",
+          "description": "Salaries and benefits for local staff (faculty and secretariat) dedicated to the programme, including trainers, convenors, mentors and administrators.",
+          "amountTotal": 10694704,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "Other",
+          "description": "Salary and benefits for consultants, advisors and other external experts, including costs borne by external funders.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office equipment (staff/faculty)",
+          "description": "Purchase costs for desktop computers, laptops, projectors, printers and similar items for staff and faculty.",
+          "amountTotal": 200000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office software (staff/faculty)",
+          "description": "Software for data analysis, training delivery or general office use for staff and faculty.",
+          "amountTotal": 20000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Facilities",
+          "subCategory": "Rent and utilities (staff/faculty)",
+          "description": "Lease of office space and utilities such as electricity, water and internet used by FETP staff and faculty.",
+          "amountTotal": 1200000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Allowances",
+          "description": "Trainee stipends, scholarships or other allowances.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee equipment",
+          "description": "Laptops, internet access and similar equipment provided to trainees.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee software",
+          "description": "Software licences provided directly to trainees.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Materials",
+          "description": "Printing of training materials, manuals and other educational resources.",
+          "amountTotal": 30000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Workshops and seminars",
+          "description": "Organising training sessions, including venue hire, catering and other training event costs.",
+          "amountTotal": 5340700,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "In-country travel",
+          "description": "Travel for faculty, mentors and trainees within the country for training, outbreaks, meetings or conferences, including per diem, lodging and transport.",
+          "amountTotal": 32462500,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "International travel",
+          "description": "International travel for faculty, mentors and trainees for conferences, outbreaks and meetings, including per diem, lodging and transport.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Other expenses",
+          "subCategory": "Other direct costs",
+          "description": "Any other direct cost associated with the FETP.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Management and oversight",
+          "description": "Salaries for upper management who oversee programme operations but are not involved in day-to-day delivery.",
+          "amountTotal": 7821360,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Office maintenance",
+          "description": "General office maintenance that is not directly attributable to the programme but is necessary for operations.",
+          "amountTotal": 480000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "In-kind contributions",
+          "subCategory": "Salary",
+          "description": "In-kind salary costs for trainers, mentors and other support staff not directly charged to the programme.",
+          "amountTotal": 2494704,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Facility upgrades",
+          "description": "Upgrading or maintaining facilities used by the programme.",
+          "amountTotal": 400000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Equipment depreciation",
+          "description": "Depreciation of high-value items such as computers and office furniture.",
+          "amountTotal": 200000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Utilities",
+          "subCategory": "Shared services",
+          "description": "Shared utilities such as security, cleaning and shared internet access that benefit the wider organisation.",
+          "amountTotal": 1000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Professional services",
+          "subCategory": "Legal and financial consulting",
+          "description": "Legal and financial services, such as auditing, compliance checks and contract negotiations.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Training and capacity building",
+          "subCategory": "Staff development",
+          "description": "Training and development of staff members who are not direct trainees but support the programme.",
+          "amountTotal": 100000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Opportunity cost",
+          "subCategory": "Trainee salary payments had they been employed",
+          "description": "Value of trainee salary time while in training rather than in normal duties. Treated as economic (opportunity) cost.",
+          "amountTotal": 42038790,
+          "isOpportunityCost": true
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Other indirect costs",
+          "subCategory": "Other indirect costs",
+          "description": "Any other indirect cost associated with the FETP.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        }
+      ]
+    }
+  },
+  "intermediate": {
+    "WHO": {
+      "label": "Intermediate – WHO template",
+      "cohortsRepresented": 1,
+      "notes": "WHO cost template for Intermediate FETP. Amounts are total programme costs used to derive component shares.",
+      "components": [
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "In-country programme staff",
+          "description": "Salaries and benefits for local staff dedicated to the intermediate programme.",
+          "amountTotal": 6571500,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "Other",
+          "description": "Salary and benefits for consultants and advisors.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office equipment (staff/faculty)",
+          "description": "Office equipment for intermediate staff and faculty.",
+          "amountTotal": 200000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office software (staff/faculty)",
+          "description": "Software for intermediate programme staff and faculty.",
+          "amountTotal": 20000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Facilities",
+          "subCategory": "Rent and utilities (staff/faculty)",
+          "description": "Rent and utilities for office space used by intermediate programme staff.",
+          "amountTotal": 600000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Allowances",
+          "description": "Trainee stipends and allowances for the intermediate programme.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee equipment",
+          "description": "Laptops and other equipment for intermediate trainees.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee software",
+          "description": "Software licences for intermediate trainees.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Materials",
+          "description": "Training materials and printing for intermediate cohorts.",
+          "amountTotal": 45000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Workshops and seminars",
+          "description": "Workshops and seminars for intermediate cohorts.",
+          "amountTotal": 2280000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "In-country travel",
+          "description": "In-country travel for intermediate faculty, mentors and trainees.",
+          "amountTotal": 11758000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "International travel",
+          "description": "International travel related to intermediate training and meetings.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Other expenses",
+          "subCategory": "Other direct costs",
+          "description": "Other direct costs for the intermediate programme.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Management and oversight",
+          "description": "Management and oversight for the intermediate programme.",
+          "amountTotal": 4396344,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Office maintenance",
+          "description": "Office maintenance that supports the intermediate programme.",
+          "amountTotal": 240000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "In-kind contributions",
+          "subCategory": "Salary",
+          "description": "In-kind salary contributions to the intermediate programme.",
+          "amountTotal": 2500000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Facility upgrades",
+          "description": "Facility upgrades that benefit the intermediate programme.",
+          "amountTotal": 500000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Equipment depreciation",
+          "description": "Depreciation of equipment used in the intermediate programme.",
+          "amountTotal": 100000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Utilities",
+          "subCategory": "Shared services",
+          "description": "Shared utilities and services for the intermediate programme.",
+          "amountTotal": 500000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Professional services",
+          "subCategory": "Legal and financial consulting",
+          "description": "Legal and financial services for the intermediate programme.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Training and capacity building",
+          "subCategory": "Staff development",
+          "description": "Staff development for personnel who support intermediate training.",
+          "amountTotal": 100000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Opportunity cost",
+          "subCategory": "Trainee salary payments had they been employed",
+          "description": "Opportunity cost of trainee salary time (intermediate).",
+          "amountTotal": 5707525,
+          "isOpportunityCost": true
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Other indirect costs",
+          "subCategory": "Other indirect costs",
+          "description": "Other indirect costs for the intermediate programme.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        }
+      ]
+    },
+    "NIE": {
+      "label": "Intermediate – NIE template",
+      "cohortsRepresented": 1,
+      "notes": "NIE cost template for Intermediate FETP.",
+      "components": [
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "In-country programme staff",
+          "description": "Salaries and benefits for local staff for NIE intermediate programme.",
+          "amountTotal": 18180000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "Other",
+          "description": "Consultants and advisors (NIE intermediate).",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office equipment (staff/faculty)",
+          "description": "Office equipment for NIE intermediate programme.",
+          "amountTotal": 1520000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office software (staff/faculty)",
+          "description": "Office software for NIE intermediate staff and faculty.",
+          "amountTotal": 7110000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Facilities",
+          "subCategory": "Rent and utilities (staff/faculty)",
+          "description": "Rent and utilities for NIE intermediate staff.",
+          "amountTotal": 3995000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Allowances",
+          "description": "Trainee allowances for NIE intermediate programme.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee equipment",
+          "description": "Trainee equipment for NIE intermediate programme.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee software",
+          "description": "Trainee software for NIE intermediate programme.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Materials",
+          "description": "Training materials for NIE intermediate programme.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Workshops and seminars",
+          "description": "Workshops and seminars for NIE intermediate cohorts.",
+          "amountTotal": 4119950,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "In-country travel",
+          "description": "In-country travel costs for NIE intermediate programme.",
+          "amountTotal": 138998875,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "International travel",
+          "description": "International travel for NIE intermediate programme.",
+          "amountTotal": 34816125,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Other expenses",
+          "subCategory": "Other direct costs",
+          "description": "Other direct costs in NIE intermediate template.",
+          "amountTotal": 34782000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Management and oversight",
+          "description": "Management and oversight for NIE intermediate programme.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Office maintenance",
+          "description": "Office maintenance for NIE intermediate programme.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "In-kind contributions",
+          "subCategory": "Salary",
+          "description": "In-kind salary contributions (NIE intermediate).",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Facility upgrades",
+          "description": "Facility upgrades related to NIE intermediate programme.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Equipment depreciation",
+          "description": "Equipment depreciation in NIE intermediate template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Utilities",
+          "subCategory": "Shared services",
+          "description": "Shared utilities for NIE intermediate programme.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Professional services",
+          "subCategory": "Legal and financial consulting",
+          "description": "Professional services in NIE intermediate template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Training and capacity building",
+          "subCategory": "Staff development",
+          "description": "Staff development for NIE intermediate staff.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Opportunity cost",
+          "subCategory": "Trainee salary payments had they been employed",
+          "description": "Opportunity cost for NIE intermediate trainees (not separately provided).",
+          "amountTotal": 0,
+          "isOpportunityCost": true
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Other indirect costs",
+          "subCategory": "Other indirect costs",
+          "description": "Other indirect costs in NIE intermediate template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        }
+      ]
+    },
+    "NCDC": {
+      "label": "Intermediate – NCDC template",
+      "cohortsRepresented": 1,
+      "notes": "NCDC cost template for Intermediate FETP.",
+      "components": [
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "In-country programme staff",
+          "description": "Salaries and benefits for local NCDC staff for the intermediate programme.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "Other",
+          "description": "Consultants and advisors in NCDC intermediate template.",
+          "amountTotal": 100000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office equipment (staff/faculty)",
+          "description": "Office equipment for NCDC intermediate programme.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office software (staff/faculty)",
+          "description": "Office software for NCDC intermediate programme.",
+          "amountTotal": 100000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Facilities",
+          "subCategory": "Rent and utilities (staff/faculty)",
+          "description": "Rent and utilities for NCDC intermediate programme.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Allowances",
+          "description": "Trainee allowances in NCDC intermediate template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee equipment",
+          "description": "Trainee equipment in NCDC intermediate template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee software",
+          "description": "Trainee software in NCDC intermediate template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Materials",
+          "description": "Training materials in NCDC intermediate template.",
+          "amountTotal": 100000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Workshops and seminars",
+          "description": "Workshops and seminars for NCDC intermediate programme.",
+          "amountTotal": 500000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "In-country travel",
+          "description": "In-country travel for NCDC intermediate programme.",
+          "amountTotal": 2000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "International travel",
+          "description": "International travel in NCDC intermediate template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Other expenses",
+          "subCategory": "Other direct costs",
+          "description": "Other direct costs in NCDC intermediate template.",
+          "amountTotal": 100000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Management and oversight",
+          "description": "Management and oversight for NCDC intermediate programme.",
+          "amountTotal": 6000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Office maintenance",
+          "description": "Office maintenance in NCDC intermediate template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "In-kind contributions",
+          "subCategory": "Salary",
+          "description": "In-kind salary contributions in NCDC intermediate template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Facility upgrades",
+          "description": "Facility upgrades in NCDC intermediate template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Equipment depreciation",
+          "description": "Equipment depreciation in NCDC intermediate template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Utilities",
+          "subCategory": "Shared services",
+          "description": "Shared utilities in NCDC intermediate template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Professional services",
+          "subCategory": "Legal and financial consulting",
+          "description": "Professional services in NCDC intermediate template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Training and capacity building",
+          "subCategory": "Staff development",
+          "description": "Staff development in NCDC intermediate template.",
+          "amountTotal": 100000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Opportunity cost",
+          "subCategory": "Trainee salary payments had they been employed",
+          "description": "Opportunity cost in NCDC intermediate template (not separately provided).",
+          "amountTotal": 0,
+          "isOpportunityCost": true
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Other indirect costs",
+          "subCategory": "Other indirect costs",
+          "description": "Other indirect costs in NCDC intermediate template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        }
+      ]
+    },
+    "Overall": {
+      "label": "Intermediate – combined Overall template (WHO + NIE + NCDC)",
+      "cohortsRepresented": 1,
+      "notes": "Combined template that uses the Overall column, summing WHO, NIE and NCDC where available.",
+      "components": [
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "In-country programme staff",
+          "description": "Combined in-country programme staff salaries for intermediate tier.",
+          "amountTotal": 24751500,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "Other",
+          "description": "Combined consultants and advisor costs for intermediate tier.",
+          "amountTotal": 100000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office equipment (staff/faculty)",
+          "description": "Combined office equipment costs for intermediate tier.",
+          "amountTotal": 1720000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office software (staff/faculty)",
+          "description": "Combined office software costs for intermediate tier.",
+          "amountTotal": 7230000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Facilities",
+          "subCategory": "Rent and utilities (staff/faculty)",
+          "description": "Combined rent and utilities for intermediate tier.",
+          "amountTotal": 4595000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Allowances",
+          "description": "Combined trainee allowances (intermediate tier).",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee equipment",
+          "description": "Combined trainee equipment (intermediate tier).",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee software",
+          "description": "Combined trainee software (intermediate tier).",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Materials",
+          "description": "Combined training materials for intermediate tier.",
+          "amountTotal": 145000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Workshops and seminars",
+          "description": "Combined workshops and seminars for intermediate tier.",
+          "amountTotal": 6899950,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "In-country travel",
+          "description": "Combined in-country travel for intermediate tier.",
+          "amountTotal": 152756875,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "International travel",
+          "description": "Combined international travel for intermediate tier.",
+          "amountTotal": 34816125,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Other expenses",
+          "subCategory": "Other direct costs",
+          "description": "Combined other direct costs for intermediate tier.",
+          "amountTotal": 34882000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Management and oversight",
+          "description": "Combined management and oversight for intermediate tier.",
+          "amountTotal": 10396344,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Office maintenance",
+          "description": "Combined office maintenance for intermediate tier.",
+          "amountTotal": 240000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "In-kind contributions",
+          "subCategory": "Salary",
+          "description": "Combined in-kind salary contributions for intermediate tier.",
+          "amountTotal": 2500000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Facility upgrades",
+          "description": "Combined facility upgrades for intermediate tier.",
+          "amountTotal": 500000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Equipment depreciation",
+          "description": "Combined equipment depreciation for intermediate tier.",
+          "amountTotal": 100000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Utilities",
+          "subCategory": "Shared services",
+          "description": "Combined shared services for intermediate tier.",
+          "amountTotal": 500000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Professional services",
+          "subCategory": "Legal and financial consulting",
+          "description": "Combined professional services for intermediate tier.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Training and capacity building",
+          "subCategory": "Staff development",
+          "description": "Combined staff development for intermediate tier.",
+          "amountTotal": 200000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Opportunity cost",
+          "subCategory": "Trainee salary payments had they been employed",
+          "description": "Intermediate trainee opportunity cost (combined overall).",
+          "amountTotal": 5707525,
+          "isOpportunityCost": true
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Other indirect costs",
+          "subCategory": "Other indirect costs",
+          "description": "Combined other indirect costs for intermediate tier.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        }
+      ]
+    }
+  },
+  "advanced": {
+    "NIE": {
+      "label": "Advanced – NIE template",
+      "cohortsRepresented": 1,
+      "notes": "NIE cost template for Advanced FETP.",
+      "components": [
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "In-country programme staff",
+          "description": "Salaries and benefits for NIE advanced programme staff.",
+          "amountTotal": 15660000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "Other",
+          "description": "Consultants and advisors in NIE advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office equipment (staff/faculty)",
+          "description": "Office equipment for NIE advanced programme.",
+          "amountTotal": 1020000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office software (staff/faculty)",
+          "description": "Office software for NIE advanced programme.",
+          "amountTotal": 4310000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Facilities",
+          "subCategory": "Rent and utilities (staff/faculty)",
+          "description": "Rent and utilities for NIE advanced staff.",
+          "amountTotal": 6375000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Allowances",
+          "description": "Trainee allowances in NIE advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee equipment",
+          "description": "Trainee equipment in NIE advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee software",
+          "description": "Trainee software in NIE advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Materials",
+          "description": "Training materials in NIE advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Workshops and seminars",
+          "description": "Workshops and seminars in NIE advanced programme.",
+          "amountTotal": 2441200,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "In-country travel",
+          "description": "In-country travel for NIE advanced programme.",
+          "amountTotal": 97499500,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "International travel",
+          "description": "International travel in NIE advanced template.",
+          "amountTotal": 83300000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Other expenses",
+          "subCategory": "Other direct costs",
+          "description": "Other direct costs in NIE advanced template.",
+          "amountTotal": 731000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Management and oversight",
+          "description": "Management and oversight in NIE advanced template.",
+          "amountTotal": 20000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Office maintenance",
+          "description": "Office maintenance in NIE advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "In-kind contributions",
+          "subCategory": "Salary",
+          "description": "In-kind salary contributions in NIE advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Facility upgrades",
+          "description": "Facility upgrades in NIE advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Equipment depreciation",
+          "description": "Equipment depreciation in NIE advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Utilities",
+          "subCategory": "Shared services",
+          "description": "Shared utilities in NIE advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Professional services",
+          "subCategory": "Legal and financial consulting",
+          "description": "Professional services in NIE advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Training and capacity building",
+          "subCategory": "Staff development",
+          "description": "Staff development in NIE advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Opportunity cost",
+          "subCategory": "Trainee salary payments had they been employed",
+          "description": "Opportunity cost in NIE advanced template (not separately provided).",
+          "amountTotal": 0,
+          "isOpportunityCost": true
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Other indirect costs",
+          "subCategory": "Other indirect costs",
+          "description": "Other indirect costs in NIE advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        }
+      ]
+    },
+    "NCDC": {
+      "label": "Advanced – NCDC template",
+      "cohortsRepresented": 1,
+      "notes": "NCDC cost template for Advanced FETP.",
+      "components": [
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "In-country programme staff",
+          "description": "Salaries and benefits for NCDC advanced programme staff.",
+          "amountTotal": 12000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "Other",
+          "description": "Consultants and advisors in NCDC advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office equipment (staff/faculty)",
+          "description": "Office equipment for NCDC advanced programme.",
+          "amountTotal": 2000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office software (staff/faculty)",
+          "description": "Office software for NCDC advanced programme.",
+          "amountTotal": 1000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Facilities",
+          "subCategory": "Rent and utilities (staff/faculty)",
+          "description": "Rent and utilities in NCDC advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Allowances",
+          "description": "Trainee allowances in NCDC advanced template.",
+          "amountTotal": 25000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee equipment",
+          "description": "Trainee equipment in NCDC advanced template.",
+          "amountTotal": 1000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee software",
+          "description": "Trainee software in NCDC advanced template.",
+          "amountTotal": 500000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Materials",
+          "description": "Training materials in NCDC advanced template.",
+          "amountTotal": 500000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Workshops and seminars",
+          "description": "Workshops and seminars in NCDC advanced programme.",
+          "amountTotal": 3000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "In-country travel",
+          "description": "In-country travel for NCDC advanced programme.",
+          "amountTotal": 10000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "International travel",
+          "description": "International travel in NCDC advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Other expenses",
+          "subCategory": "Other direct costs",
+          "description": "Other direct costs in NCDC advanced template.",
+          "amountTotal": 500000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Management and oversight",
+          "description": "Management and oversight in NCDC advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Office maintenance",
+          "description": "Office maintenance in NCDC advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "In-kind contributions",
+          "subCategory": "Salary",
+          "description": "In-kind salary contributions in NCDC advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Facility upgrades",
+          "description": "Facility upgrades in NCDC advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Equipment depreciation",
+          "description": "Equipment depreciation in NCDC advanced template.",
+          "amountTotal": 1000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Utilities",
+          "subCategory": "Shared services",
+          "description": "Shared utilities in NCDC advanced template.",
+          "amountTotal": 1000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Professional services",
+          "subCategory": "Legal and financial consulting",
+          "description": "Professional services in NCDC advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Training and capacity building",
+          "subCategory": "Staff development",
+          "description": "Staff development in NCDC advanced template.",
+          "amountTotal": 200000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Opportunity cost",
+          "subCategory": "Trainee salary payments had they been employed",
+          "description": "Opportunity cost in NCDC advanced template (not separately provided).",
+          "amountTotal": 0,
+          "isOpportunityCost": true
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Other indirect costs",
+          "subCategory": "Other indirect costs",
+          "description": "Other indirect costs in NCDC advanced template.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        }
+      ]
+    },
+    "Overall": {
+      "label": "Advanced – combined Overall template (NIE + NCDC)",
+      "cohortsRepresented": 1,
+      "notes": "Combined template for advanced tier created by summing NIE and NCDC entries.",
+      "components": [
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "In-country programme staff",
+          "description": "Combined in-country programme staff salaries for advanced tier (NIE + NCDC).",
+          "amountTotal": 27660000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Salary and benefits",
+          "subCategory": "Other",
+          "description": "Combined consultants and advisors for advanced tier.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office equipment (staff/faculty)",
+          "description": "Combined office equipment for advanced tier.",
+          "amountTotal": 3020000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Equipment and supplies",
+          "subCategory": "Office software (staff/faculty)",
+          "description": "Combined office software for advanced tier.",
+          "amountTotal": 5310000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Facilities",
+          "subCategory": "Rent and utilities (staff/faculty)",
+          "description": "Combined rent and utilities for advanced tier.",
+          "amountTotal": 6375000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Allowances",
+          "description": "Combined trainee allowances for advanced tier.",
+          "amountTotal": 25000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee equipment",
+          "description": "Combined trainee equipment for advanced tier.",
+          "amountTotal": 1000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Trainee support",
+          "subCategory": "Trainee software",
+          "description": "Combined trainee software for advanced tier.",
+          "amountTotal": 500000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Materials",
+          "description": "Combined training materials for advanced tier.",
+          "amountTotal": 500000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Training",
+          "subCategory": "Workshops and seminars",
+          "description": "Combined workshops and seminars for advanced tier.",
+          "amountTotal": 5441200,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "In-country travel",
+          "description": "Combined in-country travel for advanced tier.",
+          "amountTotal": 107499500,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Travel expenses",
+          "subCategory": "International travel",
+          "description": "Combined international travel for advanced tier.",
+          "amountTotal": 83300000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Direct cost",
+          "category": "Other expenses",
+          "subCategory": "Other direct costs",
+          "description": "Combined other direct costs for advanced tier.",
+          "amountTotal": 1231000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Management and oversight",
+          "description": "Combined management and oversight for advanced tier.",
+          "amountTotal": 20000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Administrative support",
+          "subCategory": "Office maintenance",
+          "description": "Combined office maintenance for advanced tier.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "In-kind contributions",
+          "subCategory": "Salary",
+          "description": "Combined in-kind salary contributions for advanced tier.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Facility upgrades",
+          "description": "Combined facility upgrades for advanced tier.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Infrastructure costs",
+          "subCategory": "Equipment depreciation",
+          "description": "Combined equipment depreciation for advanced tier.",
+          "amountTotal": 1000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Utilities",
+          "subCategory": "Shared services",
+          "description": "Combined shared utilities for advanced tier.",
+          "amountTotal": 1000000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Professional services",
+          "subCategory": "Legal and financial consulting",
+          "description": "Combined professional services for advanced tier.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Training and capacity building",
+          "subCategory": "Staff development",
+          "description": "Combined staff development for advanced tier.",
+          "amountTotal": 200000,
+          "isOpportunityCost": false
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Opportunity cost",
+          "subCategory": "Trainee salary payments had they been employed",
+          "description": "Combined opportunity cost for advanced tier (not reported in the templates).",
+          "amountTotal": 0,
+          "isOpportunityCost": true
+        },
+        {
+          "major": "Indirect costs",
+          "category": "Other indirect costs",
+          "subCategory": "Other indirect costs",
+          "description": "Combined other indirect costs for advanced tier.",
+          "amountTotal": 0,
+          "isOpportunityCost": false
+        }
+      ]
+    }
+  }
+}
