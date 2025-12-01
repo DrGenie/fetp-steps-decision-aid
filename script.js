@@ -1550,7 +1550,14 @@ function saveScenarioFromCurrentResults() {
         totalNetBenefitAllCohorts: r.netBenefitAllCohorts
     };
 
-    state.scenarios.push(scenario);
+        // If a scenario with the same name exists, update it; otherwise add a new one
+    const existingIndex = state.scenarios.findIndex(s => s.name === name);
+    if (existingIndex !== -1) {
+        state.scenarios[existingIndex] = scenario;
+    } else {
+        state.scenarios.push(scenario);
+    }
+
     try {
         window.localStorage.setItem("stepsScenarios", JSON.stringify(state.scenarios));
     } catch (e) {
@@ -2184,8 +2191,8 @@ function startTour(forceRestart) {
     state.tour.active = true;
     state.tour.stepIndex = 0;
     state.tour.seen = true;
-    try {
-        window.localStorage.setItem("stepsTourSeen", "1");
+        try {
+        window.localStorage.setItem("stepsTourSeen_v2", "1");
     } catch (e) {
         // ignore
     }
@@ -2203,8 +2210,8 @@ function endTour() {
 function setupTour() {
     ensureTourElements();
 
-    try {
-        state.tour.seen = window.localStorage.getItem("stepsTourSeen") === "1";
+        try {
+        state.tour.seen = window.localStorage.getItem("stepsTourSeen_v2") === "1";
     } catch (e) {
         state.tour.seen = false;
     }
@@ -2428,17 +2435,25 @@ function setupCoreInteractions() {
 /* ===========================
    Initialisation
    =========================== */
-
 document.addEventListener("DOMContentLoaded", () => {
     setupTabs();
     setupInfoTooltips();
     setupModal();
     setupCoreInteractions();
     setupTechnicalAppendix();
+
+    // Ensure advanced settings and assumption log show defaults on first load
+    populateAdvancedSettingsInputs();
+    updateAssumptionLog(readConfigurationFromInputs());
+
+    // Optionally override defaults from external JSONs if present
     loadEpiConfigIfPresent();
     loadCostConfigIfPresent();
+
     loadSavedScenarios();
     setupTour();
 
+    // Compute initial results and update all tabs without a toast
     applyConfiguration(true);
 });
+
