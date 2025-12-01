@@ -1,20 +1,38 @@
+
 {
-  "frontline": {
-    "gradsPerCohort": 0.9,
-    "outbreaksPerCohortPerYear": 2,
-    "valuePerGraduate": 200000,
-    "valuePerOutbreak": 3000000
+  "meta": {
+    "name": "STEPS FETP India epidemiological configuration",
+    "version": "1.0",
+    "description": "Default multipliers and values for graduates and outbreak responses used by the STEPS decision aid."
   },
-  "intermediate": {
-    "gradsPerCohort": 0.9,
-    "outbreaksPerCohortPerYear": 3,
-    "valuePerGraduate": 250000,
-    "valuePerOutbreak": 3500000
+  "general": {
+    "planningHorizonYears": 5,
+    "inrPerUsd": 83
   },
-  "advanced": {
-    "gradsPerCohort": 0.95,
-    "outbreaksPerCohortPerYear": 5,
-    "valuePerGraduate": 400000,
-    "valuePerOutbreak": 4000000
+  "tiers": {
+    "frontline": {
+      "label": "Frontline",
+      "durationMonths": 3,
+      "gradRate": 0.9,
+      "outbreaksPerCohortPerYear": 0.3,
+      "valuePerGraduate": 400000,
+      "valuePerOutbreak": 30000000
+    },
+    "intermediate": {
+      "label": "Intermediate",
+      "durationMonths": 12,
+      "gradRate": 0.9,
+      "outbreaksPerCohortPerYear": 0.5,
+      "valuePerGraduate": 500000,
+      "valuePerOutbreak": 30000000
+    },
+    "advanced": {
+      "label": "Advanced",
+      "durationMonths": 24,
+      "gradRate": 0.95,
+      "outbreaksPerCohortPerYear": 0.8,
+      "valuePerGraduate": 600000,
+      "valuePerOutbreak": 40000000
+    }
   }
 }
