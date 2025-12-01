@@ -874,7 +874,10 @@ function updateConfigSummary(results) {
         endorsementValueEl.textContent = formatPercent(endorsementPercent, 1);
     }
 
-    const headlineStatusEl = document.getElementById("headline-status-pill");
+    // FIX: support either headline-status-pill or headline-status-tag
+    const headlineStatusEl =
+        document.getElementById("headline-status-pill") ||
+        document.getElementById("headline-status-tag");
     const headlineTextEl = document.getElementById("headline-recommendation");
     const briefingEl = document.getElementById("headline-briefing-text");
 
@@ -1550,7 +1553,7 @@ function saveScenarioFromCurrentResults() {
         totalNetBenefitAllCohorts: r.netBenefitAllCohorts
     };
 
-        // If a scenario with the same name exists, update it; otherwise add a new one
+    // If a scenario with the same name exists, update it; otherwise add a new one
     const existingIndex = state.scenarios.findIndex(s => s.name === name);
     if (existingIndex !== -1) {
         state.scenarios[existingIndex] = scenario;
@@ -2191,7 +2194,7 @@ function startTour(forceRestart) {
     state.tour.active = true;
     state.tour.stepIndex = 0;
     state.tour.seen = true;
-        try {
+    try {
         window.localStorage.setItem("stepsTourSeen_v2", "1");
     } catch (e) {
         // ignore
@@ -2210,7 +2213,7 @@ function endTour() {
 function setupTour() {
     ensureTourElements();
 
-        try {
+    try {
         state.tour.seen = window.localStorage.getItem("stepsTourSeen_v2") === "1";
     } catch (e) {
         state.tour.seen = false;
@@ -2220,6 +2223,13 @@ function setupTour() {
     const prevBtn = document.getElementById("tour-prev");
     const nextBtn = document.getElementById("tour-next");
     const closeBtn = document.getElementById("tour-close-btn");
+
+    // NEW: wire the existing header Quick tour button
+    const headerTrigger = document.getElementById("btn-start-tour");
+    if (headerTrigger && !headerTrigger.dataset.tourBound) {
+        headerTrigger.addEventListener("click", () => startTour(true));
+        headerTrigger.dataset.tourBound = "1";
+    }
 
     if (overlay) {
         overlay.addEventListener("click", () => endTour());
@@ -2456,4 +2466,3 @@ document.addEventListener("DOMContentLoaded", () => {
     // Compute initial results and update all tabs without a toast
     applyConfiguration(true);
 });
-
