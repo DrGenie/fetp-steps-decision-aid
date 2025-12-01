@@ -1,0 +1,336 @@
+<!-- technical-appendix.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEPS Technical Appendix – FETP India</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 18px 14px 40px;
+      background: #f3f4f6;
+      color: #111827;
+    }
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 18px 20px 24px;
+      border-radius: 18px;
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.2);
+    }
+    h1, h2, h3 {
+      margin-top: 0;
+    }
+    h1 {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+    h2 {
+      font-size: 18px;
+      margin-top: 18px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 4px;
+    }
+    h3 {
+      font-size: 15px;
+      margin-top: 14px;
+    }
+    p {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      background: #f3f4f6;
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+    .math-block {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      background: #f9fafb;
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: 1px solid #e5e7eb;
+      margin: 6px 0 8px;
+      white-space: pre-wrap;
+    }
+    ul, ol {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .note {
+      background: #eff6ff;
+      border-left: 3px solid #2563eb;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <h1>STEPS Technical Appendix – FETP India</h1>
+  <p>
+    This appendix describes how STEPS combines discrete choice experiment (DCE) results, cost templates
+    and epidemiological multipliers to produce endorsement, willingness to pay, cost, benefit and national
+    simulation outputs for Field Epidemiology Training Program (FETP) scale up options in India.
+  </p>
+
+  <h2>1. Preference model and utility specification</h2>
+  <p>
+    The DCE asked respondents to choose between alternative FETP designs and an opt out option.
+    Choices are modelled using a mixed logit specification with a lognormal cost coefficient.
+    For respondent <code>n</code>, choice task <code>t</code> and alternative <code>j</code>,
+    indirect utility is written as:
+  </p>
+  <div class="math-block">
+U<sub>ntj</sub> = V<sub>ntj</sub> + ε<sub>ntj</sub>,
+  </div>
+  <p>
+    where <code>V_ntj</code> is the systematic component of utility and <code>ε_ntj</code> is an i.i.d.
+    extreme value type I error term.
+  </p>
+
+  <p>
+    In STEPS the systematic utility of an FETP programme option is specified as:
+  </p>
+  <div class="math-block">
+V = α<sub>A</sub> · ASC<sub>A</sub>
+  + β<sub>PT,int</sub> · PT<sub>int</sub>
+  + β<sub>PT,adv</sub> · PT<sub>adv</sub>
+  + β<sub>INC,univ</sub> · INC<sub>univ</sub>
+  + β<sub>INC,govpath</sub> · INC<sub>govpath</sub>
+  + β<sub>MEN,med</sub> · MEN<sub>med</sub>
+  + β<sub>MEN,high</sub> · MEN<sub>high</sub>
+  + β<sub>MOD,in</sub> · MOD<sub>in</sub>
+  + β<sub>MOD,online</sub> · MOD<sub>online</sub>
+  + β<sub>RESP,15</sub> · RESP<sub>15</sub>
+  + β<sub>RESP,7</sub> · RESP<sub>7</sub>
+  + β<sub>cost,n</sub> · cost<sub>000</sub>.
+  </div>
+  <p>
+    Attributes are coded as dummy variables relative to clearly defined reference categories:
+    frontline training, government and partner certificate, low mentorship, blended delivery,
+    and response within 30 days. The term <code>ASC_A</code> is equal to one for any programme configuration
+    and zero for the opt out alternative. The opt out alternative has its own constant <code>ASC_OptOut</code>.
+  </p>
+
+  <h3>Lognormal cost coefficient</h3>
+  <p>
+    To ensure a strictly negative marginal utility of cost, the cost coefficient is modelled as lognormal.
+    Let <code>mcost_n</code> denote the latent normal term for respondent <code>n</code>:
+  </p>
+  <div class="math-block">
+mcost<sub>n</sub> ~ Normal(μ<sub>mcost</sub>, σ<sub>mcost</sub><sup>2</sup>)
+β<sub>cost,n</sub> = -exp(mcost<sub>n</sub>).
+  </div>
+  <p>
+    The mean of the lognormal term is
+  </p>
+  <div class="math-block">
+E[exp(mcost<sub>n</sub>)] = exp(μ<sub>mcost</sub> + 0.5 σ<sub>mcost</sub><sup>2</sup>),
+  </div>
+  <p>
+    so the representative cost coefficient used in STEPS is
+  </p>
+  <div class="math-block">
+b<sub>cost,MXL</sub> = -exp(μ<sub>mcost</sub> + 0.5 σ<sub>mcost</sub><sup>2</sup>).
+  </div>
+  <p>
+    All non cost coefficients in the utility function are set equal to their mixed logit means.
+    In practice STEPS uses back transformed mean values that match the lognormal specification
+    but are simple to implement in the browser.
+  </p>
+
+  <h3>Latent class model</h3>
+  <p>
+    In addition to the mixed logit model, STEPS uses the second class from a two class latent class logit model
+    to represent a supportive stakeholder group. This class has its own alternative specific constants, attribute
+    coefficients and cost coefficient. Users can switch between the average mixed logit model and this supportive
+    latent class group to explore how endorsement and benefits change when focusing on relatively supportive stakeholders.
+  </p>
+
+  <h2>2. Endorsement probabilities</h2>
+  <p>
+    For any candidate programme configuration <code>s</code>, STEPS constructs the corresponding vector of attribute dummies
+    and cost, and evaluates the programme utility:
+  </p>
+  <div class="math-block">
+V<sub>prog,s</sub> = V<sub>noncost,s</sub> + b<sub>cost</sub> · cost<sub>000,s</sub>.
+  </div>
+  <p>
+    The opt out alternative has utility
+  </p>
+  <div class="math-block">
+V<sub>optout</sub> = α<sub>OptOut</sub> · ASC<sub>OptOut</sub> + b<sub>cost</sub> · cost<sub>000,opt</sub>,
+  </div>
+  <p>
+    with the attribute vector taken from the experimental design. Using a simple two alternative logit,
+    the probability of endorsing programme <code>s</code> rather than opting out is
+  </p>
+  <div class="math-block">
+P<sub>uptake,s</sub> = exp(V<sub>prog,s</sub>) /
+                     [exp(V<sub>prog,s</sub>) + exp(V<sub>optout</sub>)].
+  </div>
+  <p>
+    Endorsement in STEPS is reported as <code>100 × P_uptake,s</code> percent. The remaining percentage
+    is labelled “opt out” in the interface.
+  </p>
+
+  <h3>Worked example – endorsement</h3>
+  <p>
+    Consider a configuration with advanced tier, government career pathway, high mentorship,
+    blended delivery, response within 7 days and a cost of 100,000 INR per trainee per month.
+    The non cost utility is the sum of the relevant mixed logit means:
+  </p>
+  <div class="math-block">
+V<sub>noncost,s</sub> = α<sub>A</sub> + β<sub>PT,adv</sub> + β<sub>INC,govpath</sub>
+                     + β<sub>MEN,high</sub> + β<sub>RESP,7</sub>.
+  </div>
+  <p>
+    Using the numerical values in the manuscript this yields approximately 1.67.
+    The cost term is <code>b_cost,MXL × 100</code>. The programme utility is then
+    <code>V_prog,s = 1.67 + b_cost,MXL × 100</code>. Combined with the pre computed
+    <code>V_optout</code>, STEPS converts this into an endorsement percentage through
+    the logit formula above.
+  </p>
+
+  <h2>3. Willingness to pay and benefits</h2>
+  <p>
+    Willingness to pay (WTP) values are derived from the mixed logit model as the marginal rate of substitution
+    between each attribute and cost. For an attribute with coefficient <code>β_k</code> and a cost coefficient
+    <code>β_cost</code>, the WTP for that attribute level is:
+  </p>
+  <div class="math-block">
+WTP<sub>k</sub> = -β<sub>k</sub> / β<sub>cost</sub>.
+  </div>
+  <p>
+    WTP is expressed in thousand rupees per trainee per month. STEPS stores a table of WTP values for each
+    attribute level and sums them to obtain the total WTP for a configuration:
+  </p>
+  <div class="math-block">
+WTP<sub>total</sub> =
+  WTP<sub>tier</sub> +
+  WTP<sub>career</sub> +
+  WTP<sub>mentorship</sub> +
+  WTP<sub>delivery</sub> +
+  WTP<sub>response</sub>.
+  </div>
+  <p>
+    In the Results tab the model uses this combined WTP per trainee per month to derive
+    an indicative benefit per cohort:
+  </p>
+  <div class="math-block">
+Benefit per cohort =
+  WTP<sub>total</sub> × duration (months)
+  × graduates per cohort
+  × endorsement.
+  </div>
+  <p>
+    Total indicative benefit across all cohorts is the benefit per cohort multiplied by
+    the number of cohorts. This value, together with total cost, defines the benefit cost ratio
+    and net benefit reported in the tool.
+  </p>
+
+  <h2>4. Cost templates and economic cost</h2>
+  <p>
+    Cost templates are based on submissions from WHO, NIE and NCDC. For each tier the template
+    contains line items for staff, travel, training materials, management and other components.
+  </p>
+  <p>
+    STEPS treats these templates as alternative settings rather than combining them. When a template is selected
+    the tool calculates the share of total programme cost (excluding opportunity cost) represented by each component.
+    For a given configuration, programme cost per cohort is:
+  </p>
+  <div class="math-block">
+Programme cost per cohort =
+  cost per trainee per month × duration × trainees per cohort.
+  </div>
+  <p>
+    This is allocated across components according to the shares in the template. If the opportunity cost toggle
+    is turned on, the tool adds:
+  </p>
+  <div class="math-block">
+Opportunity cost per cohort =
+  opportunity cost per trainee per month × duration × trainees per cohort.
+  </div>
+  <p>
+    Total economic cost per cohort is the sum of programme cost and opportunity cost.
+    Multiplying by the number of cohorts yields total cost for the configuration.
+  </p>
+
+  <h2>5. Epidemiological multipliers</h2>
+  <p>
+    The Advanced settings tab includes multipliers that summarise the expected contribution of graduates
+    to outbreak responses and broader health system benefits:
+  </p>
+  <ul>
+    <li>Outbreak responses per graduate per year, by tier.</li>
+    <li>Monetary value assigned to an avoided or managed outbreak.</li>
+    <li>Monetary value per FETP graduate (system strengthening effects).</li>
+  </ul>
+  <p>
+    For a configuration with <code>G</code> graduates and endorsement <code>P_uptake</code>, the implied
+    number of outbreak responses per year is:
+  </p>
+  <div class="math-block">
+Outbreak responses per year =
+  G × response multiplier (tier specific) × P<sub>uptake</sub>.
+  </div>
+  <p>
+    STEPS reports this as an epidemiological summary and uses the monetary values to provide a qualitative
+    sense of the scale of health system benefits. The primary economic metrics in the tool remain the
+    WTP based benefit, benefit cost ratio and net benefit.
+  </p>
+
+  <h2>6. National simulation</h2>
+  <p>
+    National simulation results are simple extensions of the cohort level calculations:
+  </p>
+  <ul>
+    <li>Total graduates are the sum across all cohorts.</li>
+    <li>Total cost and total indicative benefit are summed across cohorts.</li>
+    <li>Net benefit is the difference between total indicative benefit and total cost.</li>
+    <li>Outbreak responses per year are calculated from the total number of graduates and their multipliers.</li>
+  </ul>
+  <p>
+    These outputs are intended to support discussions of national scale up options and trade offs,
+    not to replace detailed epidemiological or budget impact models.
+  </p>
+
+  <h2>7. Worked end to end example</h2>
+  <p>
+    As a concrete illustration, consider the following configuration:
+  </p>
+  <ul>
+    <li>Advanced programme tier (24 months).</li>
+    <li>Government career pathway as the incentive.</li>
+    <li>High mentorship (maximum two fellows per mentor).</li>
+    <li>Blended delivery.</li>
+    <li>Response within 7 days.</li>
+    <li>Cost of 100,000 INR per trainee per month.</li>
+    <li>Twenty trainees per cohort, ten cohorts.</li>
+  </ul>
+  <ol>
+    <li>STEPS constructs the attribute vector for this configuration and evaluates programme utility using the mixed logit means and the representative cost coefficient.</li>
+    <li>It retrieves the pre computed opt out utility from the design and converts the difference into an endorsement probability.</li>
+    <li>Using the WTP table, it calculates WTP per trainee per month for advanced tier, government career pathway, high mentorship, blended delivery and response within 7 days, and sums these to obtain total WTP.</li>
+    <li>Graduates are calculated as trainees per cohort times completion rate, multiplied by the number of cohorts.</li>
+    <li>Indicative benefits are obtained by combining WTP, duration, graduates and endorsement; total cost is based on cost per trainee, duration, trainees, cohorts and the cost template.</li>
+    <li>The benefit cost ratio and net benefit are then reported, alongside endorsement and outbreak response figures, in the main STEPS interface.</li>
+  </ol>
+
+  <div class="note">
+    All calculations in STEPS are deterministic and transparent. The Advanced settings panel and assumption log
+    are designed to make it straightforward to document which parameter values were used in any given workshop
+    or analysis.
+  </div>
+</div>
+</body>
+</html>
