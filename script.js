@@ -225,8 +225,7 @@ const state = {
         seen: false,
         active: false,
         stepIndex: 0
-    },
-    toastTimeoutId: null
+    }
 };
 
 /* ===========================
@@ -274,7 +273,7 @@ function logistic(x) {
 }
 
 function computeNonCostUtility(cfg, coefs) {
-    const uAsc = coefs.ascProgram || 1;
+    const uAsc = typeof coefs.ascProgram === "number" ? coefs.ascProgram : 1;
     const uTier = coefs.tier[cfg.tier] || 0;
     const uCareer = coefs.career[cfg.career] || 0;
     const uMentor = coefs.mentorship[cfg.mentorship] || 0;
@@ -342,7 +341,6 @@ function computeEndorsementAndWtp(cfg, modelId) {
     const betaCost = coefs.costPerThousand || 0;
     let wtpConfig = null;
     if (betaCost !== 0) {
-        // Willingness to pay for this configuration relative to baseline
         wtpConfig = -1000 * nonCostUtility / betaCost;
     }
 
@@ -369,9 +367,7 @@ function getProgrammeDurationMonths(tier) {
 /**
  * Prefer external cost_config.json if present.
  * If available, derive direct shares and opportunity cost rate
- * from absolute component amounts, so the tool respects the
- * full WHO / NIE / NCDC templates. Otherwise, fall back to
- * the simpler COST_TEMPLATES object.
+ * from absolute component amounts.
  */
 function getCurrentCostTemplate(tier) {
     let chosenId = state.currentCostSourceId || null;
@@ -571,20 +567,19 @@ function showToast(message, type = "info") {
 
     toast.textContent = message;
 
-    toast.classList.remove("toast-success", "toast-warning", "toast-error", "hidden", "show");
+    toast.classList.remove("toast-success", "toast-warning", "toast-error", "hidden");
     if (type === "success") toast.classList.add("toast-success");
     if (type === "warning") toast.classList.add("toast-warning");
     if (type === "error") toast.classList.add("toast-error");
 
     toast.classList.add("show");
 
-    if (state.toastTimeoutId) {
-        clearTimeout(state.toastTimeoutId);
+    if (showToast._timeoutId) {
+        clearTimeout(showToast._timeoutId);
     }
 
-    state.toastTimeoutId = setTimeout(() => {
-        toast.classList.remove("show", "toast-success", "toast-warning", "toast-error");
-        toast.classList.add("hidden");
+    showToast._timeoutId = setTimeout(() => {
+        toast.classList.remove("show");
     }, 3500);
 }
 
@@ -756,16 +751,19 @@ function populateCostSourceOptions(tier) {
 
     select.value = state.currentCostSourceId;
 
-    select.addEventListener("change", () => {
-        state.currentCostSourceId = select.value;
-        const cfg = readConfigurationFromInputs();
-        const results = computeFullResults(cfg);
-        state.lastResults = results;
-        updateCostingTab(results);
-        updateResultsTab(results);
-        updateNationalSimulation(results);
-        updateConfigSummary(results);
-    });
+    if (!select.dataset.bound) {
+        select.addEventListener("change", () => {
+            state.currentCostSourceId = select.value;
+            const cfg = readConfigurationFromInputs();
+            const results = computeFullResults(cfg);
+            state.lastResults = results;
+            updateCostingTab(results);
+            updateResultsTab(results);
+            updateNationalSimulation(results);
+            updateConfigSummary(results);
+        });
+        select.dataset.bound = "1";
+    }
 }
 
 /* ===========================
@@ -992,7 +990,6 @@ function updateCostingTab(results) {
     const oppCost = costs.opportunityCostPerCohort;
     const directCost = costs.programmeCostPerCohort;
 
-    // Top summary cards
     summary.innerHTML = `
         <div class="cost-summary-card">
             <div class="cost-summary-label">Programme cost per cohort</div>
@@ -1083,7 +1080,6 @@ function updateResultCharts(results) {
     const optPercent = util.optOutProb * 100;
 
     if (window.Chart) {
-        // Uptake chart
         const uptakeCtx = document.getElementById("chart-uptake");
         if (uptakeCtx) {
             safeDestroyChart(state.charts.uptake);
@@ -1107,7 +1103,6 @@ function updateResultCharts(results) {
             });
         }
 
-        // BCR chart
         const bcrCtx = document.getElementById("chart-bcr");
         if (bcrCtx) {
             safeDestroyChart(state.charts.bcr);
@@ -1154,7 +1149,6 @@ function updateResultCharts(results) {
             });
         }
 
-        // Epi chart
         const epiCtx = document.getElementById("chart-epi");
         if (epiCtx) {
             safeDestroyChart(state.charts.epi);
@@ -1222,7 +1216,6 @@ function updateNationalCharts(currentResults) {
     const outbreaks = allScenarios.map(s => s.outbreaks);
     const bcrs = allScenarios.map(s => (s.bcr !== null && isFinite(s.bcr)) ? s.bcr : 0);
 
-    // Cost vs benefit
     const natCostCtx = document.getElementById("chart-nat-cost-benefit");
     if (natCostCtx) {
         safeDestroyChart(state.charts.natCostBenefit);
@@ -1267,7 +1260,6 @@ function updateNationalCharts(currentResults) {
         });
     }
 
-    // Graduates vs outbreaks
     const natGradCtx = document.getElementById("chart-nat-grad-outbreak");
     if (natGradCtx) {
         safeDestroyChart(state.charts.natGradOutbreak);
@@ -1310,7 +1302,6 @@ function updateNationalCharts(currentResults) {
         });
     }
 
-    // BCR chart
     const natBcrCtx = document.getElementById("chart-nat-bcr");
     if (natBcrCtx) {
         safeDestroyChart(state.charts.natBcr);
@@ -1368,8 +1359,6 @@ function loadEpiConfigIfPresent() {
 
 /**
  * Load full cost templates from cost_config.json if present.
- * This ensures the costing tab reflects the actual WHO / NIE / NCDC
- * components and totals rather than stylised placeholders.
  */
 function loadCostConfigIfPresent() {
     fetch("cost_config.json")
@@ -1573,15 +1562,6 @@ function saveScenarioFromCurrentResults() {
     updateNationalCharts(state.lastResults);
 }
 
-function classifyScenarioStatus(bcr, endorsementRate) {
-    if (!isFinite(bcr) || bcr <= 0) return "scenario-neutral";
-    if (bcr >= 1.2 && endorsementRate >= 70) return "scenario-good";
-    if (bcr >= 1 && endorsementRate >= 50) return "scenario-warning";
-    if (bcr >= 1 && endorsementRate < 50) return "scenario-warning";
-    if (bcr < 1) return "scenario-poor";
-    return "scenario-neutral";
-}
-
 function renderScenarioTable() {
     const tbody = document.querySelector("#scenario-table tbody");
     if (!tbody) return;
@@ -1616,10 +1596,6 @@ function renderScenarioTable() {
         const endorsementStr = s.endorsementRate !== null && isFinite(s.endorsementRate)
             ? formatPercent(s.endorsementRate, 1)
             : "-";
-
-        const statusClass = classifyScenarioStatus(s.bcr, s.endorsementRate || 0);
-
-        tr.classList.add(statusClass);
 
         tr.innerHTML = `
             <td>${s.name}</td>
@@ -2204,9 +2180,10 @@ function renderTourStep() {
 }
 
 function startTour(forceRestart) {
-    if (!forceRestart && state.tour.active) return;
+    if (!forceRestart && state.tour.seen) return;
     state.tour.active = true;
     state.tour.stepIndex = 0;
+    state.tour.seen = true;
     try {
         window.localStorage.setItem("stepsTourSeen", "1");
     } catch (e) {
@@ -2236,7 +2213,6 @@ function setupTour() {
     const prevBtn = document.getElementById("tour-prev");
     const nextBtn = document.getElementById("tour-next");
     const closeBtn = document.getElementById("tour-close-btn");
-    const manualBtn = document.getElementById("btn-start-tour");
 
     if (overlay) {
         overlay.addEventListener("click", () => endTour());
@@ -2266,10 +2242,6 @@ function setupTour() {
         closeBtn.addEventListener("click", () => endTour());
     }
 
-    if (manualBtn) {
-        manualBtn.addEventListener("click", () => startTour(true));
-    }
-
     document.addEventListener("keydown", (e) => {
         if (!state.tour.active) return;
         if (e.key === "Escape") endTour();
@@ -2287,8 +2259,9 @@ function setupTour() {
         }
     });
 
-    // Always show tour on load (can change to !state.tour.seen if needed)
-    startTour(false);
+    if (!state.tour.seen) {
+        startTour(false);
+    }
 }
 
 /* ===========================
@@ -2334,12 +2307,11 @@ function applyConfiguration(silent) {
     updateAssumptionLog(cfg);
 
     if (!silent) {
-        showToast("Configuration applied. See Results and National simulation tabs.", "success");
+        showToast("Configuration applied. Results updated.", "success");
     }
 }
 
 function setupCoreInteractions() {
-    // Cost slider label
     const costSlider = document.getElementById("cost-slider");
     const costDisplay = document.getElementById("cost-display");
     if (costSlider && costDisplay) {
@@ -2349,7 +2321,6 @@ function setupCoreInteractions() {
         });
     }
 
-    // Programme tier and other selects
     const tierSelect = document.getElementById("program-tier");
     if (tierSelect) {
         tierSelect.addEventListener("change", () => {
@@ -2358,26 +2329,15 @@ function setupCoreInteractions() {
         });
     }
 
-    // Model toggles
     const modelButtons = document.querySelectorAll(".pill-toggle[data-model]");
     modelButtons.forEach(btn => {
         btn.addEventListener("click", () => {
             modelButtons.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
             state.model = btn.dataset.model || "mxl";
-            if (state.lastResults) {
-                const cfg = state.lastResults.cfg;
-                const results = computeFullResults(cfg);
-                state.lastResults = results;
-                updateConfigSummary(results);
-                updateResultsTab(results);
-                updateCostingTab(results);
-                updateNationalSimulation(results);
-            }
         });
     });
 
-    // Currency toggles
     const currencyButtons = document.querySelectorAll(".pill-toggle[data-currency]");
     currencyButtons.forEach(btn => {
         btn.addEventListener("click", () => {
@@ -2393,7 +2353,6 @@ function setupCoreInteractions() {
         });
     });
 
-    // Opportunity cost switch
     const oppToggle = document.getElementById("opp-toggle");
     if (oppToggle) {
         oppToggle.addEventListener("click", () => {
@@ -2417,7 +2376,6 @@ function setupCoreInteractions() {
         });
     }
 
-    // Apply configuration
     const applyBtn = document.getElementById("update-results");
     if (applyBtn) {
         applyBtn.addEventListener("click", () => {
@@ -2425,7 +2383,6 @@ function setupCoreInteractions() {
         });
     }
 
-    // View results snapshot
     const snapshotBtn = document.getElementById("open-snapshot");
     if (snapshotBtn) {
         snapshotBtn.addEventListener("click", () => {
@@ -2439,7 +2396,6 @@ function setupCoreInteractions() {
         });
     }
 
-    // Save scenario
     const saveBtn = document.getElementById("save-scenario");
     if (saveBtn) {
         saveBtn.addEventListener("click", () => {
@@ -2450,7 +2406,6 @@ function setupCoreInteractions() {
         });
     }
 
-    // Advanced settings
     const advApply = document.getElementById("advanced-apply");
     if (advApply) {
         advApply.addEventListener("click", () => applyAdvancedSettings());
@@ -2460,13 +2415,11 @@ function setupCoreInteractions() {
         advReset.addEventListener("click", () => resetAdvancedSettings());
     }
 
-    // Exports
     const exportExcelBtn = document.getElementById("export-excel");
-    const exportPdfBtn = document.getElementById("export-pdf");
-
     if (exportExcelBtn) {
         exportExcelBtn.addEventListener("click", () => exportScenariosToExcel());
     }
+    const exportPdfBtn = document.getElementById("export-pdf");
     if (exportPdfBtn) {
         exportPdfBtn.addEventListener("click", () => exportPolicyBriefPdf());
     }
@@ -2487,6 +2440,5 @@ document.addEventListener("DOMContentLoaded", () => {
     loadSavedScenarios();
     setupTour();
 
-    // Initial configuration apply (silent)
     applyConfiguration(true);
 });
