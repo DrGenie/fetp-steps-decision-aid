@@ -1,9 +1,8 @@
-
 {
   "meta": {
     "name": "STEPS FETP India epidemiological configuration",
     "version": "1.0",
-    "description": "Default multipliers and values for graduates and outbreak responses used by the STEPS decision aid."
+    "description": "Default multipliers and indicative monetary values for graduates and outbreak responses used by the STEPS decision aid."
   },
   "general": {
     "planningHorizonYears": 5,
