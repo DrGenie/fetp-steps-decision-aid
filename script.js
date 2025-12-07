@@ -2638,6 +2638,7 @@ function applyConfiguration(switchToResultsTab) {
     showToast(
       "Please set trainees, cohorts and cost per trainee per month to values above zero."
     );
+    return;
   }
 
   state.currentTier = cfg.tier;
@@ -2760,7 +2761,7 @@ function loadCostConfigJson() {
   if (typeof fetch === "undefined") return;
 
   fetch("cost_config.json")
-    .then(resp => resp.ok ? resp.json() : null)
+    .then(resp => (resp && resp.ok ? resp.json() : null))
     .then(data => {
       if (data) {
         COST_CONFIG = data;
