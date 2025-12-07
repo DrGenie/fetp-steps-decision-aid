@@ -1018,6 +1018,25 @@ input[type="range"]::-moz-range-thumb {
    Copilot helper
    --------------------------- */
 
+.copilot-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.copilot-info {
+  font-size: 0.85rem;
+  color: var(--color-text-soft);
+}
+
+.copilot-actions {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 #copilot-prepared-text {
   font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 0.78rem;
@@ -1221,7 +1240,6 @@ a:hover {
 
 /* ---------------------------
    Additional layout helpers
-   (for tabs, scroll blocks, Copilot etc.)
    --------------------------- */
 
 .section-header-row {
@@ -1253,34 +1271,6 @@ a:hover {
 .scroll-shell-inner {
   min-width: 880px;
 }
-
-.copilot-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
-  gap: 1rem;
-}
-
-.copilot-info {
-  font-size: 0.85rem;
-  color: var(--color-text-soft);
-}
-
-.copilot-steps {
-  margin-top: 0.4rem;
-}
-
-.copilot-steps li {
-  margin-bottom: 0.25rem;
-}
-
-.copilot-actions {
-  margin-top: 0.6rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-/* Scenario table helper */
 
 #scenario-table {
   width: 100%;
