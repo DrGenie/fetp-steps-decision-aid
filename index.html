@@ -945,9 +945,7 @@
                     </tr>
                     </thead>
                     <tbody id="dce-benefits-table-body">
-                    <!-- Filled dynamically from script.js:
-                         - One row per scenario (current configuration and saved scenarios)
-                         - Using selected benefit definition and endorsement assumptions -->
+                    <!-- Filled dynamically from script.js -->
                     </tbody>
                 </table>
             </div>
@@ -992,9 +990,7 @@
                     </tr>
                     </thead>
                     <tbody id="sensitivity-table-body">
-                    <!-- Filled dynamically:
-                         - Current configuration
-                         - One row per saved scenario using stored configuration parameters -->
+                    <!-- Filled dynamically -->
                     </tbody>
                 </table>
             </div>
@@ -1021,56 +1017,62 @@
                 </button>
             </div>
 
-            <p>
-                You can use Microsoft Copilot to generate a narrative interpretation of any scenario. The button below prepares
-                a structured prompt that includes a JSON export of the latest results and opens Copilot in a new browser tab.
-                If clipboard access is allowed, the full prompt is copied automatically so you only need to paste it into Copilot.
-            </p>
-            <p>
-                Before using the button, first run your analysis inside STEPS: apply a configuration, review the Results,
-                Costing details, National simulation and Sensitivity / DCE benefits tabs, and make sure the scenario reflects
-                the option you want to discuss. The Copilot prompt then bundles a fixed interpretation instruction together
-                with the scenario JSON, including programme tier, cohort size, number of cohorts, mentorship intensity, career
-                incentives, delivery mode, response time, costs, endorsement, willingness to pay, epidemiological outputs,
-                benefit cost ratios and net benefits.
-            </p>
-            <p class="note">
-                The Copilot helper does not store data, does not transmit information automatically and does not send outputs
-                to any third party service. All information remains in your browser until you choose to copy it. Copilot only
-                receives the scenario details when you paste the prepared text into
-                <a href="https://copilot.microsoft.com" target="_blank" rel="noopener">https://copilot.microsoft.com</a>.
-            </p>
+            <div class="copilot-layout">
+                <div class="copilot-info">
+                    <p>
+                        You can use Microsoft Copilot to generate a narrative interpretation of any scenario. The button below prepares
+                        a structured prompt that includes a JSON export of the latest results and opens Copilot in a new browser tab.
+                        If clipboard access is allowed, the full prompt is copied automatically so you only need to paste it into Copilot.
+                    </p>
+                    <p>
+                        Before using the button, first run your analysis inside STEPS: apply a configuration, review the Results,
+                        Costing details, National simulation and Sensitivity / DCE benefits tabs, and make sure the scenario reflects
+                        the option you want to discuss. The Copilot prompt then bundles a fixed interpretation instruction together
+                        with the scenario JSON, including programme tier, cohort size, number of cohorts, mentorship intensity, career
+                        incentives, delivery mode, response time, costs, endorsement, willingness to pay, epidemiological outputs,
+                        benefit cost ratios and net benefits.
+                    </p>
+                    <p class="note">
+                        The Copilot helper does not store data, does not transmit information automatically and does not send outputs
+                        to any third party service. All information remains in your browser until you choose to copy it. Copilot only
+                        receives the scenario details when you paste the prepared text into
+                        <a href="https://copilot.microsoft.com" target="_blank" rel="noopener">https://copilot.microsoft.com</a>.
+                    </p>
 
-            <div class="button-row">
-                <button id="copilot-copy-button" class="btn-primary" type="button">
-                    Open in Copilot and copy prompt
-                </button>
-            </div>
-            <p class="hint">
-                When you click “Open in Copilot and copy prompt”, STEPS prepares the full interpretation text, attempts to copy
-                it to your clipboard and opens a new browser tab pointing to
-                <a href="https://copilot.microsoft.com" target="_blank" rel="noopener">copilot.microsoft.com</a>.
-                If automatic copy works, you only need to paste once Copilot opens.
-            </p>
-            <p>
-                If automatic copy is blocked by your browser or organisation settings, use the box below to copy the prompt
-                manually and paste it into Copilot at <strong>copilot.microsoft.com</strong>.
-            </p>
+                    <div class="copilot-actions">
+                        <button id="copilot-copy-button" class="btn-primary" type="button">
+                            Open in Copilot and copy prompt
+                        </button>
+                    </div>
+                    <p class="hint">
+                        When you click “Open in Copilot and copy prompt”, STEPS prepares the full interpretation text, attempts to copy
+                        it to your clipboard and opens a new browser tab pointing to
+                        <a href="https://copilot.microsoft.com" target="_blank" rel="noopener">copilot.microsoft.com</a>.
+                        If automatic copy works, you only need to paste once Copilot opens.
+                    </p>
+                    <p>
+                        If automatic copy is blocked by your browser or organisation settings, use the box on the right to copy the prompt
+                        manually and paste it into Copilot at <strong>copilot.microsoft.com</strong>.
+                    </p>
+                </div>
 
-            <div class="form-group form-group-wide">
-                <label for="copilot-prepared-text">
-                    Prompt to paste into Copilot
-                </label>
-                <textarea id="copilot-prepared-text" rows="18" readonly>
+                <div>
+                    <div class="form-group form-group-wide">
+                        <label for="copilot-prepared-text">
+                            Prompt to paste into Copilot
+                        </label>
+                        <textarea id="copilot-prepared-text" rows="18" readonly>
 Apply a configuration and update the results in STEPS to generate the full Copilot prompt and scenario JSON here. The prepared text will include the STEPS Tool Copilot Interpretation Prompt followed by a JSON block that summarises your current scenario.
 </textarea>
+                    </div>
+                    <p class="hint">
+                        The prepared text shown above is the only content that needs to be pasted into Copilot. It combines the fixed
+                        interpretation instructions with the scenario JSON from STEPS so that Copilot can produce a structured policy
+                        brief with tables and narrative explanation of endorsement, willingness to pay, epidemiological benefits, costs,
+                        benefit cost ratios and net benefits for scale up.
+                    </p>
+                </div>
             </div>
-            <p class="hint">
-                The prepared text shown above is the only content that needs to be pasted into Copilot. It combines the fixed
-                interpretation instructions with the scenario JSON from STEPS so that Copilot can produce a structured policy
-                brief with tables and narrative explanation of endorsement, willingness to pay, epidemiological benefits, costs,
-                benefit cost ratios and net benefits for scale up.
-            </p>
         </div>
     </section>
 
@@ -1119,7 +1121,7 @@ Apply a configuration and update the results in STEPS to generate the full Copil
                         <th>Notes</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="scenario-table-body">
                     <!-- Filled dynamically -->
                     </tbody>
                 </table>
