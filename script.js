@@ -46,9 +46,9 @@ const COST_TEMPLATES = {
   frontline: {
     who: {
       id: "who",
-      label: "Frontline - WHO template (6 cohorts)",
+      label: "Frontline - WHO style template",
       description:
-        "WHO costing template for Frontline FETP with six cohorts. Includes staff, travel, supervision and management costs.",
+        "Illustrative costing template for Frontline FETP with staff, travel, supervision and management costs.",
       oppRate: 0.15,
       components: [
         { id: "staff", label: "Staff and tutors", directShare: 0.40 },
@@ -74,9 +74,9 @@ const COST_TEMPLATES = {
   intermediate: {
     who: {
       id: "who",
-      label: "Intermediate - WHO template",
+      label: "Intermediate - WHO style template",
       description:
-        "WHO costing template for Intermediate FETP. Reflects a mix of direct training and supervision costs.",
+        "Illustrative costing template for Intermediate FETP with a mix of direct training and supervision costs.",
       oppRate: 0.20,
       components: [
         { id: "staff", label: "Staff and tutors", directShare: 0.38 },
@@ -101,74 +101,14 @@ const COST_TEMPLATES = {
           directShare: 0.12
         }
       ]
-    },
-    nie: {
-      id: "nie",
-      label: "Intermediate - NIE template",
-      description:
-        "NIE budget template for Intermediate FETP. Slightly higher supervision share.",
-      oppRate: 0.22,
-      components: [
-        { id: "staff", label: "Staff and tutors", directShare: 0.36 },
-        {
-          id: "travel",
-          label: "Trainee travel and field work",
-          directShare: 0.18
-        },
-        {
-          id: "materials",
-          label: "Training materials and supplies",
-          directShare: 0.12
-        },
-        {
-          id: "supervision",
-          label: "Supervision and mentoring costs",
-          directShare: 0.22
-        },
-        {
-          id: "overheads",
-          label: "Management and overheads",
-          directShare: 0.12
-        }
-      ]
-    },
-    ncdc: {
-      id: "ncdc",
-      label: "Intermediate - NCDC template",
-      description:
-        "NCDC costing assumptions for Intermediate FETP. Higher management share.",
-      oppRate: 0.18,
-      components: [
-        { id: "staff", label: "Staff and tutors", directShare: 0.35 },
-        {
-          id: "travel",
-          label: "Trainee travel and field work",
-          directShare: 0.17
-        },
-        {
-          id: "materials",
-          label: "Training materials and supplies",
-          directShare: 0.13
-        },
-        {
-          id: "supervision",
-          label: "Supervision and mentoring costs",
-          directShare: 0.20
-        },
-        {
-          id: "overheads",
-          label: "Management and overheads",
-          directShare: 0.15
-        }
-      ]
     }
   },
   advanced: {
     nie: {
       id: "nie",
-      label: "Advanced - NIE template",
+      label: "Advanced - NIE style template",
       description:
-        "NIE budget template for Advanced FETP. Reflects intensive staff time and supervision.",
+        "Illustrative costing template for Advanced FETP with intensive staff time and supervision.",
       oppRate: 0.25,
       components: [
         { id: "staff", label: "Staff and tutors", directShare: 0.45 },
@@ -191,36 +131,6 @@ const COST_TEMPLATES = {
           id: "overheads",
           label: "Management and overheads",
           directShare: 0.10
-        }
-      ]
-    },
-    ncdc: {
-      id: "ncdc",
-      label: "Advanced - NCDC template",
-      description:
-        "NCDC costing assumptions for Advanced FETP. Slightly higher overhead share.",
-      oppRate: 0.23,
-      components: [
-        { id: "staff", label: "Staff and tutors", directShare: 0.42 },
-        {
-          id: "travel",
-          label: "Trainee travel and field work",
-          directShare: 0.19
-        },
-        {
-          id: "materials",
-          label: "Training materials and supplies",
-          directShare: 0.11
-        },
-        {
-          id: "supervision",
-          label: "Supervision and mentoring costs",
-          directShare: 0.16
-        },
-        {
-          id: "overheads",
-          label: "Management and overheads",
-          directShare: 0.12
         }
       ]
     }
@@ -983,7 +893,7 @@ function updateUptakeChart(results) {
   state.charts.uptake = new Chart(ctx, {
     type: "bar",
     data: {
-      labels: ["Endorse FETP option", "Choose opt-out"],
+      labels: ["Endorse FETP option", "Choose opt out"],
       datasets: [
         {
           label: "Share of stakeholders",
@@ -1794,7 +1704,7 @@ function updateCopilotPreparedText() {
 
   if (!state.lastResults) {
     textarea.value =
-      "Apply a configuration and update the results in STEPS to generate the full Copilot prompt and scenario JSON here. The prepared text will include the STEPS Tool Copilot Interpretation Prompt followed by a JSON block that summarises your current scenario.";
+      "Apply a configuration and update the results in STEPS to generate the full Copilot prompt and scenario JSON here. The prepared text will include the STEPS Copilot Interpretation Prompt followed by a JSON block that summarises your current scenario.";
     return;
   }
 
@@ -1814,36 +1724,49 @@ function updateCopilotPreparedText() {
 
 function setupCopilotCopyButton() {
   const btn = document.getElementById("copilot-copy-button");
-  if (!btn) return;
   const textarea = document.getElementById(
     "copilot-prepared-text"
   );
-  if (!textarea) return;
+  if (!btn || !textarea) return;
 
   btn.addEventListener("click", () => {
+    if (!state.lastResults) {
+      showToast(
+        "Run an analysis first so the Copilot text can be prepared."
+      );
+      updateCopilotPreparedText();
+    }
+
     const text = textarea.value || "";
     if (!text.trim()) {
       showToast(
-        "Run a configuration first so the Copilot text can be prepared."
+        "There is no prepared text yet. Apply a configuration first."
       );
       return;
     }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard
-        .writeText(text)
-        .then(() => {
-          showToast("Prepared text copied for Copilot.");
-        })
-        .catch(() => {
-          textarea.select();
-          document.execCommand("copy");
-          showToast("Prepared text copied for Copilot.");
-        });
-    } else {
-      textarea.select();
-      document.execCommand("copy");
-      showToast("Prepared text copied for Copilot.");
-    }
+
+    const copyPromise =
+      navigator.clipboard && navigator.clipboard.writeText
+        ? navigator.clipboard.writeText(text)
+        : new Promise((resolve, reject) => {
+            textarea.select();
+            const ok = document.execCommand("copy");
+            if (ok) resolve();
+            else reject();
+          });
+
+    copyPromise
+      .then(() => {
+        showToast("Prepared prompt copied. A new Copilot tab is opening.");
+      })
+      .catch(() => {
+        showToast(
+          "Could not copy automatically. Use the box below to copy the text manually."
+        );
+      })
+      .finally(() => {
+        window.open("https://copilot.microsoft.com/", "_blank", "noopener");
+      });
   });
 }
 
@@ -2469,9 +2392,9 @@ function exportScenariosToPdf() {
     y += 11;
 
     doc.text(
-      "Endorsement: " +
-        formatPercent(sc.endorsementRate, 1) +
-        ", total economic cost: " +
+      "Endorsement rate: " +
+        formatPercent(sc.endorsementRate || 0, 1) +
+        ", total cost: " +
         formatCurrencyInr(
           sc.totalCostAllCohorts || 0,
           0
@@ -2487,12 +2410,28 @@ function exportScenariosToPdf() {
     );
     y += 11;
 
+    doc.text(
+      "Net epidemiological benefit: " +
+        formatCurrencyInr(
+          sc.netEpiBenefitAllCohorts || 0,
+          0
+        ) +
+        ", benefit cost ratio: " +
+        (sc.bcr !== null && isFinite(sc.bcr)
+          ? sc.bcr.toFixed(2)
+          : "-") +
+        ".",
+      40,
+      y
+    );
+    y += 11;
+
     if (sc.notes) {
       doc.text("Notes: " + sc.notes, 40, y);
-      y += 12;
+      y += 11;
     }
 
-    y += 4;
+    y += 8;
   });
 
   doc.save("STEPS_saved_scenarios.pdf");
@@ -2500,706 +2439,352 @@ function exportScenariosToPdf() {
 }
 
 /* ===========================
-   Results modal
+   Save and load project JSON
    =========================== */
 
-function openResultsModal(results) {
-  const modal = document.getElementById("results-modal");
-  const body = document.getElementById("modal-body");
-  if (!modal || !body) return;
-
-  const cfg = results.config;
-
-  const lines = [];
-
-  lines.push(
-    "<p><strong>Scenario name:</strong> " +
-      (cfg.scenarioName || "Not specified") +
-      "</p>"
-  );
-  lines.push(
-    "<p><strong>Programme tier:</strong> " +
-      cfg.tier +
-      ", <strong>career incentive:</strong> " +
-      cfg.career +
-      ", <strong>mentorship:</strong> " +
-      cfg.mentorship +
-      ", <strong>delivery:</strong> " +
-      cfg.delivery +
-      ", <strong>response time:</strong> " +
-      cfg.response +
-      " days.</p>"
-  );
-  lines.push(
-    "<p><strong>Cohorts and intake:</strong> " +
-      cfg.numberOfCohorts +
-      " cohorts with " +
-      cfg.traineesPerCohort +
-      " trainees per cohort.</p>"
-  );
-  lines.push(
-    "<p><strong>Endorsement:</strong> " +
-      formatPercent(results.util.endorseProb || 0, 1) +
-      "; <strong>opt out:</strong> " +
-      formatPercent(results.util.optOutProb || 0, 1) +
-      ".</p>"
-  );
-  lines.push(
-    "<p><strong>Total economic cost (all cohorts):</strong> " +
-      formatCurrency(results.totalCostAllCohorts || 0, state.currency) +
-      "; <strong>total epidemiological benefit:</strong> " +
-      formatCurrency(results.epi.totalBenefitAllCohorts || 0, state.currency) +
-      ".</p>"
-  );
-  if (results.natBcr !== null && isFinite(results.natBcr)) {
-    lines.push(
-      "<p><strong>National benefit cost ratio:</strong> " +
-        results.natBcr.toFixed(2) +
-        "; <strong>national net benefit:</strong> " +
-        formatCurrency(results.natNetBenefit || 0, state.currency) +
-        ".</p>"
-    );
-  }
-
-  if (cfg.scenarioNotes) {
-    lines.push(
-      "<p><strong>Scenario notes:</strong> " +
-        cfg.scenarioNotes +
-        "</p>"
-    );
-  }
-
-  body.innerHTML = lines.join("\n");
-  modal.classList.remove("hidden");
-  modal.setAttribute("aria-hidden", "false");
+function buildProjectObject() {
+  return {
+    version: "1.0",
+    currency: state.currency,
+    includeOpportunityCost: state.includeOpportunityCost,
+    epiSettings: state.epiSettings,
+    scenarios: state.scenarios,
+    lastConfig: state.lastResults ? state.lastResults.config : null,
+    lastCostSourceId: state.currentCostSourceId
+  };
 }
 
-function closeResultsModal() {
-  const modal = document.getElementById("results-modal");
-  if (!modal) return;
-  modal.classList.add("hidden");
-  modal.setAttribute("aria-hidden", "true");
+function saveProjectJson() {
+  const dataStr = JSON.stringify(buildProjectObject(), null, 2);
+  const blob = new Blob([dataStr], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "STEPS_project.json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast("Project JSON saved.");
 }
 
-/* ===========================
-   Guided tour
-   =========================== */
+function applyConfigToInputs(cfg) {
+  if (!cfg) return;
+  const setVal = (id, value) => {
+    const el = document.getElementById(id);
+    if (el && value !== undefined && value !== null) {
+      el.value = value;
+    }
+  };
 
-function collectTourSteps() {
-  const elements = document.querySelectorAll("[data-tour-step]");
-  const steps = [];
-  elements.forEach(el => {
-    const rect = el.getBoundingClientRect();
-    steps.push({
-      element: el,
-      stepId: el.getAttribute("data-tour-step"),
-      title: el.getAttribute("data-tour-title") || "Tour step",
-      content: el.getAttribute("data-tour-content") || "",
-      rect
-    });
-  });
-  state.tour.steps = steps;
+  setVal("program-tier", cfg.tier);
+  setVal("career-track", cfg.career);
+  setVal("mentorship", cfg.mentorship);
+  setVal("delivery", cfg.delivery);
+  setVal("response", cfg.response);
+  setVal("cost-slider", cfg.costPerTraineePerMonth);
+  setVal("trainees", cfg.traineesPerCohort);
+  setVal("cohorts", cfg.numberOfCohorts);
+  setVal("scenario-name", cfg.scenarioName || "");
+  setVal("scenario-notes", cfg.scenarioNotes || "");
 }
 
-function positionTourPopover(step) {
-  const overlay = document.getElementById("tour-overlay");
-  const pop = document.getElementById("tour-popover");
-  if (!overlay || !pop || !step) return;
-
-  const rect = step.element.getBoundingClientRect();
-  const popRect = pop.getBoundingClientRect();
-
-  const top = Math.max(20, rect.bottom + 8);
-  let left = rect.left;
-  if (left + popRect.width > window.innerWidth - 20) {
-    left = window.innerWidth - popRect.width - 20;
-  }
-  if (left < 20) left = 20;
-
-  pop.style.top = (top + window.scrollY) + "px";
-  pop.style.left = (left + window.scrollX) + "px";
-
-  overlay.classList.remove("hidden");
-  pop.classList.remove("hidden");
-}
-
-function showTourStep(index) {
-  const steps = state.tour.steps;
-  if (!steps || !steps.length) return;
-
-  if (index < 0) index = 0;
-  if (index >= steps.length) index = steps.length - 1;
-
-  state.tour.stepIndex = index;
-  const step = steps[index];
-
-  const titleEl = document.getElementById("tour-title");
-  const contentEl = document.getElementById("tour-content");
-  const indicator = document.getElementById(
-    "tour-step-indicator"
-  );
-
-  if (titleEl) titleEl.textContent = step.title;
-  if (contentEl) contentEl.textContent = step.content;
-  if (indicator) {
-    indicator.textContent =
-      "Step " + (index + 1) + " of " + steps.length;
-  }
-
-  positionTourPopover(step);
-}
-
-function startGuidedTour() {
-  if (!state.tour.steps.length) {
-    collectTourSteps();
-  }
-  if (!state.tour.steps.length) {
-    showToast("No tour steps defined.");
+function loadProjectObject(obj) {
+  if (!obj || typeof obj !== "object") {
+    showToast("Invalid project file.");
     return;
   }
-  state.tour.active = true;
-  showTourStep(0);
+
+  if (obj.epiSettings) {
+    state.epiSettings = obj.epiSettings;
+  } else {
+    state.epiSettings = JSON.parse(JSON.stringify(DEFAULT_EPI_SETTINGS));
+  }
+
+  state.currency = obj.currency || "INR";
+  state.includeOpportunityCost =
+    typeof obj.includeOpportunityCost === "boolean"
+      ? obj.includeOpportunityCost
+      : true;
+
+  state.scenarios = Array.isArray(obj.scenarios)
+    ? obj.scenarios
+    : [];
+
+  state.currentCostSourceId = obj.lastCostSourceId || null;
+
+  renderScenarioTable();
+  populateAdvancedSettingsForm();
+
+  if (obj.lastConfig) {
+    applyConfigToInputs(obj.lastConfig);
+    applyConfiguration(false);
+  }
+
+  showToast("Project JSON loaded.");
 }
 
-function endGuidedTour() {
-  const overlay = document.getElementById("tour-overlay");
-  const pop = document.getElementById("tour-popover");
-  if (overlay) overlay.classList.add("hidden");
-  if (pop) pop.classList.add("hidden");
-  state.tour.active = false;
+function setupProjectSaveLoad() {
+  const saveBtnIds = ["saveProject", "btn-save-project"];
+  const loadBtnIds = ["loadProject", "btn-load-project"];
+  const fileInputIds = ["loadFile", "project-file-input"];
+
+  let saveBtn = null;
+  let loadBtn = null;
+  let fileInput = null;
+
+  saveBtnIds.forEach(id => {
+    if (!saveBtn) {
+      const el = document.getElementById(id);
+      if (el) saveBtn = el;
+    }
+  });
+  loadBtnIds.forEach(id => {
+    if (!loadBtn) {
+      const el = document.getElementById(id);
+      if (el) loadBtn = el;
+    }
+  });
+  fileInputIds.forEach(id => {
+    if (!fileInput) {
+      const el = document.getElementById(id);
+      if (el) fileInput = el;
+    }
+  });
+
+  if (saveBtn) {
+    saveBtn.addEventListener("click", saveProjectJson);
+  }
+
+  if (loadBtn && fileInput) {
+    loadBtn.addEventListener("click", () => {
+      fileInput.value = "";
+      fileInput.click();
+    });
+
+    fileInput.addEventListener("change", () => {
+      const file = fileInput.files && fileInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = evt => {
+        try {
+          const obj = JSON.parse(evt.target.result);
+          loadProjectObject(obj);
+        } catch (e) {
+          showToast("Could not read project JSON.");
+        }
+      };
+      reader.readAsText(file);
+    });
+  }
 }
 
 /* ===========================
-   Main results update
+   Main apply configuration
    =========================== */
 
-function applyConfiguration(showToastFlag) {
+function updateHeadlineUi(results) {
+  const cfgSummaryEl = document.getElementById("config-summary-text");
+  const headTagEl = document.getElementById("headline-tag");
+  const headTextEl = document.getElementById("headline-text");
+  const headBriefEl = document.getElementById("headline-briefing-text");
+  const natSummaryEl = document.getElementById("national-summary-text");
+
+  if (cfgSummaryEl) {
+    cfgSummaryEl.textContent = buildConfigSummaryText(
+      results.config,
+      results.costs
+    );
+  }
+
+  const head = classifyHeadline(results);
+  if (headTagEl) {
+    headTagEl.textContent = head.tagText;
+    headTagEl.classList.remove(
+      "headline-status-good",
+      "headline-status-watch",
+      "headline-status-poor",
+      "headline-status-neutral"
+    );
+    const cls =
+      head.status === "good"
+        ? "headline-status-good"
+        : head.status === "watch"
+        ? "headline-status-watch"
+        : head.status === "poor"
+        ? "headline-status-poor"
+        : "headline-status-neutral";
+    headTagEl.classList.add(cls);
+  }
+  if (headTextEl) {
+    headTextEl.textContent = head.text;
+  }
+  if (headBriefEl) {
+    headBriefEl.textContent = buildHeadlineBriefing(results);
+  }
+  if (natSummaryEl) {
+    natSummaryEl.textContent = buildNationalSummaryText(results);
+  }
+}
+
+function applyConfiguration(switchToResultsTab) {
   const cfg = readConfigurationFromInputs();
 
-  if (cfg.tier !== state.currentTier) {
-    state.currentTier = cfg.tier;
-    populateCostSourceOptions(cfg.tier);
+  if (
+    cfg.traineesPerCohort <= 0 ||
+    cfg.numberOfCohorts <= 0 ||
+    cfg.costPerTraineePerMonth <= 0
+  ) {
+    showToast(
+      "Please set trainees, cohorts and cost per trainee per month to values above zero."
+    );
   }
+
+  state.currentTier = cfg.tier;
+
+  populateCostSourceOptions(cfg.tier);
 
   const results = computeScenarioResults(cfg);
   state.lastResults = results;
 
-  const summaryText = buildConfigSummaryText(
-    cfg,
-    results.costs
-  );
-  const summaryEl = document.getElementById("config-summary");
-  if (summaryEl) {
-    summaryEl.textContent = summaryText;
-  }
-
-  const endorseValue = document.getElementById(
-    "config-endorsement-value"
-  );
-  if (endorseValue) {
-    endorseValue.textContent = formatPercent(
-      results.util.endorseProb || 0,
-      1
-    );
-  }
-
-  const headlineStatus = classifyHeadline(results);
-  const statusTag = document.getElementById(
-    "headline-status-tag"
-  );
-  if (statusTag) {
-    statusTag.textContent = headlineStatus.tagText;
-    statusTag.classList.remove(
-      "status-neutral",
-      "status-good",
-      "status-watch",
-      "status-poor"
-    );
-    statusTag.classList.add(
-      headlineStatus.status === "good"
-        ? "status-good"
-        : headlineStatus.status === "watch"
-        ? "status-watch"
-        : headlineStatus.status === "poor"
-        ? "status-poor"
-        : "status-neutral"
-    );
-  }
-
-  const headlineTextEl = document.getElementById(
-    "headline-recommendation"
-  );
-  if (headlineTextEl) {
-    headlineTextEl.textContent = headlineStatus.text;
-  }
-
-  const briefingEl = document.getElementById(
-    "headline-briefing-text"
-  );
-  if (briefingEl) {
-    briefingEl.textContent = buildHeadlineBriefing(results);
-  }
-
-  const endorseRateEl = document.getElementById("endorsement-rate");
-  const optOutEl = document.getElementById("optout-rate");
-  if (endorseRateEl) {
-    endorseRateEl.textContent = formatPercent(
-      results.util.endorseProb || 0,
-      1
-    );
-  }
-  if (optOutEl) {
-    optOutEl.textContent = formatPercent(
-      results.util.optOutProb || 0,
-      1
-    );
-  }
-
-  const wtpTraineeEl = document.getElementById(
-    "wtp-per-trainee"
-  );
-  const wtpCohortEl = document.getElementById(
-    "wtp-total-cohort"
-  );
-  if (wtpTraineeEl) {
-    wtpTraineeEl.textContent =
-      typeof results.wtpPerTraineePerMonth === "number"
-        ? formatCurrencyInr(
-            results.wtpPerTraineePerMonth,
-            0
-          )
-        : "-";
-  }
-  if (wtpCohortEl) {
-    wtpCohortEl.textContent =
-      typeof results.wtpPerCohort === "number"
-        ? formatCurrency(
-            results.wtpPerCohort,
-            state.currency
-          )
-        : "-";
-  }
-
-  const progCostEl = document.getElementById(
-    "prog-cost-per-cohort"
-  );
-  const totalCostEl = document.getElementById("total-cost");
-  if (progCostEl) {
-    progCostEl.textContent = formatCurrency(
-      results.costs.programmeCostPerCohort || 0,
-      state.currency
-    );
-  }
-  if (totalCostEl) {
-    totalCostEl.textContent = formatCurrency(
-      results.costs.totalEconomicCostPerCohort || 0,
-      state.currency
-    );
-  }
-
-  const netBenefitEl = document.getElementById("net-benefit");
-  const bcrEl = document.getElementById("bcr");
-  if (netBenefitEl) {
-    netBenefitEl.textContent = formatCurrency(
-      results.netBenefitPerCohort || 0,
-      state.currency
-    );
-  }
-  if (bcrEl) {
-    bcrEl.textContent =
-      results.bcrPerCohort !== null &&
-      isFinite(results.bcrPerCohort)
-        ? results.bcrPerCohort.toFixed(2)
-        : "-";
-  }
-
-  const gradsEl = document.getElementById("epi-graduates");
-  const outbreaksEl = document.getElementById("epi-outbreaks");
-  const epiBenefitEl = document.getElementById("epi-benefit");
-  if (gradsEl) {
-    gradsEl.textContent = formatNumber(
-      results.epi.graduatesAllCohorts || 0,
-      0
-    );
-  }
-  if (outbreaksEl) {
-    outbreaksEl.textContent = formatNumber(
-      results.epi.outbreaksPerYearAllCohorts || 0,
-      1
-    );
-  }
-  if (epiBenefitEl) {
-    epiBenefitEl.textContent = formatCurrency(
-      results.epi.benefitPerCohort || 0,
-      state.currency
-    );
-  }
-
-  const natCostEl = document.getElementById("nat-total-cost");
-  const natBenefitEl = document.getElementById(
-    "nat-total-benefit"
-  );
-  const natNetEl = document.getElementById(
-    "nat-net-benefit"
-  );
-  const natBcrEl = document.getElementById("nat-bcr");
-  const natWtpEl = document.getElementById("nat-total-wtp");
-  const natGradsEl = document.getElementById("nat-graduates");
-  const natOutbreaksEl = document.getElementById(
-    "nat-outbreaks"
-  );
-
-  if (natCostEl) {
-    natCostEl.textContent = formatCurrency(
-      results.totalCostAllCohorts || 0,
-      state.currency
-    );
-  }
-  if (natBenefitEl) {
-    natBenefitEl.textContent = formatCurrency(
-      results.epi.totalBenefitAllCohorts || 0,
-      state.currency
-    );
-  }
-  if (natNetEl) {
-    natNetEl.textContent = formatCurrency(
-      results.natNetBenefit || 0,
-      state.currency
-    );
-  }
-  if (natBcrEl) {
-    natBcrEl.textContent =
-      results.natBcr !== null &&
-      isFinite(results.natBcr)
-        ? results.natBcr.toFixed(2)
-        : "-";
-  }
-  if (natWtpEl) {
-    natWtpEl.textContent =
-      typeof results.wtpAllCohorts === "number"
-        ? formatCurrency(
-            results.wtpAllCohorts,
-            state.currency
-          )
-        : "-";
-  }
-  if (natGradsEl) {
-    natGradsEl.textContent = formatNumber(
-      results.epi.graduatesAllCohorts || 0,
-      0
-    );
-  }
-  if (natOutbreaksEl) {
-    natOutbreaksEl.textContent = formatNumber(
-      results.epi.outbreaksPerYearAllCohorts || 0,
-      1
-    );
-  }
-
-  const natSummaryEl = document.getElementById(
-    "natsim-summary-text"
-  );
-  if (natSummaryEl) {
-    natSummaryEl.textContent = buildNationalSummaryText(
-      results
-    );
-  }
-
   updateCostBreakdown(results);
-  updateAssumptionLog(results);
   updateUptakeChart(results);
   updateBcrChart(results);
   updateEpiChart(results);
   updateNationalCharts(results);
-  refreshSensitivityTables(false);
+  updateAssumptionLog(results);
+  updateHeadlineUi(results);
   updateCopilotPreparedText();
+  refreshSensitivityTables(false);
 
-  if (showToastFlag) {
-    showToast("Configuration applied.");
+  if (switchToResultsTab) {
+    setActiveTab("results");
   }
+
+  showToast("Configuration applied and results updated.");
 }
 
 /* ===========================
-   External config loading
+   Initialisation
    =========================== */
 
-function tryLoadExternalConfigs() {
-  if (window.fetch) {
-    fetch("epi_config.json")
-      .then(res => {
-        if (!res.ok) throw new Error("No epi_config");
-        return res.json();
-      })
-      .then(json => {
-        if (json && json.tiers && json.general) {
-          state.epiSettings = json;
-          populateAdvancedSettingsForm();
-        }
-      })
-      .catch(() => {});
-
-    fetch("cost_config.json")
-      .then(res => {
-        if (!res.ok) throw new Error("No cost_config");
-        return res.json();
-      })
-      .then(json => {
-        COST_CONFIG = json;
-        populateCostSourceOptions(state.currentTier);
-      })
-      .catch(() => {});
-  }
-}
-
-/* ===========================
-   Event wiring
-   =========================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-  const costSlider = document.getElementById("cost-slider");
-  const costDisplay = document.getElementById("cost-display");
-  const currencyLabel = document.getElementById("currency-label");
-
-  if (costSlider && costDisplay) {
-    const updateCostLabel = () => {
-      const value = parseFloat(costSlider.value) || 0;
-      costDisplay.textContent = formatCurrencyInr(value, 0);
-    };
-    costSlider.addEventListener("input", updateCostLabel);
-    updateCostLabel();
-  }
-
-  const tabLinks = document.querySelectorAll(".tab-link");
-  tabLinks.forEach(btn => {
+function setupTabs() {
+  const tabs = document.querySelectorAll(".tab-link");
+  tabs.forEach(btn => {
     btn.addEventListener("click", () => {
       const tabId = btn.getAttribute("data-tab");
-      setActiveTab(tabId);
+      if (tabId) {
+        setActiveTab(tabId);
+      }
     });
   });
+}
 
-  // Ensure an initial active tab
-  const firstTab = document.querySelector(".tab-link");
-  if (firstTab) {
-    const firstId = firstTab.getAttribute("data-tab");
-    if (firstId) setActiveTab(firstId);
+function setupCoreButtons() {
+  const applyIds = ["apply-config", "apply-configuration", "btn-apply-config"];
+  const viewResultsIds = ["view-results-summary", "btn-view-results"];
+  const saveScenarioIds = ["save-scenario", "btn-save-scenario"];
+  const exportScenExcelIds = ["export-scenarios-excel"];
+  const exportScenPdfIds = ["export-scenarios-pdf"];
+  const exportSensExcelIds = ["export-sensitivity-excel"];
+  const exportSensPdfIds = ["export-sensitivity-pdf"];
+  const updateSensIds = ["update-sensitivity", "btn-update-sensitivity"];
+
+  const attachClick = (ids, handler) => {
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener("click", handler);
+      }
+    });
+  };
+
+  attachClick(applyIds, () => applyConfiguration(true));
+  attachClick(viewResultsIds, () => setActiveTab("results"));
+  attachClick(saveScenarioIds, saveCurrentScenario);
+  attachClick(exportScenExcelIds, exportScenariosToExcel);
+  attachClick(exportScenPdfIds, exportScenariosToPdf);
+  attachClick(exportSensExcelIds, exportSensitivityToExcel);
+  attachClick(exportSensPdfIds, exportSensitivityToPdf);
+  attachClick(updateSensIds, () => refreshSensitivityTables(true));
+}
+
+function setupCurrencyAndOppToggles() {
+  const currencySelect =
+    document.getElementById("currency-select") ||
+    document.getElementById("currency");
+  if (currencySelect) {
+    currencySelect.addEventListener("change", () => {
+      const val = currencySelect.value === "USD" ? "USD" : "INR";
+      state.currency = val;
+      if (state.lastResults) {
+        applyConfiguration(false);
+      }
+    });
   }
 
-  const modelPills = document.querySelectorAll(
-    '.pill-toggle[data-model]'
-  );
-  modelPills.forEach(btn => {
+  const oppToggleIds = ["opp-cost-toggle", "toggle-opportunity-cost"];
+  oppToggleIds.forEach(id => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
     btn.addEventListener("click", () => {
-      modelPills.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      state.model = btn.getAttribute("data-model") || "mxl";
+      btn.classList.toggle("on");
+      state.includeOpportunityCost = btn.classList.contains("on");
       if (state.lastResults) {
         applyConfiguration(false);
       }
     });
   });
+}
 
-  const currencyPills = document.querySelectorAll(
-    '.pill-toggle[data-currency]'
-  );
-  currencyPills.forEach(btn => {
-    btn.addEventListener("click", () => {
-      currencyPills.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      state.currency =
-        btn.getAttribute("data-currency") || "INR";
-      if (currencyLabel) {
-        currencyLabel.textContent = state.currency;
-      }
-      if (state.lastResults) {
-        applyConfiguration(false);
-      }
-      renderScenarioTable();
-      refreshSensitivityTables(false);
-    });
+function setupAdvancedButtons() {
+  const advApplyIds = ["advanced-apply", "btn-advanced-apply"];
+  const advResetIds = ["advanced-reset", "btn-advanced-reset"];
+
+  advApplyIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener("click", applyAdvancedSettings);
+    }
   });
 
-  const oppToggle = document.getElementById("opp-toggle");
-  if (oppToggle) {
-    oppToggle.addEventListener("click", () => {
-      oppToggle.classList.toggle("on");
-      state.includeOpportunityCost =
-        oppToggle.classList.contains("on");
-      if (state.lastResults) {
-        applyConfiguration(false);
+  advResetIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener("click", resetAdvancedSettings);
+    }
+  });
+}
+
+function loadCostConfigJson() {
+  if (typeof fetch === "undefined") return;
+
+  fetch("cost_config.json")
+    .then(resp => resp.ok ? resp.json() : null)
+    .then(data => {
+      if (data) {
+        COST_CONFIG = data;
+        populateCostSourceOptions(state.currentTier);
+        if (state.lastResults) {
+          applyConfiguration(false);
+        }
       }
+    })
+    .catch(() => {
+      // Fallback to hard coded templates
     });
-  }
+}
 
-  const updateBtn = document.getElementById("update-results");
-  if (updateBtn) {
-    updateBtn.addEventListener("click", () => {
-      applyConfiguration(true);
-    });
-  }
-
-  const snapshotBtn = document.getElementById("open-snapshot");
-  if (snapshotBtn) {
-    snapshotBtn.addEventListener("click", () => {
-      if (!state.lastResults) {
-        showToast(
-          "Apply a configuration before opening the summary."
-        );
-        return;
-      }
-      openResultsModal(state.lastResults);
-    });
-  }
-
-  const modalClose = document.getElementById("close-modal");
-  if (modalClose) {
-    modalClose.addEventListener("click", closeResultsModal);
-  }
-
-  const modal = document.getElementById("results-modal");
-  if (modal) {
-    modal.addEventListener("click", e => {
-      if (e.target === modal) closeResultsModal();
-    });
-  }
-
-  const saveBtn = document.getElementById("save-scenario");
-  if (saveBtn) {
-    saveBtn.addEventListener("click", saveCurrentScenario);
-  }
-
-  const exportExcelBtn = document.getElementById("export-excel");
-  if (exportExcelBtn) {
-    exportExcelBtn.addEventListener(
-      "click",
-      exportScenariosToExcel
-    );
-  }
-
-  const exportPdfBtn = document.getElementById("export-pdf");
-  if (exportPdfBtn) {
-    exportPdfBtn.addEventListener(
-      "click",
-      exportScenariosToPdf
-    );
-  }
-
-  const costSourceSelect = document.getElementById("cost-source");
-  if (costSourceSelect) {
-    costSourceSelect.addEventListener("change", () => {
-      state.currentCostSourceId =
-        costSourceSelect.value || null;
-      if (state.lastResults) {
-        applyConfiguration(false);
-      }
-    });
-  }
-
-  const tierSelect = document.getElementById("program-tier");
-  if (tierSelect) {
-    tierSelect.addEventListener("change", () => {
-      state.currentTier = tierSelect.value;
-      populateCostSourceOptions(state.currentTier);
-      if (state.lastResults) {
-        applyConfiguration(false);
-      }
-    });
-  }
-
-  const advApply = document.getElementById("advanced-apply");
-  if (advApply) {
-    advApply.addEventListener("click", applyAdvancedSettings);
-  }
-  const advReset = document.getElementById("advanced-reset");
-  if (advReset) {
-    advReset.addEventListener("click", resetAdvancedSettings);
-  }
-
-  const sensUpdateBtn = document.getElementById(
-    "refresh-sensitivity-benefits"
-  );
-  if (sensUpdateBtn) {
-    sensUpdateBtn.addEventListener("click", () => {
-      refreshSensitivityTables(true);
-    });
-  }
-
-  const sensEpiToggle = document.getElementById(
-    "sensitivity-epi-toggle"
-  );
-  if (sensEpiToggle) {
-    sensEpiToggle.addEventListener("click", () => {
-      sensEpiToggle.classList.toggle("on");
-      refreshSensitivityTables(false);
-    });
-  }
-
-  const sensExcelBtn = document.getElementById(
-    "export-sensitivity-benefits-excel"
-  );
-  if (sensExcelBtn) {
-    sensExcelBtn.addEventListener(
-      "click",
-      exportSensitivityToExcel
-    );
-  }
-
-  const sensPdfBtn = document.getElementById(
-    "export-sensitivity-benefits-pdf"
-  );
-  if (sensPdfBtn) {
-    sensPdfBtn.addEventListener(
-      "click",
-      exportSensitivityToPdf
-    );
-  }
-
-  const tourStartBtn = document.getElementById(
-    "btn-start-tour"
-  );
-  if (tourStartBtn) {
-    tourStartBtn.addEventListener("click", () => {
-      collectTourSteps();
-      startGuidedTour();
-    });
-  }
-
-  const tourNext = document.getElementById("tour-next");
-  const tourPrev = document.getElementById("tour-prev");
-  const tourClose = document.getElementById("tour-close");
-
-  if (tourNext) {
-    tourNext.addEventListener("click", () => {
-      if (!state.tour.steps.length) return;
-      const nextIndex = state.tour.stepIndex + 1;
-      if (nextIndex >= state.tour.steps.length) {
-        endGuidedTour();
-      } else {
-        showTourStep(nextIndex);
-      }
-    });
-  }
-  if (tourPrev) {
-    tourPrev.addEventListener("click", () => {
-      if (!state.tour.steps.length) return;
-      const prevIndex = state.tour.stepIndex - 1;
-      if (prevIndex < 0) return;
-      showTourStep(prevIndex);
-    });
-  }
-  if (tourClose) {
-    tourClose.addEventListener("click", endGuidedTour);
-  }
-
-  const tourOverlay = document.getElementById(
-    "tour-overlay"
-  );
-  if (tourOverlay) {
-    tourOverlay.addEventListener("click", endGuidedTour);
-  }
-
-  populateAdvancedSettingsForm();
+document.addEventListener("DOMContentLoaded", () => {
+  setActiveTab("configuration");
   populateCostSourceOptions(state.currentTier);
-  tryLoadExternalConfigs();
+  populateAdvancedSettingsForm();
+  setupTabs();
+  setupCoreButtons();
+  setupCurrencyAndOppToggles();
+  setupAdvancedButtons();
   setupCopilotCopyButton();
+  setupProjectSaveLoad();
+  loadCostConfigJson();
   updateCopilotPreparedText();
 });
