@@ -90,7 +90,7 @@
                 </p>
                 <ul class="plain-list">
                     <li>Preferences and willingness-to-pay estimates from a discrete choice experiment with stakeholders.</li>
-                    <li>Costing templates from WHO, NIE and NCDC for Frontline, Intermediate and Advanced programmes.</li>
+                    <li>Consolidated cost templates that combine data from WHO, NIE and NCDC across Frontline, Intermediate and Advanced programmes.</li>
                     <li>Simple epidemiological multipliers that translate training scale-up and outbreak response times into health benefits.</li>
                 </ul>
                 <p>
@@ -247,12 +247,14 @@
                     <div class="attr-table-row">
                         <div class="attr-cell-title">Cost templates</div>
                         <div class="attr-cell-levels">
-                            Template budgets submitted by WHO, NIE and NCDC for different FETP tiers.
+                            Consolidated programme cost templates for Frontline, Intermediate and Advanced tiers, derived from
+                            combined WHO, NIE and NCDC budget submissions across institutions.
                         </div>
                         <div class="attr-cell-expl">
-                            Templates are used as alternative settings rather than being combined. Policy makers can
-                            switch between templates to see how cost structure affects economic cost while holding
-                            programme design constant. Templates that include opportunity cost feed into total economic
+                            For each tier, STEPS uses a single consolidated cost template that reflects total programme costs
+                            across institutions. These totals are converted into per cohort and per trainee per month costs
+                            using the cohort sizes in the source data and the cohort size selected in the configuration tab.
+                            Where the template includes an explicit opportunity cost component, this feeds into total economic
                             cost when the opportunity cost switch is on.
                         </div>
                     </div>
@@ -651,37 +653,40 @@
             <div class="card">
                 <div class="card-header-with-info">
                     <h2>Cost templates and sources</h2>
-                    <button type="button" class="info-icon" data-tooltip="Select cost templates submitted by WHO, NIE or NCDC. These control cost structure and the opportunity cost entries used in economic cost calculations." aria-label="Cost templates and sources information">i</button>
+                    <button type="button" class="info-icon" data-tooltip="Review the consolidated cost template for the selected programme tier. This controls cost structure and any opportunity cost entries used in economic cost calculations." aria-label="Cost templates and sources information">i</button>
                 </div>
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="cost-source">
-                            Cost template source
-                            <button type="button" class="info-icon" data-tooltip="Choose whether to use WHO, NIE or NCDC cost templates for the selected tier. This affects how costs are allocated across categories." aria-label="Cost template source information">i</button>
+                            Cost template
+                            <button type="button" class="info-icon" data-tooltip="Choose the cost template profile for the selected tier. In the current version, each tier uses a consolidated template that combines data from WHO, NIE and NCDC across all institutions." aria-label="Cost template source information">i</button>
                         </label>
                         <select id="cost-source"></select>
                     </div>
                 </div>
                 <p>
-                    Cost templates are based on submissions from WHO, NIE and NCDC. For Frontline training,
-                    WHO supplies a template for six cohorts. For Intermediate training, templates are available
-                    from WHO, NIE and NCDC. For Advanced training, templates are available from NIE and NCDC.
+                    Cost templates are based on a consolidated dataset that combines submissions from WHO, NIE and NCDC
+                    for Frontline, Intermediate and Advanced programmes. For each tier, the template represents the total
+                    programme cost across institutions and the associated cost components such as staff, travel, training
+                    materials and indirect costs including opportunity cost where applicable.
                 </p>
                 <p>
-                    Templates are used as alternative settings rather than being combined. Policy makers can
-                    switch between templates to see how cost structure affects economic cost while holding
-                    programme design constant.
+                    STEPS converts these total programme costs into per cohort and per trainee per month figures using the
+                    total cohort size in the source data and the cohort size you select in the Configuration tab. This keeps
+                    the costing module consistent with the underlying templates while allowing users to explore alternative
+                    cohort sizes and numbers of cohorts.
                 </p>
                 <p class="note">
-                    Templates that include the opportunity cost of trainee time feed into total economic cost
-                    when the opportunity cost switch is on. When it is off, results focus on budgetary costs only.
+                    Where the template includes an explicit opportunity cost of trainee time, this feeds into total
+                    economic cost when the opportunity cost switch is on. When it is off, results focus on budgetary
+                    (financial) costs only.
                 </p>
             </div>
 
             <div class="card card-secondary">
                 <div class="card-header-with-info">
                     <h2>Cost components for this configuration</h2>
-                    <button type="button" class="info-icon" data-tooltip="Breakdown of programme and economic costs across staff, travel, supervision, materials, management and any other categories in the selected template." aria-label="Cost components information">i</button>
+                    <button type="button" class="info-icon" data-tooltip="Breakdown of programme and economic costs across staff, travel, supervision, materials, indirect costs and any opportunity cost entries in the consolidated template." aria-label="Cost components information">i</button>
                 </div>
                 <div id="cost-breakdown-summary" class="cost-summary">
                     <!-- Filled dynamically -->
@@ -1002,7 +1007,7 @@
     <section id="tab-copilot" class="tab-panel">
         <div class="card">
             <div class="card-header-with-info">
-                <h2>Copilot helper</h2>
+                <h2>Interpret scenarios with Microsoft Copilot</h2>
                 <button type="button"
                         class="info-icon"
                         aria-label="Copilot helper information"
@@ -1010,56 +1015,46 @@
                     i
                 </button>
             </div>
+
             <p>
-                This tab prepares a complete text package for Microsoft Copilot based on the scenario you have analysed in STEPS.
-                The prepared text includes a fixed interpretation prompt and a JSON block that summarises your current configuration,
-                including programme tier, cohort size, number of cohorts, mentorship intensity, career incentives, delivery mode,
-                response time, costs, endorsement, willingness to pay, epidemiological outputs, benefit cost ratios and net benefits.
+                You can use Microsoft Copilot to generate a narrative interpretation of any scenario. The button below prepares
+                a structured prompt that includes a JSON export of the latest results and opens Copilot in a new browser tab.
+                If clipboard access is allowed, the full prompt is copied automatically so you only need to paste it into Copilot.
             </p>
             <p>
-                To use this helper, first run your analysis inside STEPS by applying a configuration and reviewing the Results,
-                Costing details, National simulation and Sensitivity / DCE benefits tabs. Once you are satisfied with the scenario,
-                come to this Copilot tab, review the prepared text, then press the copy button and open Microsoft Copilot in a new
-                browser tab. The prepared text is designed to be pasted as a single prompt into Copilot so that it can reconstruct
-                the scenario and generate a structured policy briefing.
+                Before using the button, first run your analysis inside STEPS: apply a configuration, review the Results,
+                Costing details, National simulation and Sensitivity / DCE benefits tabs, and make sure the scenario reflects
+                the option you want to discuss. The Copilot prompt then bundles a fixed interpretation instruction together
+                with the scenario JSON, including programme tier, cohort size, number of cohorts, mentorship intensity, career
+                incentives, delivery mode, response time, costs, endorsement, willingness to pay, epidemiological outputs,
+                benefit cost ratios and net benefits.
             </p>
             <p class="note">
-                The Copilot helper does not store data, does not transmit information automatically and does not send outputs to
-                any third party service. All information remains in your browser until you choose to copy it. Copilot will only
-                receive the scenario details when you paste the prepared text into
+                The Copilot helper does not store data, does not transmit information automatically and does not send outputs
+                to any third party service. All information remains in your browser until you choose to copy it. Copilot only
+                receives the scenario details when you paste the prepared text into
                 <a href="https://copilot.microsoft.com" target="_blank" rel="noopener">https://copilot.microsoft.com</a>.
-            </p>
-            <p>
-                After copying the text below, open <strong>https://copilot.microsoft.com</strong> in a new tab, choose the most
-                appropriate Copilot mode for policy analysis, and paste the text into the chat box. Copilot will then use the
-                embedded STEPS Tool Copilot Interpretation Prompt and the scenario JSON to produce a policy ready briefing with
-                tables and narrative interpretation of endorsement, willingness to pay, epidemiological benefits, costs, benefit
-                cost ratios and net benefits for national scale up of FETP in India.
-            </p>
-
-            <h3>Plain language summary of what Copilot will do</h3>
-            <p id="copilot-summary-text">
-                Once you paste the prepared text into Microsoft Copilot, it will read the STEPS scenario JSON, restate the
-                configuration in plain language, interpret endorsement levels, explain the willingness to pay results as a
-                preference-based benefit measure, summarise epidemiological outputs such as graduates and outbreak responses,
-                compare total willingness to pay and total economic cost, comment on the benefit cost ratio and net benefits,
-                and give a concise recommendation on whether the scenario looks attractive for national or targeted scale up.
             </p>
 
             <div class="button-row">
                 <button id="copilot-copy-button" class="btn-primary" type="button">
-                    Copy text for Copilot
+                    Open in Copilot and copy prompt
                 </button>
             </div>
             <p class="hint">
-                After clicking “Copy text for Copilot”, open
-                <a href="https://copilot.microsoft.com" target="_blank" rel="noopener">copilot.microsoft.com</a> in a new browser
-                tab and paste the copied text into a new conversation. Copilot will not run unless you manually transfer this text.
+                When you click “Open in Copilot and copy prompt”, STEPS prepares the full interpretation text, attempts to copy
+                it to your clipboard and opens a new browser tab pointing to
+                <a href="https://copilot.microsoft.com" target="_blank" rel="noopener">copilot.microsoft.com</a>.
+                If automatic copy works, you only need to paste once Copilot opens.
+            </p>
+            <p>
+                If automatic copy is blocked by your browser or organisation settings, use the box below to copy the prompt
+                manually and paste it into Copilot at <strong>copilot.microsoft.com</strong>.
             </p>
 
             <div class="form-group form-group-wide">
                 <label for="copilot-prepared-text">
-                    Text to paste into Copilot
+                    Prompt to paste into Copilot
                 </label>
                 <textarea id="copilot-prepared-text" rows="18" readonly>
 Apply a configuration and update the results in STEPS to generate the full Copilot prompt and scenario JSON here. The prepared text will include the STEPS Tool Copilot Interpretation Prompt followed by a JSON block that summarises your current scenario.
@@ -1068,7 +1063,8 @@ Apply a configuration and update the results in STEPS to generate the full Copil
             <p class="hint">
                 The prepared text shown above is the only content that needs to be pasted into Copilot. It combines the fixed
                 interpretation instructions with the scenario JSON from STEPS so that Copilot can produce a structured policy
-                brief for your selected configuration.
+                brief with tables and narrative explanation of endorsement, willingness to pay, epidemiological benefits, costs,
+                benefit cost ratios and net benefits for scale up.
             </p>
         </div>
     </section>
