@@ -1,6 +1,7 @@
 /* ===================================================
    STEPS FETP India Decision Aid
    Script with interactive DCE sensitivity and Copilot helper
+   (upgraded, wired to results, sensitivity and Copilot tabs)
    =================================================== */
 
 /* ===========================
@@ -275,24 +276,41 @@ function logistic(x) {
   return 1 / (1 + Math.exp(-x));
 }
 
+function setTextIfExists(id, text) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.textContent = text;
+  }
+}
+
+function setTextMulti(ids, text) {
+  ids.forEach(id => setTextIfExists(id, text));
+}
+
 /* ===========================
    Configuration reading
    =========================== */
 
 function readConfigurationFromInputs() {
-  const tier = document.getElementById("program-tier").value;
-  const career = document.getElementById("career-track").value;
-  const mentorship = document.getElementById("mentorship").value;
-  const delivery = document.getElementById("delivery").value;
-  const response = document.getElementById("response").value;
+  const tierEl = document.getElementById("program-tier");
+  const careerEl = document.getElementById("career-track");
+  const mentorshipEl = document.getElementById("mentorship");
+  const deliveryEl = document.getElementById("delivery");
+  const responseEl = document.getElementById("response");
+
+  const tier = tierEl ? tierEl.value : "frontline";
+  const career = careerEl ? careerEl.value : "certificate";
+  const mentorship = mentorshipEl ? mentorshipEl.value : "low";
+  const delivery = deliveryEl ? deliveryEl.value : "blended";
+  const response = responseEl ? responseEl.value : "30";
 
   const costSlider = document.getElementById("cost-slider");
   const traineesInput = document.getElementById("trainees");
   const cohortsInput = document.getElementById("cohorts");
 
-  const costPerTraineePerMonth = parseFloat(costSlider.value) || 0;
-  const traineesPerCohort = parseInt(traineesInput.value, 10) || 0;
-  const numberOfCohorts = parseInt(cohortsInput.value, 10) || 0;
+  const costPerTraineePerMonth = parseFloat(costSlider && costSlider.value) || 0;
+  const traineesPerCohort = parseInt(traineesInput && traineesInput.value, 10) || 0;
+  const numberOfCohorts = parseInt(cohortsInput && cohortsInput.value, 10) || 0;
 
   const scenarioNameInput = document.getElementById("scenario-name");
   const scenarioNotesInput = document.getElementById("scenario-notes");
@@ -634,6 +652,7 @@ function getEndorsementRateForSensitivity(defaultRate) {
   if (input) {
     const raw = parseFloat(input.value);
     if (!isNaN(raw) && raw >= 0) {
+      // If user types e.g. 75, treat as percent
       rate = raw > 1.5 ? raw / 100 : raw;
     }
   }
@@ -867,6 +886,56 @@ function setActiveTab(tabId) {
       panel.classList.remove("active");
     }
   });
+}
+
+/* Live preview for configuration inputs (cost slider, trainees, cohorts) */
+
+function updateCostSliderDisplay() {
+  const slider = document.getElementById("cost-slider");
+  if (!slider) return;
+  const value = parseFloat(slider.value || "0") || 0;
+  const txt = formatCurrency(value, state.currency);
+  setTextMulti(
+    ["cost-slider-display", "cost-slider-value", "cost-per-trainee-display"],
+    txt
+  );
+}
+
+function updateTraineeCohortDisplay() {
+  const traineesInput = document.getElementById("trainees");
+  const cohortsInput = document.getElementById("cohorts");
+  const traineesVal = traineesInput ? parseInt(traineesInput.value, 10) || 0 : 0;
+  const cohortsVal = cohortsInput ? parseInt(cohortsInput.value, 10) || 0 : 0;
+
+  setTextMulti(
+    ["trainees-display", "trainees-count"],
+    formatNumber(traineesVal, 0)
+  );
+  setTextMulti(
+    ["cohorts-display", "cohorts-count"],
+    formatNumber(cohortsVal, 0)
+  );
+}
+
+function setupConfigurationInputsUi() {
+  const slider = document.getElementById("cost-slider");
+  if (slider) {
+    slider.addEventListener("input", updateCostSliderDisplay);
+  }
+
+  const traineesInput = document.getElementById("trainees");
+  if (traineesInput) {
+    traineesInput.addEventListener("input", updateTraineeCohortDisplay);
+  }
+
+  const cohortsInput = document.getElementById("cohorts");
+  if (cohortsInput) {
+    cohortsInput.addEventListener("input", updateTraineeCohortDisplay);
+  }
+
+  // Initial sync
+  updateCostSliderDisplay();
+  updateTraineeCohortDisplay();
 }
 
 /* ===========================
@@ -1124,6 +1193,13 @@ function populateCostSourceOptions(tier) {
   });
 
   select.value = chosenId;
+
+  select.addEventListener("change", () => {
+    state.currentCostSourceId = select.value || chosenId;
+    if (state.lastResults) {
+      applyConfiguration(false);
+    }
+  });
 }
 
 function updateCostBreakdown(results) {
@@ -1381,6 +1457,103 @@ function buildHeadlineBriefing(results) {
   );
 
   return paragraphs.join(" ");
+}
+
+/* ===========================
+   Result cards (summary KPIs)
+   =========================== */
+
+function updateResultCards(results) {
+  if (!results) return;
+
+  const endorse = results.util.endorseProb || 0;
+  const optOut = results.util.optOutProb || 0;
+  const endorsePct = endorse * 100;
+  const optOutPct = optOut * 100;
+
+  const costPerCohort = results.costs.totalEconomicCostPerCohort || 0;
+  const totalCostAllCohorts = results.totalCostAllCohorts || 0;
+
+  const wtpPerTrainee = results.wtpPerTraineePerMonth;
+  const wtpAll = results.wtpAllCohorts;
+
+  const bcrPerCohort = results.bcrPerCohort;
+  const netBenefitPerCohort = results.netBenefitPerCohort;
+
+  const natBcr = results.natBcr;
+  const natNet = results.natNetBenefit;
+
+  const gradsAll = results.epi.graduatesAllCohorts || 0;
+  const outbreaksPerYear = results.epi.outbreaksPerYearAllCohorts || 0;
+  const epiBenefitAll = results.epi.totalBenefitAllCohorts || 0;
+
+  setTextMulti(
+    ["result-endorsement-rate", "kpi-endorsement-rate"],
+    endorsePct.toFixed(1) + " %"
+  );
+  setTextMulti(
+    ["result-optout-rate", "kpi-optout-rate"],
+    optOutPct.toFixed(1) + " %"
+  );
+
+  setTextMulti(
+    ["result-cost-cohort", "kpi-cost-per-cohort"],
+    formatCurrency(costPerCohort, state.currency)
+  );
+  setTextMulti(
+    ["result-cost-all-cohorts", "kpi-cost-all-cohorts"],
+    formatCurrency(totalCostAllCohorts, state.currency)
+  );
+
+  setTextMulti(
+    ["result-wtp-per-trainee", "kpi-wtp-per-trainee"],
+    typeof wtpPerTrainee === "number" && isFinite(wtpPerTrainee)
+      ? formatCurrencyInr(wtpPerTrainee, 0)
+      : "-"
+  );
+  setTextMulti(
+    ["result-wtp-all-cohorts", "kpi-wtp-all-cohorts"],
+    wtpAll !== null && wtpAll !== undefined
+      ? formatCurrency(wtpAll, state.currency)
+      : "-"
+  );
+
+  setTextMulti(
+    ["result-bcr-cohort", "kpi-bcr-cohort"],
+    bcrPerCohort !== null && isFinite(bcrPerCohort)
+      ? bcrPerCohort.toFixed(2)
+      : "-"
+  );
+  setTextMulti(
+    ["result-net-benefit-cohort", "kpi-net-benefit-cohort"],
+    netBenefitPerCohort !== null && isFinite(netBenefitPerCohort)
+      ? formatCurrency(netBenefitPerCohort, state.currency)
+      : "-"
+  );
+
+  setTextMulti(
+    ["result-nat-bcr", "kpi-nat-bcr"],
+    natBcr !== null && isFinite(natBcr) ? natBcr.toFixed(2) : "-"
+  );
+  setTextMulti(
+    ["result-nat-net-benefit", "kpi-nat-net-benefit"],
+    natNet !== null && isFinite(natNet)
+      ? formatCurrency(natNet, state.currency)
+      : "-"
+  );
+
+  setTextMulti(
+    ["result-graduates-total", "kpi-graduates-total"],
+    formatNumber(gradsAll, 0)
+  );
+  setTextMulti(
+    ["result-outbreaks-per-year", "kpi-outbreaks-per-year"],
+    formatNumber(outbreaksPerYear, 1)
+  );
+  setTextMulti(
+    ["result-epi-benefit-total", "kpi-epi-benefit-total"],
+    formatCurrency(epiBenefitAll, state.currency)
+  );
 }
 
 /* ===========================
@@ -1955,6 +2128,32 @@ function refreshSensitivityTables(showToastFlag) {
   }
 }
 
+function setupSensitivityControls() {
+  const epiToggle = document.getElementById("sensitivity-epi-toggle");
+  if (epiToggle) {
+    epiToggle.addEventListener("click", () => {
+      epiToggle.classList.toggle("on");
+      refreshSensitivityTables(false);
+    });
+  }
+
+  const benefitSelect = document.getElementById("benefit-definition-select");
+  if (benefitSelect) {
+    benefitSelect.addEventListener("change", () => {
+      refreshSensitivityTables(false);
+    });
+  }
+
+  const overrideInput = document.getElementById("endorsement-override");
+  if (overrideInput) {
+    const handler = () => refreshSensitivityTables(false);
+    overrideInput.addEventListener("change", handler);
+    overrideInput.addEventListener("keyup", e => {
+      if (e.key === "Enter") handler();
+    });
+  }
+}
+
 /* ===========================
    Sensitivity exports
    =========================== */
@@ -2157,9 +2356,10 @@ function exportSensitivityToPdf() {
    =========================== */
 
 function renderScenarioTable() {
-  const tbody = document.querySelector(
-    "#scenario-table tbody"
-  );
+  let tbody = document.querySelector("#scenario-table tbody");
+  if (!tbody) {
+    tbody = document.getElementById("scenario-table-body");
+  }
   if (!tbody) return;
 
   while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
@@ -2487,6 +2687,9 @@ function applyConfigToInputs(cfg) {
   setVal("cohorts", cfg.numberOfCohorts);
   setVal("scenario-name", cfg.scenarioName || "");
   setVal("scenario-notes", cfg.scenarioNotes || "");
+
+  updateCostSliderDisplay();
+  updateTraineeCohortDisplay();
 }
 
 function loadProjectObject(obj) {
@@ -2655,6 +2858,7 @@ function applyConfiguration(switchToResultsTab) {
   updateNationalCharts(results);
   updateAssumptionLog(results);
   updateHeadlineUi(results);
+  updateResultCards(results);
   updateCopilotPreparedText();
   refreshSensitivityTables(false);
 
@@ -2720,6 +2924,8 @@ function setupCurrencyAndOppToggles() {
       state.currency = val;
       if (state.lastResults) {
         applyConfiguration(false);
+      } else {
+        updateCostSliderDisplay();
       }
     });
   }
@@ -2786,6 +2992,8 @@ document.addEventListener("DOMContentLoaded", () => {
   setupAdvancedButtons();
   setupCopilotCopyButton();
   setupProjectSaveLoad();
+  setupSensitivityControls();
+  setupConfigurationInputsUi();
   loadCostConfigJson();
   updateCopilotPreparedText();
 });
