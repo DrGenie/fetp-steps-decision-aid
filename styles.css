@@ -1220,6 +1220,73 @@ a:hover {
 }
 
 /* ---------------------------
+   Additional layout helpers
+   (for tabs, scroll blocks, Copilot etc.)
+   --------------------------- */
+
+.section-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.section-header-row h2,
+.section-header-row h3 {
+  margin: 0;
+}
+
+.section-tagline {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.scroll-shell {
+  margin-top: 0.6rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(148, 163, 184, 0.55);
+  background: #ffffff;
+  overflow: auto;
+}
+
+.scroll-shell-inner {
+  min-width: 880px;
+}
+
+.copilot-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+  gap: 1rem;
+}
+
+.copilot-info {
+  font-size: 0.85rem;
+  color: var(--color-text-soft);
+}
+
+.copilot-steps {
+  margin-top: 0.4rem;
+}
+
+.copilot-steps li {
+  margin-bottom: 0.25rem;
+}
+
+.copilot-actions {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Scenario table helper */
+
+#scenario-table {
+  width: 100%;
+}
+
+/* ---------------------------
    Responsive
    --------------------------- */
 
@@ -1232,6 +1299,9 @@ a:hover {
   }
   .grid-two,
   .grid-two-stretch {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .copilot-layout {
     grid-template-columns: minmax(0, 1fr);
   }
 }
