@@ -1,1664 +1,208 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>STEPS Technical Appendix – FETP India Decision Aid</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Reuse main styles if served in same folder -->
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            margin: 24px;
-            line-height: 1.6;
-            color: #0f172a;
-            background: #f3f4f6;
-        }
-        .appendix-shell {
-            max-width: 1024px;
-            margin: 0 auto 64px;
-        }
-        .appendix-header {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 24px 24px 20px;
-            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
-            border: 1px solid #e5e7eb;
-            margin-bottom: 24px;
-            display: flex;
-            justify-content: space-between;
-            gap: 24px;
-            align-items: flex-start;
-        }
-        .appendix-title-block h1 {
-            font-size: 1.8rem;
-            margin: 0 0 4px;
-            color: #0b1120;
-        }
-        .appendix-title-block p {
-            margin: 0;
-            color: #4b5563;
-            font-size: 0.95rem;
-        }
-        .appendix-badge {
-            align-self: flex-start;
-            display: inline-flex;
-            flex-direction: column;
-            gap: 6px;
-            text-align: right;
-        }
-        .badge-chip {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4px 10px;
-            border-radius: 999px;
-            font-size: 0.75rem;
-            border: 1px solid #d1d5db;
-            color: #111827;
-            background: #f9fafb;
-        }
-        .badge-chip.primary {
-            border-color: #1d4f91;
-            background: #eff6ff;
-            color: #1e3a8a;
-        }
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <title>STEPS Technical Appendix – FETP India Decision Aid</title> <meta name="viewport" content="width=device-width, initial-scale=1"> <style> body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 24px; line-height: 1.6; color: #0f172a; background: #f3f4f6; } .appendix-shell { max-width: 1024px; margin: 0 auto 64px; } .appendix-header { background: #ffffff; border-radius: 16px; padding: 24px 24px 20px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06); border: 1px solid #e5e7eb; margin-bottom: 24px; display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; } .appendix-title-block h1 { font-size: 1.8rem; margin: 0 0 4px; color: #0b1120; } .appendix-title-block p { margin: 0; color: #4b5563; font-size: 0.95rem; } .appendix-badge { align-self: flex-start; display: inline-flex; flex-direction: column; gap: 6px; text-align: right; } .badge-chip { display: inline-flex; align-items: center; justify-content: center; padding: 4px 10px; border-radius: 999px; font-size: 0.75rem; border: 1px solid #d1d5db; color: #111827; background: #f9fafb; } .badge-chip.primary { border-color: #1d4f91; background: #eff6ff; color: #1e3a8a; } .appendix-nav { background: #ffffff; border-radius: 14px; padding: 16px 18px; border: 1px solid #e5e7eb; margin-bottom: 24px; } .appendix-nav h2 { font-size: 1rem; margin: 0 0 8px; color: #111827; } .appendix-nav p { margin: 0 0 8px; font-size: 0.9rem; color: #4b5563; } .appendix-nav ul { margin: 0; padding-left: 18px; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 4px 16px; font-size: 0.9rem; } .appendix-nav a { color: #1d4f91; text-decoration: none; } .appendix-nav a:hover { text-decoration: underline; } .appendix-section { background: #ffffff; border-radius: 16px; padding: 20px 22px; margin-bottom: 20px; border: 1px solid #e5e7eb; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04); } .appendix-section h2 { font-size: 1.25rem; margin-top: 0; margin-bottom: 6px; color: #0b1120; } .appendix-section h3 { font-size: 1.05rem; margin-top: 16px; margin-bottom: 6px; color: #111827; } .appendix-section p { margin-top: 6px; margin-bottom: 6px; color: #374151; font-size: 0.95rem; } .appendix-section ul, .appendix-section ol { margin: 4px 0 8px; padding-left: 20px; font-size: 0.95rem; } .equation-block { margin: 10px 0; padding: 8px 10px; background: #f9fafb; border-radius: 8px; border-left: 3px solid #1d4f91; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.9rem; color: #111827; overflow-x: auto; } .inline-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background: #f3f4f6; padding: 1px 4px; border-radius: 4px; } .example-box { margin: 10px 0; padding: 10px 12px; background: #eff6ff; border-radius: 10px; border: 1px solid #bfdbfe; font-size: 0.93rem; } .example-title { font-weight: 600; color: #1e3a8a; margin-bottom: 4px; } .summary-callout { margin-top: 12px; padding: 10px 12px; border-radius: 10px; background: #ecfdf3; border: 1px solid #bbf7d0; font-size: 0.93rem; color: #14532d; } .warning-callout { margin-top: 12px; padding: 10px 12px; border-radius: 10px; background: #fef3c7; border: 1px solid #fed7aa; font-size: 0.93rem; color: #92400e; } .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px 18px; } .small-table { width: 100%; border-collapse: collapse; margin: 6px 0 10px; font-size: 0.9rem; } .small-table th, .small-table td { border: 1px solid #e5e7eb; padding: 4px 6px; text-align: left; } .small-table th { background: #f3f4f6; font-weight: 600; } .small-table tbody tr:nth-child(even) { background: #ffffff; } .ref-list { font-size: 0.9rem; } .ref-list li { margin-bottom: 4px; } @media (max-width: 640px) { body { margin: 12px; } .appendix-header { flex-direction: column; } .appendix-badge { text-align: left; align-items: flex-start; } } </style> </head> <body> <div class="appendix-shell"> <header class="appendix-header"> <div class="appendix-title-block"> <h1>STEPS Technical Appendix</h1> <p> Scalable Training Estimation and Planning System for FETP India. This appendix explains in detail how the STEPS decision aid combines discrete choice experiment results, cost templates and epidemiological assumptions to produce endorsement, cost, benefit and cost benefit metrics for user configured Field Epidemiology Training Program scenarios. </p> <p> The appendix is written as a stand alone manual. It is designed so that analysts can reproduce all calculations in spreadsheets or statistical software and adapt the approach for Field Epidemiology Training Programmes in other settings. Symbols and formulas are kept simple and are always linked back to the inputs visible in the user interface. </p> </div> <div class="appendix-badge"> <span class="badge-chip primary">FETP India decision aid</span> <span class="badge-chip">Version 1.1 · December 2025</span> </div> </header> <section class="appendix-nav"> <h2>How to use this appendix</h2> <p> Each section mirrors the structure of the STEPS tool. The text follows the order of the tabs and explains the external assumptions that sit behind the sliders, toggles and tooltip icons. You can read it from start to finish or move directly to a section using the navigation links. </p> <ul> <li><a href="#sec-overview">1. Overview and main concepts</a></li> <li><a href="#sec-tabs">2. Tab by tab explanation</a></li> <li><a href="#sec-utility">3. Preference model, utilities and endorsement</a></li> <li><a href="#sec-wtp">4. DCE based benefit measures and willingness to pay</a></li> <li><a href="#sec-costs">5. Cost assumptions, cost components and worked examples</a></li> <li><a href="#sec-epi">6. Epidemiological and other benefit assumptions</a></li> <li><a href="#sec-advanced">7. Advanced settings and editable assumptions</a></li> <li><a href="#sec-worked">8. Full worked scenarios across all tabs</a></li> <li><a href="#sec-copilot">9. Copilot tab and video guide</a></li> <li><a href="#sec-use">10. Recommended use, limits and future updates</a></li> <li><a href="#sec-refs">11. References and sources</a></li> </ul> </section> <!-- 1. OVERVIEW --> <section id="sec-overview" class="appendix-section"> <h2>1. Overview and main concepts</h2> <p> STEPS is a decision aid that helps national and state partners in India explore alternative designs and scale up options for Field Epidemiology Training Programmes. The tool allows users to define training configurations, such as tier, mentorship and delivery mode, and to see in real time how these choices affect stakeholder endorsement, programme costs, epidemiological benefits and overall cost benefit metrics. </p> <p> The tool relies on three sets of inputs. First, it uses a discrete choice experiment with health system stakeholders that asked respondents to choose between alternative FETP configurations and an explicit opt out option. Second, it uses cost templates drawn from World Health Organization guidance, national costing exercises and partner institutions in India for different FETP tiers and delivery models. Third, it uses epidemiological and health security assumptions that link additional graduates and improved outbreak response capacity to indicative monetary benefits. </p> <p> At each step the interface displays simple numbers such as endorsement percentages, costs per cohort, graduates, outbreak responses and benefit cost ratios. Behind these numbers sit assumptions and formulas. This appendix explains each assumption, cites the sources used where possible and shows how users can change key assumptions in the Advanced settings tab as better information becomes available. </p> <div class="summary-callout"> STEPS is deliberately transparent. Every slider and toggle correspond to parameters that can be discussed, challenged and updated. The tool is not a black box epidemiological model but a structured way of combining preference data, cost data and simple epidemiological multipliers in support of investment and planning discussions. </div> </section> <!-- 2. TAB BY TAB --> <section id="sec-tabs" class="appendix-section"> <h2>2. Tab by tab explanation</h2>
+<h3>2.1 Introduction tab</h3>
+<p>
+  The Introduction tab explains the purpose of the tool, the three FETP tiers used in India and the main outputs shown in subsequent tabs. It summarises that the tool combines stakeholder preferences, cost information and epidemiological assumptions to provide endorsement estimates, cost and benefit metrics and scale up projections. The text on this tab is fixed and is intended to give non technical users an accessible entry point.
+</p>
 
-        .appendix-nav {
-            background: #ffffff;
-            border-radius: 14px;
-            padding: 16px 18px;
-            border: 1px solid #e5e7eb;
-            margin-bottom: 24px;
-        }
-        .appendix-nav h2 {
-            font-size: 1rem;
-            margin: 0 0 8px;
-            color: #111827;
-        }
-        .appendix-nav p {
-            margin: 0 0 8px;
-            font-size: 0.9rem;
-            color: #4b5563;
-        }
-        .appendix-nav ul {
-            margin: 0;
-            padding-left: 18px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-            gap: 4px 16px;
-            font-size: 0.9rem;
-        }
-        .appendix-nav a {
-            color: #1d4f91;
-            text-decoration: none;
-        }
-        .appendix-nav a:hover {
-            text-decoration: underline;
-        }
+<h3>2.2 Attributes tab</h3>
+<p>
+  The Attributes tab lists the attributes and levels that were included in the discrete choice experiment. It shows the labels that appeared in the survey, the levels that respondents compared and the reference levels that are treated as the baseline in the econometric model. This makes it clear how the model coefficients used in the tool are linked to practical features of FETP design, such as programme duration, mentorship intensity and outbreak response time. Tooltip icons on this tab explain technical terms such as “reference level” or “alternative specific constant” using plain language.
+</p>
 
-        .appendix-section {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 20px 22px;
-            margin-bottom: 20px;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
-        }
-        .appendix-section h2 {
-            font-size: 1.25rem;
-            margin-top: 0;
-            margin-bottom: 6px;
-            color: #0b1120;
-        }
-        .appendix-section h3 {
-            font-size: 1.05rem;
-            margin-top: 16px;
-            margin-bottom: 6px;
-            color: #111827;
-        }
-        .appendix-section p {
-            margin-top: 6px;
-            margin-bottom: 6px;
-            color: #374151;
-            font-size: 0.95rem;
-        }
-        .appendix-section ul,
-        .appendix-section ol {
-            margin: 4px 0 8px;
-            padding-left: 20px;
-            font-size: 0.95rem;
-        }
+<h3>2.3 Configuration tab</h3>
+<p>
+  The Configuration tab is where users define scenarios. For each scenario, users choose a tier, a career incentive, mentorship intensity, delivery mode and expected response time. They also select cohort size and number of cohorts and set a cost per trainee per month using a slider. The tool immediately recomputes the utility of the configured option, the probability that stakeholders endorse this option instead of the opt out alternative, the implied graduates and outbreak responses and the resulting benefits and costs.
+</p>
+<p>
+  Tooltip icons next to each input explain what the choice means and how it enters the calculations. For example, the tooltip next to the cost slider explains that the discrete choice model uses cost measured in thousands of Indian rupees per trainee per month and that this is the main driver of both endorsement and cost per cohort. The tooltip next to the response time selector explains that faster response times are both strongly valued in the discrete choice experiment and treated as improving epidemiological benefits through response multipliers that can be adjusted in the Advanced settings tab.
+</p>
 
-        .equation-block {
-            margin: 10px 0;
-            padding: 8px 10px;
-            background: #f9fafb;
-            border-radius: 8px;
-            border-left: 3px solid #1d4f91;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            font-size: 0.9rem;
-            color: #111827;
-            overflow-x: auto;
-        }
-        .inline-mono {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            background: #f3f4f6;
-            padding: 1px 4px;
-            border-radius: 4px;
-        }
-        .example-box {
-            margin: 10px 0;
-            padding: 10px 12px;
-            background: #eff6ff;
-            border-radius: 10px;
-            border: 1px solid #bfdbfe;
-            font-size: 0.93rem;
-        }
-        .example-title {
-            font-weight: 600;
-            color: #1e3a8a;
-            margin-bottom: 4px;
-        }
+<h3>2.4 Results tab</h3>
+<p>
+  The Results tab shows the core outputs for the current configuration. These are endorsement and opt out percentages, programme and economic cost per cohort, graduates per cohort, outbreak responses over the planning horizon, total epidemiological benefits, DCE based benefits and benefit cost ratios. The endorsement values come directly from the discrete choice model, while the costs and benefits are obtained using the assumptions described later in this appendix.
+</p>
+<p>
+  Tooltip icons on this tab explain how endorsement is calculated, what is meant by programme cost and economic cost and how epidemiological and DCE based benefits are converted into monetary values. For users who only want a high level picture, this tab may be sufficient. For users who want to audit or adapt the calculations, later sections and the Advanced settings tab provide the needed detail.
+</p>
 
-        .summary-callout {
-            margin-top: 12px;
-            padding: 10px 12px;
-            border-radius: 10px;
-            background: #ecfdf3;
-            border: 1px solid #bbf7d0;
-            font-size: 0.93rem;
-            color: #14532d;
-        }
-        .warning-callout {
-            margin-top: 12px;
-            padding: 10px 12px;
-            border-radius: 10px;
-            background: #fef3c7;
-            border: 1px solid #fed7aa;
-            font-size: 0.93rem;
-            color: #92400e;
-        }
+<h3>2.5 Costing details tab</h3>
+<p>
+  The Costing details tab opens the black box of cost per trainee per month. It shows how the total programme cost per cohort implied by the cost slider is decomposed into staff, travel, materials, supervision, overhead and opportunity cost of trainee time. The shares used for this split come from cost templates that reflect current understanding of how FETP programmes are delivered in India and from World Health Organization guidance on training programme costing. These shares can be updated centrally in the configuration files if new costing studies become available.
+</p>
 
-        .two-col {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 12px 18px;
-        }
-        .small-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 6px 0 10px;
-            font-size: 0.9rem;
-        }
-        .small-table th,
-        .small-table td {
-            border: 1px solid #e5e7eb;
-            padding: 4px 6px;
-            text-align: left;
-        }
-        .small-table th {
-            background: #f3f4f6;
-            font-weight: 600;
-        }
-        .small-table tbody tr:nth-child(even) {
-            background: #ffffff;
-        }
+<h3>2.6 National simulation tab</h3>
+<p>
+  The National simulation tab scales the per cohort costs and benefits to the national level using the number of cohorts chosen in the Configuration tab. Costs and benefits scale linearly with the number of cohorts. The benefit cost ratios remain unchanged because both numerator and denominator are multiplied by the same number. This tab also shows total graduates and outbreak responses over the planning horizon, making it easier to communicate national scale achievements rather than only per cohort outputs.
+</p>
 
-        .ref-list {
-            font-size: 0.9rem;
-        }
-        .ref-list li {
-            margin-bottom: 4px;
-        }
+<h3>2.7 Saved scenarios tab</h3>
+<p>
+  The Saved scenarios tab records scenarios that the user chooses to store. For each scenario the tool keeps the inputs, the key outputs and the advanced assumptions in force when the scenario was saved. The table allows side by side comparison of endorsement, costs, benefits and benefit cost ratios across multiple scenarios. Users can export the table to Excel or JSON for further analysis. Tooltip icons on this tab explain how saved scenarios can be used for incremental cost benefit comparisons and how they relate to the Copilot tab.
+</p>
 
-        @media (max-width: 640px) {
-            body {
-                margin: 12px;
-            }
-            .appendix-header {
-                flex-direction: column;
-            }
-            .appendix-badge {
-                text-align: left;
-                align-items: flex-start;
-            }
-        }
-    </style>
-</head>
-<body>
-<div class="appendix-shell">
-    <header class="appendix-header">
-        <div class="appendix-title-block">
-            <h1>STEPS Technical Appendix</h1>
-            <p>
-                Scalable Training Estimation and Planning System for FETP India.  
-                This appendix explains, step by step, how the STEPS decision aid translates preference estimates,
-                cost templates and epidemiological multipliers into endorsement, costs, benefits and national
-                scale up results. Default epidemiological settings assume a five year planning horizon and an
-                exchange rate of 83 INR per USD for display.
-            </p>
-        </div>
-        <div class="appendix-badge">
-            <span class="badge-chip primary">FETP India decision aid</span>
-            <span class="badge-chip">Version 1.0 · November 2025</span>
-        </div>
-    </header>
+<h3>2.8 Advanced settings tab</h3>
+<p>
+  The Advanced settings tab exposes the epidemiological and valuation assumptions that sit behind the benefit calculations. Users can edit planning horizon, graduation rates, outbreak response multipliers, value per graduate and value per outbreak response for each tier, as well as the exchange rate used for optional USD displays. These changes are applied instantly to all subsequent calculations. The tab also shows the default values and, where possible, short source notes or references. A separate section below explains these assumptions and their sources in more detail and suggests how users can adapt them as more local data become available.
+</p>
 
-    <section class="appendix-nav">
-        <h2>How to use this appendix</h2>
-        <p>
-            Each section mirrors the structure of the STEPS tool. You can read it in order or jump directly to a
-            topic using the links below.
-        </p>
-        <ul>
-            <li><a href="#sec-overview">1. Overview of the preference study and STEPS</a></li>
-            <li><a href="#sec-utility">2. Preference model and utilities</a></li>
-            <li><a href="#sec-endorsement">3. Endorsement probabilities</a></li>
-            <li><a href="#sec-wtp">4. Willingness to pay (WTP)</a></li>
-            <li><a href="#sec-costs">5. Programme and economic costs</a></li>
-            <li><a href="#sec-epi">6. Epidemiological multipliers and benefits</a></li>
-            <li><a href="#sec-national">7. National simulation</a></li>
-            <li><a href="#sec-worked">8. Worked example matching the user interface</a></li>
-            <li><a href="#sec-advanced">9. Advanced settings and sensitivity</a></li>
-            <li><a href="#sec-use">10. Recommended use and limits</a></li>
-            <li><a href="#sec-refs">11. References and contact</a></li>
-        </ul>
-    </section>
+<h3>2.9 Copilot tab</h3>
+<p>
+  The Copilot tab contains the soft Copilot integration. When users run scenarios in the Configuration and Results tabs and save those scenarios, the tool automatically prepares a structured text prompt that summarises the chosen scenarios, their costs, epidemiological benefits, DCE based benefits and key assumptions. The prompt also embeds a JSON representation of the scenarios. The Copilot tab displays this combined interpretation prompt and JSON clearly and provides a one click copy button. Users can then open Microsoft Copilot in a new browser tab, paste the text and ask Copilot to generate a narrative policy briefing, decision memo or slide outline based on the STEPS outputs.
+</p>
+<p>
+  The Copilot tab does not send any data automatically to external services. It only prepares text for the user to copy. The tab assumes that users who wish to use Copilot have their own University of Newcastle or institutional Copilot access and that they are familiar with their organisation’s rules on sharing scenario information. The appendix section on the Copilot tab provides examples of what the prepared prompt looks like and how Copilot can help interpret outputs for different audiences.
+</p>
 
-    <!-- 1. OVERVIEW -->
-    <section id="sec-overview" class="appendix-section">
-        <h2>1. Overview of the preference study and STEPS</h2>
-        <p>
-            The STEPS tool is built on a discrete choice experiment (DCE) that asked stakeholders to choose between
-            alternative Field Epidemiology Training Program (FETP) designs and an explicit opt out option.
-            Each training option was described by:
-        </p>
-        <ul>
-            <li>Programme tier: Frontline, Intermediate or Advanced.</li>
-            <li>Career incentive: government and partner certificate, university qualification, or government career pathway.</li>
-            <li>Mentorship intensity: low, medium or high.</li>
-            <li>Delivery mode: blended, fully in person, or fully online.</li>
-            <li>Expected response time for events: within 30, 15 or 7 days.</li>
-            <li>Cost per trainee per month in Indian rupees.</li>
-        </ul>
-        <p>
-            In each DCE task respondents viewed two FETP options (Training A and Training B) plus an opt out alternative
-            where no new training option was funded. By observing how respondents traded off attributes and cost across many
-            tasks, the study estimated preference parameters that describe how attractive each feature is on average and how
-            this differs across people.
-        </p>
-        <p>
-            STEPS links three ingredients:
-        </p>
-        <ol>
-            <li>Preference estimates from the DCE (a mixed logit model and a two class latent class model).</li>
-            <li>Cost templates from WHO, NIE and NCDC for different FETP tiers, including opportunity cost of trainee time where available.</li>
-            <li>Simple epidemiological multipliers that translate training outputs into indicative public health benefits.</li>
-        </ol>
-        <p>
-            These inputs are combined to produce, for any user selected configuration:
-        </p>
-        <ul>
-            <li>Predicted endorsement and opt out rates.</li>
-            <li>Willingness to pay for attribute improvements.</li>
-            <li>Programme cost per cohort and economic cost including opportunity cost.</li>
-            <li>Indicative monetary benefits, net benefit and benefit cost ratio.</li>
-            <li>National scale results when the configuration is rolled out to multiple cohorts.</li>
-        </ul>
-        <div class="summary-callout">
-            STEPS is a decision support tool, not a full transmission model. It focuses on transparent, easily
-            explained indicators that can be used in policy discussions and business case documents and it can
-            be aligned with more detailed modelling where needed.
-        </div>
-    </section>
-
-    <!-- 2. PREFERENCE MODEL AND UTILITIES -->
-    <section id="sec-utility" class="appendix-section">
-        <h2>2. Preference model and utilities</h2>
-        <p>
-            The main model used in STEPS is a mixed logit (MXL) model estimated on the DCE data. The model includes:
-        </p>
-        <ul>
-            <li>An alternative specific constant for Training A (<span class="inline-mono">ASC_A</span>).</li>
-            <li>An alternative specific constant for the opt out option (<span class="inline-mono">ASC_OptOut</span>).</li>
-            <li>Dummy variables for each non cost attribute level relative to a baseline.</li>
-            <li>A linear cost term measured in thousands of rupees per trainee per month.</li>
-        </ul>
-        <p>
-            For individual <span class="inline-mono">n</span>, alternative <span class="inline-mono">j</span> and task
-            <span class="inline-mono">t</span>, the systematic utility in the mixed logit specification is:
-        </p>
-        <div class="equation-block">
-            U(n, j, t) = ASC\_terms  
-            + attribute coefficients × attribute levels  
-            + cost coefficient × cost
-        </div>
-        <p>
-            In the STEPS code the mixed logit mean coefficients (measured at the sample average) are:
-        </p>
-        <div class="two-col">
-            <div>
-                <h3>Key mixed logit parameters</h3>
-                <table class="small-table">
-                    <thead>
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Interpretation</th>
-                        <th>Value</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>ASC_A</td>
-                        <td>Training A alternative specific constant</td>
-                        <td>0.168</td>
-                    </tr>
-                    <tr>
-                        <td>ASC_OptOut</td>
-                        <td>Opt out alternative specific constant</td>
-                        <td>-0.601</td>
-                    </tr>
-                    <tr>
-                        <td>Intermediate</td>
-                        <td>Programme is Intermediate (12 months)</td>
-                        <td>0.220</td>
-                    </tr>
-                    <tr>
-                        <td>Advanced</td>
-                        <td>Programme is Advanced (24 months)</td>
-                        <td>0.487</td>
-                    </tr>
-                    <tr>
-                        <td>UniQual</td>
-                        <td>University qualification incentive</td>
-                        <td>0.017</td>
-                    </tr>
-                    <tr>
-                        <td>GovCareer</td>
-                        <td>Government career pathway incentive</td>
-                        <td>-0.122</td>
-                    </tr>
-                    <tr>
-                        <td>MentorMedium</td>
-                        <td>Medium mentorship</td>
-                        <td>0.453</td>
-                    </tr>
-                    <tr>
-                        <td>MentorHigh</td>
-                        <td>High mentorship</td>
-                        <td>0.640</td>
-                    </tr>
-                    <tr>
-                        <td>InPerson</td>
-                        <td>Fully in person delivery</td>
-                        <td>-0.232</td>
-                    </tr>
-                    <tr>
-                        <td>Online</td>
-                        <td>Fully online delivery</td>
-                        <td>-1.073</td>
-                    </tr>
-                    <tr>
-                        <td>Resp15</td>
-                        <td>Detect and respond within 15 days</td>
-                        <td>0.546</td>
-                    </tr>
-                    <tr>
-                        <td>Resp7</td>
-                        <td>Detect and respond within 7 days</td>
-                        <td>0.610</td>
-                    </tr>
-                    <tr>
-                        <td>Cost</td>
-                        <td>Cost per trainee per month (per thousand INR)</td>
-                        <td>-0.005</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div>
-                <h3>Latent class supportive group (Class 2)</h3>
-                <p>
-                    In addition to the mixed logit model, STEPS uses parameters from a two class latent class
-                    model. Class 2 is interpreted as a supportive stakeholder group. Key Class 2 parameters are:
-                </p>
-                <table class="small-table">
-                    <thead>
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Interpretation</th>
-                        <th>Value</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>ASC_A</td>
-                        <td>Training A constant</td>
-                        <td>0.098</td>
-                    </tr>
-                    <tr>
-                        <td>ASC_OptOut</td>
-                        <td>Opt out constant</td>
-                        <td>-2.543</td>
-                    </tr>
-                    <tr>
-                        <td>Advanced</td>
-                        <td>Advanced programme (24 months)</td>
-                        <td>0.422</td>
-                    </tr>
-                    <tr>
-                        <td>MentorMedium</td>
-                        <td>Medium mentorship</td>
-                        <td>0.342</td>
-                    </tr>
-                    <tr>
-                        <td>MentorHigh</td>
-                        <td>High mentorship</td>
-                        <td>0.486</td>
-                    </tr>
-                    <tr>
-                        <td>Resp15</td>
-                        <td>Within 15 days</td>
-                        <td>0.317</td>
-                    </tr>
-                    <tr>
-                        <td>Resp7</td>
-                        <td>Within 7 days</td>
-                        <td>0.504</td>
-                    </tr>
-                    <tr>
-                        <td>Cost</td>
-                        <td>Cost per thousand INR</td>
-                        <td>-0.001</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <h3>2.1 Building utility from attribute levels</h3>
-        <p>
-            In the STEPS code, the systematic part of utility for a programme configuration is constructed in two
-            steps:
-        </p>
-        <ol>
-            <li>Compute a non cost component that adds up the constant and all non cost attribute coefficients.</li>
-            <li>Add the cost term, which is the cost coefficient multiplied by cost per trainee per month in thousands.</li>
-        </ol>
-        <p>
-            The mixed logit non cost utility is:
-        </p>
-        <div class="equation-block">
-            nonCostUtility = ASC\_A  
-            + tier coefficient  
-            + career incentive coefficient  
-            + mentorship coefficient  
-            + delivery mode coefficient  
-            + response time coefficient
-        </div>
-        <p>
-            The cost term is:
-        </p>
-        <div class="equation-block">
-            costUtility = cost coefficient × (cost per trainee per month in INR / 1,000)
-        </div>
-        <p>
-            Total utility for the FETP programme relative to Training B is:
-        </p>
-        <div class="equation-block">
-            V\_FETP = nonCostUtility + costUtility
-        </div>
-
-        <div class="example-box">
-            <div class="example-title">Example 1: Non cost utility for an Advanced, high mentorship programme</div>
-            <p>
-                Consider an Advanced FETP configuration with:
-            </p>
-            <ul>
-                <li>Programme tier: Advanced.</li>
-                <li>Career incentive: university qualification.</li>
-                <li>Mentorship intensity: high.</li>
-                <li>Delivery mode: blended (reference).</li>
-                <li>Expected response time: within 7 days.</li>
-            </ul>
-            <p>
-                Using the mixed logit means, the non cost utility is:
-            </p>
-            <div class="equation-block">
-                nonCostUtility  
-                = ASC\_A  
-                + Advanced  
-                + UniQual  
-                + MentorHigh  
-                + Blended (0)  
-                + Resp7  
-                = 0.168 + 0.487 + 0.017 + 0.640 + 0 + 0.610  
-                = 1.922
-            </div>
-            <p>
-                The same approach is used in the STEPS code for any combination of tier, incentive, mentorship,
-                delivery and response time selected in the Configuration tab.
-            </p>
-        </div>
-
-        <div class="example-box">
-            <div class="example-title">Example 1b: Comparing Intermediate and Advanced non cost utility</div>
-            <p>
-                For illustration, compare two configurations that are identical except for programme tier:
-            </p>
-            <ul>
-                <li>Configuration X: Intermediate, blended, medium mentorship, response within 15 days.</li>
-                <li>Configuration Y: Advanced, blended, medium mentorship, response within 15 days.</li>
-            </ul>
-            <p>
-                Ignoring cost and career incentives, non cost utility for X is:
-            </p>
-            <div class="equation-block">
-                nonCostUtility\_X  
-                = ASC\_A + Intermediate + MentorMedium + Resp15  
-                = 0.168 + 0.220 + 0.453 + 0.546  
-                = 1.387
-            </div>
-            <p>
-                For Y (Advanced instead of Intermediate):
-            </p>
-            <div class="equation-block">
-                nonCostUtility\_Y  
-                = 0.168 + 0.487 + 0.453 + 0.546  
-                = 1.654
-            </div>
-            <p>
-                Advanced has higher non cost utility by 0.267. For the same cost per trainee per month,
-                the model therefore predicts higher endorsement for the Advanced configuration.
-            </p>
-        </div>
-    </section>
-
-    <!-- 3. ENDORSEMENT PROBABILITIES -->
-    <section id="sec-endorsement" class="appendix-section">
-        <h2>3. Endorsement probabilities</h2>
-        <p>
-            STEPS reports endorsement as the predicted share of stakeholders who would support the chosen programme
-            configuration instead of choosing the opt out alternative. To compute this, STEPS compares the utility
-            of the FETP configuration with the utility of opting out.
-        </p>
-        <p>
-            Let <span class="inline-mono">V_FETP</span> denote the total utility of the configured option
-            relative to Training B, and <span class="inline-mono">ASC_OptOut</span> denote the opt out constant.
-            The difference in utility between FETP and opt out is:
-        </p>
-        <div class="equation-block">
-            deltaV = -ASC\_OptOut + nonCostUtility + costUtility
-        </div>
-        <p>
-            With a single FETP option and an opt out, the endorsement probability is:
-        </p>
-        <div class="equation-block">
-            P(endorse) = exp(deltaV) / (1 + exp(deltaV))  
-            P(opt out) = 1 - P(endorse)
-        </div>
-
-        <div class="example-box">
-            <div class="example-title">Example 2: Endorsement for the Advanced high mentorship configuration</div>
-            <p>
-                Continue the configuration from Example 1 and assume a cost per trainee per month of
-                75,000 INR. The cost term is:
-            </p>
-            <div class="equation-block">
-                cost per trainee per month = 75,000 INR  
-                cost in thousands = 75,000 / 1,000 = 75  
-                cost coefficient = -0.005  
-                costUtility = -0.005 × 75 = -0.375
-            </div>
-            <p>
-                Total utility for FETP is:
-            </p>
-            <div class="equation-block">
-                V\_FETP = nonCostUtility + costUtility  
-                = 1.922 - 0.375  
-                = 1.547
-            </div>
-            <p>
-                The opt out constant is <span class="inline-mono">ASC_OptOut = -0.601</span>, so the utility
-                difference between FETP and opt out is:
-            </p>
-            <div class="equation-block">
-                deltaV = -ASC\_OptOut + V\_FETP  
-                = -(-0.601) + 1.547  
-                = 0.601 + 1.547  
-                = 2.148
-            </div>
-            <p>
-                The endorsement probability is:
-            </p>
-            <div class="equation-block">
-                P(endorse) = exp(2.148) / (1 + exp(2.148))  
-                ≈ 8.57 / 9.57  
-                ≈ 0.895 or 89.5 percent
-            </div>
-            <p>
-                STEPS would display this as roughly 90 percent endorsement and 10 percent opt out. If the cost slider
-                is moved upward, the costUtility term becomes more negative and endorsement falls. If cost is reduced,
-                endorsement increases.
-            </p>
-        </div>
-
-        <div class="example-box">
-            <div class="example-title">Example 2b: Effect of increasing cost on endorsement</div>
-            <p>
-                For the same Advanced configuration, increase cost per trainee per month to 250,000 INR:
-            </p>
-            <div class="equation-block">
-                cost in thousands = 250,000 / 1,000 = 250  
-                costUtility = -0.005 × 250 = -1.25  
-                V\_FETP = 1.922 - 1.25 = 0.672  
-                deltaV = -ASC\_OptOut + V\_FETP  
-                = 0.601 + 0.672 = 1.273  
-                P(endorse) = exp(1.273) / (1 + exp(1.273))  
-                ≈ 3.57 / 4.57 ≈ 0.78 (78 percent)
-            </div>
-            <p>
-                Moving the cost slider from 75,000 to 250,000 INR reduces endorsement from around 90 percent
-                to around 78 percent in this example. The Results tab in STEPS reflects exactly this logic.
-            </p>
-        </div>
-
-        <p>
-            STEPS applies exactly the same logic when the supportive latent class group is selected, but substitutes
-            the Class 2 parameters in place of the mixed logit means. This allows users to explore endorsement among
-            a more supportive audience.
-        </p>
-    </section>
-
-    <!-- 4. WTP -->
-    <section id="sec-wtp" class="appendix-section">
-        <h2>4. Willingness to pay (WTP)</h2>
-        <p>
-            Willingness to pay expresses each attribute coefficient in rupee terms per trainee per month.
-            For a DCE with a linear cost term, the marginal willingness to pay for attribute level
-            <span class="inline-mono">k</span> is:
-        </p>
-        <div class="equation-block">
-            WTP\_k = - beta\_k / beta\_cost
-        </div>
-        <p>
-            Here <span class="inline-mono">beta_k</span> is the coefficient on the attribute level and
-            <span class="inline-mono">beta_cost</span> is the cost coefficient measured per thousand INR.
-            To convert into rupees per trainee per month, we multiply by 1,000.
-        </p>
-
-        <h3>4.1 WTP from the mixed logit model</h3>
-        <p>
-            With a cost coefficient of -0.005, the mixed logit implies the approximate WTP values in the
-            table below.
-        </p>
-        <table class="small-table">
-            <thead>
-            <tr>
-                <th>Attribute level</th>
-                <th>Coefficient</th>
-                <th>WTP (thousand INR)</th>
-                <th>WTP (INR per trainee per month)</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Intermediate programme</td>
-                <td>0.220</td>
-                <td>44.0</td>
-                <td>44,000</td>
-            </tr>
-            <tr>
-                <td>Advanced programme</td>
-                <td>0.487</td>
-                <td>97.4</td>
-                <td>97,400</td>
-            </tr>
-            <tr>
-                <td>Medium mentorship</td>
-                <td>0.453</td>
-                <td>90.6</td>
-                <td>90,600</td>
-            </tr>
-            <tr>
-                <td>High mentorship</td>
-                <td>0.640</td>
-                <td>128.0</td>
-                <td>128,000</td>
-            </tr>
-            <tr>
-                <td>Fully in person (relative to blended)</td>
-                <td>-0.232</td>
-                <td>-46.4</td>
-                <td>-46,400</td>
-            </tr>
-            <tr>
-                <td>Fully online (relative to blended)</td>
-                <td>-1.073</td>
-                <td>-214.6</td>
-                <td>-214,600</td>
-            </tr>
-            <tr>
-                <td>Response within 15 days</td>
-                <td>0.546</td>
-                <td>109.2</td>
-                <td>109,200</td>
-            </tr>
-            <tr>
-                <td>Response within 7 days</td>
-                <td>0.610</td>
-                <td>122.0</td>
-                <td>122,000</td>
-            </tr>
-            </tbody>
-        </table>
-
-        <div class="example-box">
-            <div class="example-title">Example 3: WTP for high mentorship</div>
-            <p>
-                The coefficient for high mentorship is 0.640. With a cost coefficient of -0.005 the
-                WTP is:
-            </p>
-            <div class="equation-block">
-                WTP\_highMentor = - 0.640 / (-0.005)  
-                = 128 (thousand INR)  
-                = 128,000 INR per trainee per month
-            </div>
-            <p>
-                This means that, averaged across respondents, high mentorship is valued as much as
-                an increase of about 128,000 INR per trainee per month in programme cost. If actual
-                cost is lower than this, high mentorship tends to improve cost effectiveness as long
-                as it also improves epidemiological outcomes.
-            </p>
-        </div>
-
-        <div class="example-box">
-            <div class="example-title">Example 3b: WTP difference between Intermediate and Advanced tiers</div>
-            <p>
-                Using the same cost coefficient, the WTP for Intermediate and Advanced relative to Frontline are:
-            </p>
-            <div class="equation-block">
-                WTP\_Intermediate = -0.220 / (-0.005) = 44 (thousand INR) = 44,000 INR  
-                WTP\_Advanced = -0.487 / (-0.005) = 97.4 (thousand INR) ≈ 97,400 INR
-            </div>
-            <p>
-                Moving from Frontline to Intermediate is valued at around 44,000 INR per trainee per month,
-                while moving from Frontline to Advanced is valued at around 97,400 INR. This gap, combined
-                with different costs and epidemiological multipliers, drives whether Intermediate or Advanced
-                looks more attractive in the STEPS results.
-            </p>
-        </div>
-
-        <h3>4.2 WTP from the supportive latent class group</h3>
-        <p>
-            For Class 2 of the latent class model the cost coefficient is -0.001. WTP values are therefore
-            larger for a given attribute coefficient. For example, the WTP for an Advanced programme among
-            supportive stakeholders is roughly:
-        </p>
-        <div class="equation-block">
-            WTP\_Advanced\_Class2 = - 0.422 / (-0.001)  
-            ≈ 422 (thousand INR)  
-            ≈ 422,000 INR per trainee per month
-        </div>
-        <p>
-            STEPS uses these WTP values to generate the WTP summary shown in the Results tab. They
-            complement endorsement by indicating the monetary value stakeholders attach to different design
-            features.
-        </p>
-
-        <div class="warning-callout">
-            WTP is based on stated preferences in a survey context and should not be interpreted as a literal
-            budget willingness to pay by any single organisation. It is best used as a relative measure when
-            comparing design options and prioritising attributes.
-        </div>
-    </section>
-
-    <!-- 5. COSTS -->
-    <section id="sec-costs" class="appendix-section">
-        <h2>5. Programme and economic costs</h2>
-        <p>
-            STEPS builds programme and economic costs at two levels:
-        </p>
-        <ul>
-            <li>Per cohort, based on cost per trainee per month chosen in the Configuration tab and programme duration.</li>
-            <li>Across cohorts, based on the number of cohorts entered by the user.</li>
-        </ul>
-
-        <h3>5.1 Programme cost per cohort</h3>
-        <p>
-            For a given configuration, programme cost per cohort (excluding opportunity cost) is:
-        </p>
-        <div class="equation-block">
-            C\_prog = costPerTraineePerMonth × traineesPerCohort × durationMonths
-        </div>
-
-        <div class="example-box">
-            <div class="example-title">Example 4: Programme cost per Advanced cohort</div>
-            <p>
-                Suppose the configuration is:
-            </p>
-            <ul>
-                <li>Programme tier: Advanced (24 months).</li>
-                <li>Cohort size: 20 trainees.</li>
-                <li>Cost per trainee per month: 250,000 INR.</li>
-            </ul>
-            <p>
-                Then:
-            </p>
-            <div class="equation-block">
-                C\_prog = 250,000 × 20 × 24  
-                = 250,000 × 480  
-                = 120,000,000 INR
-            </div>
-        </div>
-
-        <div class="example-box">
-            <div class="example-title">Example 4b: Programme cost for an Intermediate cohort</div>
-            <p>
-                Consider an Intermediate configuration with:
-            </p>
-            <ul>
-                <li>Programme tier: Intermediate (12 months).</li>
-                <li>Cohort size: 30 trainees.</li>
-                <li>Cost per trainee per month: 150,000 INR.</li>
-            </ul>
-            <p>
-                Programme cost per cohort is:
-            </p>
-            <div class="equation-block">
-                C\_prog = 150,000 × 30 × 12  
-                = 150,000 × 360  
-                = 54,000,000 INR
-            </div>
-            <p>
-                Users can compare this with the Advanced example to see how moving from Intermediate to Advanced
-                changes both cost and the epidemiological benefits described in the next section.
-            </p>
-        </div>
-
-        <h3>5.2 Economic cost and opportunity cost</h3>
-        <p>
-            Cost templates from WHO, NIE and NCDC identify:
-        </p>
-        <ul>
-            <li>Shares of cost allocated to staff, travel, materials, supervision and overheads.</li>
-            <li>Where applicable, an opportunity cost component for trainee time.</li>
-        </ul>
-        <p>
-            When the opportunity cost toggle is off, STEPS reports:
-        </p>
-        <ul>
-            <li>Programme cost per cohort based on the slider and cohort parameters.</li>
-            <li>Allocation of this cost across components using the chosen template shares.</li>
-        </ul>
-        <p>
-            When the opportunity cost toggle is on, STEPS:
-        </p>
-        <ul>
-            <li>Adds the template specific opportunity cost per cohort to programme cost.</li>
-            <li>Reports total economic cost as the sum of programme and opportunity cost.</li>
-        </ul>
-        <p>
-            Economic cost per cohort is:
-        </p>
-        <div class="equation-block">
-            C\_economic = C\_prog + C\_opp
-        </div>
-
-        <div class="example-box">
-            <div class="example-title">Example 5: Economic cost with opportunity cost</div>
-            <p>
-                Take the Advanced programme example with <span class="inline-mono">C_prog = 120,000,000 INR</span>.
-                Assume the cost template indicates that opportunity cost of trainee time is equivalent to
-                20 percent of programme cost:
-            </p>
-            <div class="equation-block">
-                C\_opp = 0.20 × 120,000,000 = 24,000,000 INR  
-                C\_economic = 120,000,000 + 24,000,000  
-                = 144,000,000 INR
-            </div>
-            <p>
-                STEPS will show 144,000,000 INR as total economic cost per cohort when opportunity cost is included.
-            </p>
-        </div>
-
-        <h3>5.3 Cost components</h3>
-        <p>
-            Component specific amounts are obtained by multiplying template shares by the programme cost per cohort.
-            For example, if staff are 40 percent of programme cost, then:
-        </p>
-        <div class="equation-block">
-            staffCost = 0.40 × C\_prog
-        </div>
-        <p>
-            Similar calculations are carried out for travel, materials, supervision and overhead categories.
-            These are reported in the Costing details tab and updated each time the user changes cost per trainee,
-            cohort size, programme tier or template source.
-        </p>
-
-        <h3>5.4 Structure of STEPS cost templates</h3>
-        <p>
-            The STEPS tool reads cost templates for each tier and institution. In the current version:
-        </p>
-        <table class="small-table">
-            <thead>
-            <tr>
-                <th>Template ID</th>
-                <th>Tier</th>
-                <th>Institution</th>
-                <th>Notes</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>WHO_FL6</td>
-                <td>Frontline</td>
-                <td>WHO</td>
-                <td>Template for six Frontline cohorts, used to derive per cohort and per trainee per month costs.</td>
-            </tr>
-            <tr>
-                <td>WHO_INT</td>
-                <td>Intermediate</td>
-                <td>WHO</td>
-                <td>Intermediate cost structure including staff, travel, materials, supervision and overheads.</td>
-            </tr>
-            <tr>
-                <td>NIE_INT</td>
-                <td>Intermediate</td>
-                <td>NIE</td>
-                <td>Alternative Intermediate template reflecting NIE delivery arrangements.</td>
-            </tr>
-            <tr>
-                <td>NCDC_INT</td>
-                <td>Intermediate</td>
-                <td>NCDC</td>
-                <td>Intermediate template with NCDC specific cost structure.</td>
-            </tr>
-            <tr>
-                <td>NIE_ADV</td>
-                <td>Advanced</td>
-                <td>NIE</td>
-                <td>Advanced cost template used for Advanced tier options.</td>
-            </tr>
-            <tr>
-                <td>NCDC_ADV</td>
-                <td>Advanced</td>
-                <td>NCDC</td>
-                <td>Advanced cost template with NCDC assumptions.</td>
-            </tr>
-            </tbody>
-        </table>
-        <p>
-            In the implementation, each template contains:
-        </p>
-        <ul>
-            <li>A total cost per cohort consistent with the duration and cohort size used to construct the template.</li>
-            <li>Shares for each cost component (for example staff, travel, supervision, materials, overheads).</li>
-            <li>An explicit line for opportunity cost of trainee time where relevant.</li>
-        </ul>
-        <p>
-            When a user selects a template in the Costing tab, STEPS rescales the shares to match the chosen
-            cost per trainee per month, while preserving the component mix implied by the template.
-        </p>
-
-        <div class="example-box">
-            <div class="example-title">Example 5b: Applying a WHO Intermediate template</div>
-            <p>
-                Suppose the WHO Intermediate template implies the following shares of programme cost:
-            </p>
-            <ul>
-                <li>Staff: 45 percent.</li>
-                <li>Travel and per diem: 25 percent.</li>
-                <li>Materials and supplies: 10 percent.</li>
-                <li>Supervision and mentoring: 15 percent.</li>
-                <li>Overheads and other: 5 percent.</li>
-            </ul>
-            <p>
-                If the user sets <span class="inline-mono">C_prog = 54,000,000 INR</span> (as in Example 4b),
-                STEPS reports:
-            </p>
-            <div class="equation-block">
-                staffCost = 0.45 × 54,000,000 = 24,300,000 INR  
-                travelCost = 0.25 × 54,000,000 = 13,500,000 INR  
-                materialsCost = 0.10 × 54,000,000 = 5,400,000 INR  
-                supervisionCost = 0.15 × 54,000,000 = 8,100,000 INR  
-                overheadCost = 0.05 × 54,000,000 = 2,700,000 INR
-            </div>
-            <p>
-                These amounts appear in the Costing details table, helping users understand which inputs drive
-                overall costs for a given configuration.
-            </p>
-        </div>
-    </section>
-
-    <!-- 6. EPIDEMIOLOGY -->
-    <section id="sec-epi" class="appendix-section">
-        <h2>6. Epidemiological multipliers and benefits</h2>
-        <p>
-            STEPS uses simple multipliers to translate FETP training into public health outcomes. These multipliers
-            are specific to each tier:
-        </p>
-        <ul>
-            <li>Graduates per cohort as a share of trainees.</li>
-            <li>Outbreak responses per cohort per year.</li>
-            <li>Indicative monetary value per graduate (INR).</li>
-            <li>Indicative monetary value per outbreak response (INR).</li>
-        </ul>
-        <p>
-            Default values are defined in the epidemiological configuration file
-            <span class="inline-mono">epi_config.json</span> and can be adjusted in the Advanced settings tab.
-        </p>
-
-        <h3>6.1 Default epidemiological configuration</h3>
-        <p>
-            In the current version, default values are:
-        </p>
-        <table class="small-table">
-            <thead>
-            <tr>
-                <th>Tier</th>
-                <th>Duration (months)</th>
-                <th>Graduation rate</th>
-                <th>Outbreaks per cohort per year</th>
-                <th>Value per graduate (INR)</th>
-                <th>Value per outbreak response (INR)</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Frontline</td>
-                <td>3</td>
-                <td>0.90</td>
-                <td>0.30</td>
-                <td>400,000</td>
-                <td>30,000,000</td>
-            </tr>
-            <tr>
-                <td>Intermediate</td>
-                <td>12</td>
-                <td>0.90</td>
-                <td>0.50</td>
-                <td>500,000</td>
-                <td>30,000,000</td>
-            </tr>
-            <tr>
-                <td>Advanced</td>
-                <td>24</td>
-                <td>0.95</td>
-                <td>0.80</td>
-                <td>600,000</td>
-                <td>40,000,000</td>
-            </tr>
-            </tbody>
-        </table>
-        <p>
-            The general section of the configuration also specifies:
-        </p>
-        <ul>
-            <li>Planning horizon for outbreak related benefits: 5 years.</li>
-            <li>Display exchange rate: 83 INR per USD (used only for USD labels in the interface).</li>
-        </ul>
-
-        <h3>6.2 Graduates and outbreak responses</h3>
-        <p>
-            Let:
-        </p>
-        <ul>
-            <li><span class="inline-mono">gradRate_tier</span> be the graduation rate (share) for the tier.</li>
-            <li><span class="inline-mono">outbreaks_tier</span> be outbreak responses per cohort per year.</li>
-            <li><span class="inline-mono">endorse</span> be the endorsement probability for the configuration.</li>
-        </ul>
-        <p>
-            For one cohort the expected number of graduates is:
-        </p>
-        <div class="equation-block">
-            graduates\_per\_cohort = traineesPerCohort × gradRate\_tier × endorse
-        </div>
-        <p>
-            Expected outbreak responses supported per year are:
-        </p>
-        <div class="equation-block">
-            outbreaks\_per\_year\_per\_cohort = outbreaks\_tier × endorse
-        </div>
-
-        <h3>6.3 Monetary benefits</h3>
-        <p>
-            Let:
-        </p>
-        <ul>
-            <li><span class="inline-mono">valueGrad_tier</span> be the indicative value per graduate (INR).</li>
-            <li><span class="inline-mono">valueOutbreak_tier</span> be the indicative value per outbreak response (INR).</li>
-            <li><span class="inline-mono">planningHorizonYears</span> be the number of years benefits are counted for outbreak responses.</li>
-        </ul>
-        <p>
-            Then benefits per cohort are:
-        </p>
-        <div class="equation-block">
-            benefit\_graduates = graduates\_per\_cohort × valueGrad\_tier  
-            benefit\_outbreaks = outbreaks\_per\_year\_per\_cohort × valueOutbreak\_tier × planningHorizonYears  
-            totalBenefit\_per\_cohort = benefit\_graduates + benefit\_outbreaks
-        </div>
-
-        <div class="example-box">
-            <div class="example-title">Example 6: Benefits for an Advanced programme</div>
-            <p>
-                Assume:
-            </p>
-            <ul>
-                <li>Advanced tier graduation rate: 0.95.</li>
-                <li>Outbreak responses per cohort per year: 0.8.</li>
-                <li>Planning horizon: 5 years.</li>
-                <li>Value per graduate: 600,000 INR.</li>
-                <li>Value per outbreak response: 40,000,000 INR.</li>
-                <li>Cohort size: 20 trainees.</li>
-                <li>Endorsement: 0.90 (90 percent).</li>
-            </ul>
-            <p>
-                Then expected graduates per cohort are:
-            </p>
-            <div class="equation-block">
-                graduates\_per\_cohort = 20 × 0.95 × 0.90  
-                = 20 × 0.855  
-                = 17.1 graduates
-            </div>
-            <p>
-                Graduate related benefits are:
-            </p>
-            <div class="equation-block">
-                benefit\_graduates = 17.1 × 600,000  
-                = 10,260,000 INR
-            </div>
-            <p>
-                Outbreak responses per year are:
-            </p>
-            <div class="equation-block">
-                outbreaks\_per\_year\_per\_cohort = 0.8 × 0.90  
-                = 0.72
-            </div>
-            <p>
-                Over the five year planning horizon:
-            </p>
-            <div class="equation-block">
-                benefit\_outbreaks = 0.72 × 40,000,000 × 5  
-                = 0.72 × 200,000,000  
-                = 144,000,000 INR
-            </div>
-            <p>
-                Total indicative benefit per cohort is:
-            </p>
-            <div class="equation-block">
-                totalBenefit\_per\_cohort = 10,260,000 + 144,000,000  
-                = 154,260,000 INR
-            </div>
-        </div>
-
-        <div class="example-box">
-            <div class="example-title">Example 6b: Intermediate programme benefits</div>
-            <p>
-                For an Intermediate configuration with:
-            </p>
-            <ul>
-                <li>Graduation rate: 0.90.</li>
-                <li>Outbreak responses per cohort per year: 0.5.</li>
-                <li>Value per graduate: 500,000 INR.</li>
-                <li>Value per outbreak response: 30,000,000 INR.</li>
-                <li>Cohort size: 30 trainees.</li>
-                <li>Endorsement: 0.80 (80 percent).</li>
-                <li>Planning horizon: 5 years.</li>
-            </ul>
-            <p>
-                Graduates per cohort:
-            </p>
-            <div class="equation-block">
-                graduates\_per\_cohort = 30 × 0.90 × 0.80  
-                = 30 × 0.72  
-                = 21.6 graduates
-            </div>
-            <p>
-                Graduate benefits:
-            </p>
-            <div class="equation-block">
-                benefit\_graduates = 21.6 × 500,000  
-                = 10,800,000 INR
-            </div>
-            <p>
-                Outbreak responses per year:
-            </p>
-            <div class="equation-block">
-                outbreaks\_per\_year\_per\_cohort = 0.5 × 0.80  
-                = 0.40
-            </div>
-            <p>
-                Outbreak benefits over 5 years:
-            </p>
-            <div class="equation-block">
-                benefit\_outbreaks = 0.40 × 30,000,000 × 5  
-                = 0.40 × 150,000,000  
-                = 60,000,000 INR
-            </div>
-            <p>
-                Total benefit per Intermediate cohort:
-            </p>
-            <div class="equation-block">
-                totalBenefit\_per\_cohort = 10,800,000 + 60,000,000  
-                = 70,800,000 INR
-            </div>
-            <p>
-                Users can compare this with the Advanced example to see how higher values per graduate
-                and per outbreak response influence benefits as tier increases.
-            </p>
-        </div>
-    </section>
-
-    <!-- 7. NATIONAL SIMULATION -->
-    <section id="sec-national" class="appendix-section">
-        <h2>7. National simulation</h2>
-        <p>
-            The National simulation tab scales up cohort level results to the national level using the
-            number of cohorts specified in the Configuration tab. The scaling is direct and transparent.
-        </p>
-
-        <h3>7.1 Costs at national level</h3>
-        <p>
-            Let:
-        </p>
-        <ul>
-            <li><span class="inline-mono">C_economic</span> be economic cost per cohort.</li>
-            <li><span class="inline-mono">benefit_per_cohort</span> be total indicative benefit per cohort.</li>
-            <li><span class="inline-mono">N_cohorts</span> be the number of cohorts.</li>
-        </ul>
-        <p>
-            Then:
-        </p>
-        <div class="equation-block">
-            totalCost\_national = C\_economic × N\_cohorts  
-            totalBenefit\_national = benefit\_per\_cohort × N\_cohorts  
-            netBenefit\_national = totalBenefit\_national - totalCost\_national
-        </div>
-        <p>
-            The national benefit cost ratio is:
-        </p>
-        <div class="equation-block">
-            BCR\_national = totalBenefit\_national / totalCost\_national
-        </div>
-        <p>
-            This ratio is the same as the per cohort ratio because the scaling factor cancels out.
-        </p>
-
-        <h3>7.2 Epidemiological metrics at national level</h3>
-        <p>
-            National level graduates and outbreak responses are:
-        </p>
-        <div class="equation-block">
-            graduates\_national = graduates\_per\_cohort × N\_cohorts  
-            outbreaks\_national = outbreaks\_per\_year\_per\_cohort × N\_cohorts
-        </div>
-        <p>
-            These are reported in the National simulation tab and update whenever the cohort size, number of
-            cohorts, endorsement or epidemiological multipliers are changed.
-        </p>
-
-        <div class="example-box">
-            <div class="example-title">Example 7: National scaling of the Advanced scenario</div>
-            <p>
-                Using the Advanced example above:
-            </p>
-            <ul>
-                <li>Economic cost per cohort: 144,000,000 INR.</li>
-                <li>Benefit per cohort: 154,260,000 INR.</li>
-                <li>Graduates per cohort: 17.1.</li>
-                <li>Outbreak responses per year per cohort: 0.72.</li>
-            </ul>
-            <p>
-                Suppose the configuration is scaled to 10 cohorts. Then:
-            </p>
-            <div class="equation-block">
-                totalCost\_national = 144,000,000 × 10 = 1,440,000,000 INR  
-                totalBenefit\_national = 154,260,000 × 10 = 1,542,600,000 INR  
-                netBenefit\_national = 1,542,600,000 - 1,440,000,000  
-                = 102,600,000 INR
-            </div>
-            <p>
-                The benefit cost ratio is:
-            </p>
-            <div class="equation-block">
-                BCR\_national = 1,542,600,000 / 1,440,000,000  
-                ≈ 1.07
-            </div>
-            <p>
-                National graduates and outbreak responses are:
-            </p>
-            <div class="equation-block">
-                graduates\_national = 17.1 × 10 = 171 graduates  
-                outbreaks\_national = 0.72 × 10 = 7.2 outbreak responses per year
-            </div>
-        </div>
-
-        <div class="example-box">
-            <div class="example-title">Example 7b: National picture for Intermediate scenario</div>
-            <p>
-                Using the Intermediate example (Example 6b) and assuming:
-            </p>
-            <ul>
-                <li>Economic cost per cohort: 60,000,000 INR (programme plus opportunity cost).</li>
-                <li>Benefit per cohort: 70,800,000 INR.</li>
-                <li>Graduates per cohort: 21.6.</li>
-                <li>Outbreak responses per year per cohort: 0.40.</li>
-                <li>Number of cohorts: 15.</li>
-            </ul>
-            <p>
-                National level results are:
-            </p>
-            <div class="equation-block">
-                totalCost\_national = 60,000,000 × 15 = 900,000,000 INR  
-                totalBenefit\_national = 70,800,000 × 15 = 1,062,000,000 INR  
-                netBenefit\_national = 1,062,000,000 - 900,000,000  
-                = 162,000,000 INR  
-                BCR\_national = 1,062,000,000 / 900,000,000 ≈ 1.18
-            </div>
-            <p>
-                Graduates and outbreak responses:
-            </p>
-            <div class="equation-block">
-                graduates\_national = 21.6 × 15 = 324 graduates  
-                outbreaks\_national = 0.40 × 15 = 6 outbreak responses per year
-            </div>
-            <p>
-                These summaries are what appear in the National simulation tab when the user selects
-                matching cohort numbers and cost assumptions.
-            </p>
-        </div>
-    </section>
-
-    <!-- 8. WORKED EXAMPLE -->
-    <section id="sec-worked" class="appendix-section">
-        <h2>8. Worked example matching the user interface</h2>
-        <p>
-            This section walks through a complete example that matches a realistic configuration in the
-            STEPS interface. The goal is to show, in one place, how the preference model, costs and
-            epidemiological multipliers interact.
-        </p>
-
-        <h3>8.1 Configuration</h3>
-        <p>
-            Consider the following configuration, which matches a typical scenario used in workshops:
-        </p>
-        <ul>
-            <li>Programme tier: Advanced (24 months).</li>
-            <li>Career incentive: university qualification.</li>
-            <li>Mentorship intensity: high.</li>
-            <li>Delivery mode: blended.</li>
-            <li>Expected response time: within 7 days.</li>
-            <li>Cost per trainee per month: 75,000 INR.</li>
-            <li>Cohort size: 20 trainees.</li>
-            <li>Number of cohorts: 10.</li>
-            <li>Preference model: mixed logit average.</li>
-            <li>Opportunity cost: included.</li>
-        </ul>
-
-        <h3>8.2 Step 1: Utility and endorsement</h3>
-        <p>
-            From Example 1 the non cost utility is 1.922. With cost per trainee per month of 75,000 INR:
-        </p>
-        <div class="equation-block">
-            costUtility = -0.005 × (75,000 / 1,000)  
-            = -0.005 × 75  
-            = -0.375  
-            V\_FETP = 1.922 - 0.375 = 1.547
-        </div>
-        <p>
-            The opt out constant is -0.601, so:
-        </p>
-        <div class="equation-block">
-            deltaV = -ASC\_OptOut + V\_FETP  
-            = 0.601 + 1.547 = 2.148  
-            P(endorse) ≈ 0.895 (89.5 percent)  
-            P(opt out) ≈ 0.105 (10.5 percent)
-        </div>
-        <p>
-            STEPS will therefore show endorsement close to 90 percent for this configuration.
-        </p>
-
-        <h3>8.3 Step 2: Programme and economic costs</h3>
-        <p>
-            Programme cost per cohort is:
-        </p>
-        <div class="equation-block">
-            C\_prog = 75,000 × 20 × 24  
-            = 75,000 × 480  
-            = 36,000,000 INR
-        </div>
-        <p>
-            Suppose the chosen cost template implies an opportunity cost equal to 25 percent of programme
-            cost. Then:
-        </p>
-        <div class="equation-block">
-            C\_opp = 0.25 × 36,000,000 = 9,000,000 INR  
-            C\_economic = 36,000,000 + 9,000,000  
-            = 45,000,000 INR per cohort
-        </div>
-
-        <h3>8.4 Step 3: Epidemiological multipliers and benefits</h3>
-        <p>
-            Assume:
-        </p>
-        <ul>
-            <li>Advanced graduation rate: 0.95.</li>
-            <li>Outbreak responses per cohort per year: 0.8.</li>
-            <li>Value per graduate: 600,000 INR.</li>
-            <li>Value per outbreak response: 40,000,000 INR.</li>
-            <li>Planning horizon: 5 years.</li>
-        </ul>
-        <p>
-            With endorsement of 0.895 and cohort size of 20:
-        </p>
-        <div class="equation-block">
-            graduates\_per\_cohort = 20 × 0.95 × 0.895  
-            ≈ 17.03 graduates
-        </div>
-        <p>
-            Graduate benefits are:
-        </p>
-        <div class="equation-block">
-            benefit\_graduates = 17.03 × 600,000  
-            ≈ 10,218,000 INR
-        </div>
-        <p>
-            Outbreak responses per year are:
-        </p>
-        <div class="equation-block">
-            outbreaks\_per\_year\_per\_cohort = 0.8 × 0.895  
-            ≈ 0.716
-        </div>
-        <p>
-            Over five years:
-        </p>
-        <div class="equation-block">
-            benefit\_outbreaks ≈ 0.716 × 40,000,000 × 5  
-            ≈ 0.716 × 200,000,000  
-            ≈ 143,200,000 INR
-        </div>
-        <p>
-            Total indicative benefit per cohort is:
-        </p>
-        <div class="equation-block">
-            totalBenefit\_per\_cohort ≈ 10,218,000 + 143,200,000  
-            ≈ 153,418,000 INR
-        </div>
-
-        <h3>8.5 Step 4: Benefit cost ratio and net benefit</h3>
-        <p>
-            Per cohort:
-        </p>
-        <div class="equation-block">
-            netBenefit\_per\_cohort ≈ 153,418,000 - 45,000,000  
-            ≈ 108,418,000 INR  
-            BCR\_per\_cohort ≈ 153,418,000 / 45,000,000  
-            ≈ 3.41
-        </div>
-
-        <h3>8.6 Step 5: National scaling</h3>
-        <p>
-            With 10 cohorts:
-        </p>
-        <div class="equation-block">
-            totalCost\_national = 45,000,000 × 10 = 450,000,000 INR  
-            totalBenefit\_national ≈ 153,418,000 × 10  
-            ≈ 1,534,180,000 INR  
-            netBenefit\_national ≈ 1,534,180,000 - 450,000,000  
-            ≈ 1,084,180,000 INR
-        </div>
-        <p>
-            Graduates and outbreak responses are:
-        </p>
-        <div class="equation-block">
-            graduates\_national ≈ 17.03 × 10 ≈ 170 graduates  
-            outbreaks\_national ≈ 0.716 × 10 ≈ 7.2 responses per year
-        </div>
-        <p>
-            These values are close to what the STEPS National simulation tab will show for the same configuration.
-        </p>
-
-        <div class="example-box">
-            <div class="example-title">Example 8b: Comparing Advanced and Intermediate workshop scenarios</div>
-            <p>
-                For workshop discussions, users can compare the Advanced scenario above with an Intermediate
-                scenario that uses the Intermediate costs and benefits from Examples 4b and 6b:
-            </p>
-            <ul>
-                <li>Intermediate economic cost per cohort: 60,000,000 INR.</li>
-                <li>Intermediate benefit per cohort: 70,800,000 INR.</li>
-                <li>Advanced economic cost per cohort: 45,000,000 INR (at 75,000 INR per trainee per month).</li>
-                <li>Advanced benefit per cohort: 153,418,000 INR.</li>
-            </ul>
-            <p>
-                This highlights how the combination of preference based endorsement, programme cost and
-                epidemiological multipliers can favour different tiers under different assumptions.
-            </p>
-        </div>
-    </section>
-
-    <!-- 9. ADVANCED SETTINGS -->
-    <section id="sec-advanced" class="appendix-section">
-        <h2>9. Advanced settings and sensitivity</h2>
-        <p>
-            The Advanced settings tab exposes key epidemiological and display parameters so that technical users can
-            align STEPS with national assumptions without editing code. The main adjustable parameters are:
-        </p>
-        <ul>
-            <li>Graduation rates for each tier.</li>
-            <li>Outbreak responses per cohort per year for each tier.</li>
-            <li>Value per graduate for each tier.</li>
-            <li>Value per outbreak response for each tier.</li>
-            <li>Planning horizon in years.</li>
-            <li>Display exchange rate (INR per USD).</li>
-        </ul>
-        <p>
-            Changing any of these parameters immediately updates:
-        </p>
-        <ul>
-            <li>Per cohort epidemiological metrics and monetary benefits.</li>
-            <li>National simulation results.</li>
-            <li>Benefit cost ratio and net benefit in the Results and National simulation tabs.</li>
-        </ul>
-        <p>
-            For stability, the tool does not change the underlying preference coefficients when advanced settings
-            are edited. Only the translation between graduates, outbreak responses and monetary benefits is affected.
-        </p>
-
-        <div class="example-box">
-            <div class="example-title">Example 8: Increasing the value per outbreak response</div>
-            <p>
-                Suppose a new analysis suggests that each outbreak response avoided has a value of 50,000,000 INR
-                instead of 40,000,000 INR. If the user updates the value per outbreak response for the relevant tier:
-            </p>
-            <ul>
-                <li>Graduate benefits remain unchanged.</li>
-                <li>Outbreak related benefits increase by 25 percent.</li>
-                <li>Total benefits and net benefits increase.</li>
-                <li>The benefit cost ratio increases proportionally to the change in benefits.</li>
-            </ul>
-            <p>
-                This allows country teams to align STEPS with updated numbers from health security or burden of
-                disease models while keeping the preference based endorsement structure intact.
-            </p>
-        </div>
-
-        <div class="example-box">
-            <div class="example-title">Example 8b: Adjusting graduation rates after programme strengthening</div>
-            <p>
-                If monitoring data suggest that graduation rates for Intermediate programmes have increased from
-                0.90 to 0.95 after curriculum strengthening:
-            </p>
-            <ul>
-                <li>Update the Intermediate graduation rate in the Advanced settings from 0.90 to 0.95.</li>
-                <li>Graduates per cohort increase proportionally, raising graduate related benefits.</li>
-                <li>Outbreak related benefits remain unchanged unless outbreak multipliers are also updated.</li>
-                <li>Overall benefit cost ratios improve slightly for Intermediate configurations.</li>
-            </ul>
-            <p>
-                This provides a simple way to reflect improvements in programme quality in the STEPS outputs.
-            </p>
-        </div>
-
-        <p>
-            The <span class="inline-mono">epi_config.json</span> file provides the same parameters in a structured
-            format that can be edited before deployment. When present, the tool reads this file on load and uses its
-            contents as defaults. If the file is not present, built in default values are used.
-        </p>
-    </section>
-
-    <!-- 10. USE AND LIMITS -->
-    <section id="sec-use" class="appendix-section">
-        <h2>10. Recommended use and limits</h2>
-        <p>
-            STEPS is designed as a transparent decision aid for use with ministries, partners and funders such
-            as the World Bank, WHO and CDC. It is best used to:
-        </p>
-        <ul>
-            <li>Compare alternative FETP programme designs and identify high value options.</li>
-            <li>Support business case documents with credible endorsement, cost and benefit metrics.</li>
-            <li>Structure workshop discussions around trade offs between cost, endorsement and epidemiological impact.</li>
-        </ul>
-        <p>
-            It is not intended to replace:
-        </p>
-        <ul>
-            <li>Detailed epidemiological models of disease transmission.</li>
-            <li>Full economic evaluations that include discounting of costs and health outcomes over long horizons.</li>
-            <li>Comprehensive fiscal planning tools for multi programme portfolios.</li>
-        </ul>
-        <div class="summary-callout">
-            In practice, STEPS works best when used alongside detailed modelling. STEPS can highlight promising
-            configurations quickly. Detailed models can then be applied to a shortlist of options if required for
-            large scale investment decisions.
-        </div>
-    </section>
-
-    <!-- 11. REFERENCES -->
-    <section id="sec-refs" class="appendix-section">
-        <h2>11. References and contact</h2>
-        <ul class="ref-list">
-            <li>
-                Louviere J, Hensher D, Swait J. Stated Choice Methods: Analysis and Application.
-                Cambridge University Press.
-            </li>
-            <li>
-                Train K. Discrete Choice Methods with Simulation. Cambridge University Press.
-            </li>
-            <li>
-                Hauber A, González JM, Groothuis‐Oudshoorn CGM, et al. Statistical methods for benefit–risk assessment
-                using discrete choice experiments. Applied Health Economics and Health Policy.
-            </li>
-        </ul>
-        <p>
-            STEPS and this technical appendix were prepared by Mesfin Genie, Newcastle Business School,
-            The University of Newcastle, Australia, in collaboration with partners in India and international
-            agencies. For technical questions or adaptation requests, please contact
-            <a href="mailto:mesfin.genie@newcastle.edu.au">mesfin.genie@newcastle.edu.au</a>.
-        </p>
-    </section>
+<h3>2.10 Video guide tab</h3>
+<p>
+  The Video guide tab embeds a short video created using Microsoft Copilot, based on a script developed by the STEPS team. The video walks through the main tabs, explains the meaning of the inputs and outputs and highlights typical workshop use cases. The embedded player uses a standard secure iframe. Users can watch the video directly within the tool or open it in a separate window, depending on the hosting arrangement used by the project. The video does not change the calculations but can be a helpful starting point for new users.
+</p>
+</section> <!-- 3. PREFERENCE MODEL AND ENDORSEMENT --> <section id="sec-utility" class="appendix-section"> <h2>3. Preference model, utilities and endorsement</h2> <p> The tool uses a mixed logit model estimated on DCE data with an explicit opt out alternative. The model includes an alternative specific constant for the configured programme option, an alternative specific constant for the opt out option, dummy variables for non cost attributes and a linear cost term measured in thousands of rupees per trainee per month. The cost coefficient is negative, indicating that higher costs reduce the attractiveness of a configuration. </p> <p> For each configuration the tool constructs a non cost utility component by adding the relevant attribute coefficients and then adds the cost component obtained by multiplying the cost coefficient by the cost per trainee per month in thousands. The resulting total utility is compared with the utility of the opt out option. Endorsement is then calculated using the standard logit formula, which produces a value between zero and one. This value is displayed as an endorsement percentage, with the complement reported as the opt out percentage. </p> <div class="example-box"> <div class="example-title">Worked example: endorsement for an Advanced programme</div> <p> Consider an Advanced programme with high mentorship, blended delivery and response within 7 days. Suppose the combined non cost coefficient for these features, including the programme constant, is equal to 1.92. If cost per trainee per month is 75,000 INR and the cost coefficient is −0.005 per thousand rupees, the cost component is −0.005 times 75, which equals −0.375. Total utility for the programme is therefore 1.92 minus 0.375, which equals 1.545. </p> <p> If the opt out constant is −0.60, the utility difference between the programme and the opt out option is 0.60 plus 1.545, which equals 2.145. The corresponding endorsement probability from the logit formula is approximately 0.895. In the Results tab this would appear as around 90 percent endorsement and 10 percent opt out. If the user increases the cost slider, the cost component becomes more negative and endorsement falls. If the user reduces the cost slider, endorsement increases. </p> </div> <p> Tooltip icons next to the endorsement outputs summarise this process in a single sentence and point users to this appendix for full details. The discrete choice methods on which this is based are well established in health economics and transport economics. Standard references include Louviere, Hensher and Swait and Train’s text on discrete choice methods with simulation, which provide the theoretical background for logit based models and mixed logit extensions.:contentReference[oaicite:0]{index=0} </p> </section> <!-- 4. WTP AND DCE BENEFITS --> <section id="sec-wtp" class="appendix-section"> <h2>4. DCE based benefit measures and willingness to pay</h2> <p> The discrete choice model includes a linear cost term. This allows attribute coefficients to be translated into monetary values using standard willingness to pay calculations. For each attribute level the tool calculates the marginal willingness to pay per trainee per month by dividing the attribute coefficient by the absolute value of the cost coefficient and multiplying by one thousand to convert from units of thousand rupees to rupees per trainee per month. </p> <p> These marginal willingness to pay values can be interpreted as the amount of monthly programme cost per trainee that stakeholders are prepared to sacrifice in exchange for a specific improvement, such as moving from low to high mentorship or from a 30 day response time to a 7 day response time, while holding other features constant. In line with recommendations for discrete choice experiments used in benefit–risk and economic evaluation, the tool uses these WTP values as one of several benefit indicators rather than as an exclusive decision rule.:contentReference[oaicite:1]{index=1} </p> <div class="example-box"> <div class="example-title">Worked example: WTP for faster outbreak response</div> <p> Suppose the mixed logit model implies a coefficient of 0.55 for reducing outbreak response time from 30 days to 15 days and a cost coefficient of −0.005. The implied willingness to pay per trainee per month in thousands of rupees is 0.55 divided by 0.005, which equals 110. In rupees per trainee per month this is 110,000. For a cohort of 30 trainees over 12 months the DCE based benefit for this attribute change is 110,000 multiplied by 30 and then by 12, which equals 39,600,000 rupees. </p> <p> If the tool user sets cohort size to 30 and programme duration to 12 months, the DCE based benefit table in the Results or Sensitivity tabs will show a value close to 39.6 million rupees for the response time improvement, adjusting slightly for rounding and other attribute choices. Users can compare this DCE based benefit with the incremental programme cost of investments needed to achieve faster response, as well as with the epidemiological benefits described later in this appendix. </p> </div> <p> The tool also constructs configuration level DCE based benefits by summing the marginal willingness to pay values for all non cost attribute levels included in the configuration and scaling by cohort size, number of months and number of cohorts. These DCE based benefits are reported alongside epidemiological benefits in the Sensitivity and Saved scenarios tabs. Tooltip icons next to the DCE benefit columns explain that these values are based on survey stated preferences rather than observed budget allocations and are best interpreted as relative measures for comparing design options rather than as hard budget ceilings.:contentReference[oaicite:2]{index=2} </p> </section> <!-- 5. COSTS --> <section id="sec-costs" class="appendix-section"> <h2>5. Cost assumptions, cost components and worked examples</h2> <p> The cost side of the tool begins with a simple user input: cost per trainee per month. This cost is multiplied by cohort size and programme duration to obtain programme cost per cohort. Programme cost per cohort is then decomposed into components based on cost shares from templates that reflect the typical structure of FETP programmes in India and similar settings. </p> <p> The main cost components are staff salaries and benefits, travel and per diem, materials and supplies, supervision and mentoring, overheads and the opportunity cost of trainee time. Templates draw on World Health Organization guidance for costing training and health security programmes, as well as context specific costing studies where available.:contentReference[oaicite:3]{index=3} </p>
+<h3>5.1 Programme cost per cohort</h3>
+<p>
+  Programme cost per cohort is calculated by multiplying the user chosen cost per trainee per month by cohort size and by programme duration in months. This cost reflects direct financial outlays for delivering the training programme, such as salaries, travel, accommodation during workshops, teaching materials and venue costs. This is the value shown as programme cost in the Results and Costing details tabs when the opportunity cost toggle is switched off.
+</p>
+<div class="example-box">
+  <div class="example-title">Worked example: programme cost for an Intermediate cohort</div>
+  <p>
+    Suppose the user configures an Intermediate programme of 12 months with a cost per trainee per month of 150,000 rupees and a cohort size of 30 trainees. Programme cost per cohort is 150,000 multiplied by 30 and then by 12, which equals 54,000,000 rupees. This value appears in the Results and Costing details tabs as the programme cost per cohort before adding opportunity cost.
+  </p>
 </div>
-</body>
-</html>
+
+<h3>5.2 Opportunity cost and economic cost</h3>
+<p>
+  Opportunity cost reflects the value of the time that trainees spend away from their usual duties while participating in the programme. Country specific studies suggest that the opportunity cost of trainee time can represent between 10 and 30 percent of total programme cost, depending on salary levels, intensity of service disruption and the extent to which training is integrated into routine work.:contentReference[oaicite:4]{index=4}
+</p>
+<p>
+  In the tool, when the opportunity cost toggle is activated the economic cost per cohort is obtained by adding an opportunity cost component to the programme cost. The default opportunity cost share for each tier is specified in the cost configuration file and can be changed in future versions as new costing information becomes available.
+</p>
+<div class="example-box">
+  <div class="example-title">Worked example: adding opportunity cost</div>
+  <p>
+    Using the Intermediate example above with a programme cost of 54,000,000 rupees, suppose the template specifies that opportunity cost is equal to 20 percent of programme cost. The opportunity cost component is therefore 0.20 multiplied by 54,000,000, which equals 10,800,000 rupees. Economic cost per cohort becomes 54,000,000 plus 10,800,000, which is 64,800,000 rupees. In the Costing details tab the opportunity cost row will show 10,800,000 rupees, and the total economic cost row will show 64,800,000 rupees.
+  </p>
+</div>
+
+<h3>5.3 Cost components and shares</h3>
+<p>
+  To improve interpretability and alignment with programme budgets, the Costing details tab breaks programme cost per cohort into components using cost shares from templates. For each template, the shares for staff, travel, materials, supervision and overheads are based on either World Health Organization guidance on training cost categories or FETP specific costing exercises.:contentReference[oaicite:5]{index=5}
+</p>
+<div class="example-box">
+  <div class="example-title">Worked example: decomposing costs using template shares</div>
+  <p>
+    Continuing with the Intermediate programme example, suppose the chosen cost template indicates that staff represent 45 percent of programme cost, travel 25 percent, materials 10 percent, supervision 15 percent and overheads 5 percent. With a programme cost of 54,000,000 rupees the component amounts are 24,300,000 rupees for staff, 13,500,000 for travel, 5,400,000 for materials, 8,100,000 for supervision and 2,700,000 for overheads. These values are shown line by line in the Costing details tab. If the user changes the cost per trainee per month or cohort size, all component amounts adjust proportionally while keeping the shares fixed.
+  </p>
+</div>
+<p>
+  The tooltip icons next to each cost component remind users that the shares come from external templates and that these can be updated when more accurate local cost data become available. In many low and middle income settings, cost estimates for training and health security programmes are imprecise, and the purpose of the tool is to make these assumptions explicit rather than to claim precise estimates.:contentReference[oaicite:6]{index=6}
+</p>
+</section> <!-- 6. EPIDEMIOLOGICAL AND OTHER BENEFITS --> <section id="sec-epi" class="appendix-section"> <h2>6. Epidemiological and other benefit assumptions</h2> <p> The tool converts graduates and outbreak responses into indicative monetary benefits using multipliers and values per unit. These benefit assumptions are intentionally simple and are designed to be updated as better evidence emerges. They are not intended to replace detailed health impact modelling but to provide an approximate monetary estimate of the gains from stronger epidemiological capacity that can be used in high level cost benefit comparisons. </p>
+<h3>6.1 Graduates, outbreak responses and planning horizon</h3>
+<p>
+  For each tier the epidemiological configuration includes a graduation rate and an expected number of outbreak responses supported per cohort per year, conditional on endorsement. Graduates per cohort are calculated by multiplying cohort size by graduation rate and by endorsement. Outbreak responses per cohort per year are calculated by multiplying a tier specific outbreak multiplier by endorsement. The planning horizon, typically set at five years, reflects the period over which graduates and strengthened systems are assumed to contribute meaningfully to outbreak detection and response.
+</p>
+<p>
+  The choice of a five year horizon is consistent with several global health security investment frameworks and with the time period of many FETP strategic plans.:contentReference[oaicite:7]{index=7} Users can adjust the planning horizon in the Advanced settings tab to reflect national preferences or new evidence.
+</p>
+
+<h3>6.2 Monetary value per graduate</h3>
+<p>
+  Assigning a monetary value to each graduate is challenging but necessary for constructing simple benefit measures. The default values per graduate in the tool are derived from a combination of salary scales, productivity gains and avoided outbreak costs reported in the literature on health workforce investments and field epidemiology training.:contentReference[oaicite:8]{index=8}
+</p>
+<p>
+  A practical interpretation is that the value per graduate represents the present value of the additional contributions that a trained field epidemiologist makes over the planning horizon, relative to a scenario without training. This includes better outbreak detection, improved analytic support to programmes and more effective use of resources. In the absence of precise country specific estimates, the tool uses rounded values that are easy to understand and adjust. For example, default values may be set at 400,000 rupees per Frontline graduate, 500,000 per Intermediate graduate and 600,000 per Advanced graduate, recognising the increasing responsibility and expected impact with higher tiers.
+</p>
+<div class="example-box">
+  <div class="example-title">Worked example: graduate related benefits</div>
+  <p>
+    Suppose an Intermediate programme has a cohort size of 30 trainees, a graduation rate of 0.90 and endorsement of 0.80. Expected graduates per cohort are 30 multiplied by 0.90 and then by 0.80, which equals 21.6. If the value per graduate for Intermediate tier is set at 500,000 rupees, graduate related benefits per cohort are 21.6 multiplied by 500,000, which equals 10,800,000 rupees.
+  </p>
+</div>
+
+<h3>6.3 Monetary value per outbreak response</h3>
+<p>
+  The value per outbreak response reflects the avoided costs of uncontrolled outbreaks, including health care costs, productivity losses and broader economic disruption. Empirical studies on the economic impact of outbreaks and on the returns to investments in preparedness provide wide ranges for these values, often in the tens of millions of rupees per significant event in the Indian context.:contentReference[oaicite:9]{index=9}
+</p>
+<p>
+  The tool therefore uses rounded default values such as 30 million rupees per outbreak response for Frontline and Intermediate tiers and 40 million rupees for Advanced tier, recognising the higher complexity and potential impact of Advanced graduates. These values are not precise estimates but plausible order of magnitude anchors that can be changed in the Advanced settings tab as more detailed national studies become available.
+</p>
+<div class="example-box">
+  <div class="example-title">Worked example: outbreak related benefits</div>
+  <p>
+    For the Intermediate example above, suppose the tier specific outbreak multiplier is 0.5 expected responses per cohort per year at full endorsement. With endorsement of 0.80, expected responses per year become 0.40. Over a five year planning horizon this yields 0.40 multiplied by 5, which equals 2 expected outbreak responses. If the value per response is 30,000,000 rupees, outbreak related benefits are 2 multiplied by 30,000,000, which equals 60,000,000 rupees.
+  </p>
+  <p>
+    Total epidemiological benefits per cohort are therefore graduate related benefits (10,800,000 rupees) plus outbreak related benefits (60,000,000 rupees), which equals 70,800,000 rupees. These are the numbers shown in the Results and National simulation tabs, subject to rounding.
+  </p>
+</div>
+
+<h3>6.4 Response time and epidemiological uplift</h3>
+<p>
+  Faster response times can reduce the number of cases and deaths during outbreaks and limit economic disruption. To keep the tool simple while acknowledging this, response time is treated in two ways. First, faster response is valued directly through the discrete choice willingness to pay, as described earlier. Second, optional response time multipliers in the epidemiological configuration file allow outbreak related benefits to be increased when response is faster than 30 days. For example, a multiplier of 1.2 for 15 days and 1.5 for 7 days indicates that faster response yields 20 to 50 percent more epidemiological benefit than the base case.
+</p>
+<div class="example-box">
+  <div class="example-title">Worked example: response time multipliers</div>
+  <p>
+    Returning to the Intermediate example with outbreak benefits of 60,000,000 rupees at 30 days, a multiplier of 1.2 for 15 days increases benefits to 72,000,000 rupees. A multiplier of 1.5 for 7 days increases benefits to 90,000,000 rupees. In the Results tab the value shown for epidemiological benefits reflects the response time chosen in the Configuration tab and the multipliers set in the Advanced settings tab.
+  </p>
+</div>
+<p>
+  Users can set the multipliers based on simple modelling exercises, literature on timeliness of response and outbreak control or country specific experience. Publications on International Health Regulations core capacities and joint external evaluations provide contextual information on the importance of timeliness for outbreak control, even if they do not provide direct monetary values.:contentReference[oaicite:10]{index=10}
+</p>
+</section> <!-- 7. ADVANCED SETTINGS --> <section id="sec-advanced" class="appendix-section"> <h2>7. Advanced settings and editable assumptions</h2> <p> The Advanced settings tab is the main place where users can change the epidemiological and valuation assumptions without editing code. Parameters available for editing include graduation rates, outbreak multipliers, values per graduate and per outbreak response, response time multipliers, planning horizon and the exchange rate used for optional USD displays. All these values are read from configuration files such as epi_config.json when the tool loads and can be changed interactively through the tab. </p> <p> Changing these parameters updates all benefit calculations, national results and cost benefit ratios from that point onwards. The discrete choice coefficients and cost templates are not affected by these edits. This separation allows preference and cost structures to remain anchored in empirical data while the mapping from physical outputs to monetary benefits is adjusted as new evidence becomes available. </p> <div class="example-box"> <div class="example-title">Worked example: updating value per outbreak response</div> <p> Suppose a new national study suggests that the economic impact of averting a large outbreak is closer to 50,000,000 rupees per event than the default 40,000,000. A technical user can open the Advanced settings tab, locate the field for value per outbreak response for the relevant tier and change 40,000,000 to 50,000,000. From that point onwards, outbreak related benefits and total benefits increase by 25 percent for configurations involving that tier, and the benefit cost ratios reported in the Results, National simulation and Saved scenarios tabs adjust accordingly. </p> </div> <div class="example-box"> <div class="example-title">Worked example: adjusting graduation rates</div> <p> If programme monitoring reveals that graduation rates for Intermediate cohorts have improved from 0.90 to 0.95 after curriculum strengthening, the user can change the graduation rate parameter for the Intermediate tier in the Advanced settings tab. Expected graduates per cohort increase proportionally, graduate related benefits rise and benefit cost ratios improve. This provides a simple way to reflect quality improvements in the tool without changing the underlying preference model. </p> </div> <p> Tooltip icons in the Advanced settings tab remind users that changes here affect all subsequent scenarios and that it is good practice to document any edits made during workshops or analyses. Where possible, links to external documents, such as national health security investment cases or costing studies, can be added to the tool documentation to justify particular parameter values.:contentReference[oaicite:11]{index=11} </p> </section> <!-- 8. WORKED SCENARIOS --> <section id="sec-worked" class="appendix-section"> <h2>8. Full worked scenarios across all tabs</h2> <p> This section brings together the previous elements through two illustrative scenarios. The numbers are chosen to be realistic and to connect directly to the values used in the rest of the appendix. They are not intended to reflect actual policy recommendations but to demonstrate how the tool behaves. </p>
+<h3>8.1 Scenario A: Advanced, high mentorship, fast response</h3>
+<p>
+  Scenario A corresponds to an Advanced programme of 24 months with high mentorship, blended delivery, response within 7 days, cost per trainee per month of 75,000 rupees, cohort size of 20, number of cohorts equal to 10, mixed logit preferences and opportunity cost included.
+</p>
+<p>
+  In the Configuration tab the user selects Advanced tier, high mentorship, blended delivery, 7 day response, sets the cost slider to 75,000, defines cohort size as 20 and the number of cohorts as 10 and activates the opportunity cost toggle. In the Results tab endorsement appears close to 90 percent, with around 10 percent opting out. Programme cost per cohort is 75,000 multiplied by 20 and then by 24, which equals 36,000,000 rupees. If opportunity cost is set at 25 percent of programme cost, economic cost per cohort is 45,000,000 rupees.
+</p>
+<p>
+  In the Costing details tab programme cost per cohort is split into staff, travel, materials, supervision and overhead components according to the template shares for Advanced tier. Opportunity cost appears as a separate line, and total economic cost is shown at the bottom of the table. In the National simulation tab national total cost is 45,000,000 multiplied by 10, which equals 450,000,000 rupees.
+</p>
+<p>
+  Using the epidemiological assumptions for Advanced tier and endorsement of 0.895, the tool calculates around 17 graduates per cohort and roughly 0.72 outbreak responses per year per cohort. Over a five year horizon, outbreak related benefits are about 143,000,000 rupees per cohort and graduate related benefits are about 10,200,000 rupees, giving total epidemiological benefits of about 153,400,000 rupees per cohort. Subtracting economic cost per cohort yields a net benefit of approximately 108,400,000 rupees and a benefit cost ratio of around 3.4.
+</p>
+<p>
+  In the DCE based benefit view the tool also computes configuration level willingness to pay benefits and endorsement adjusted willingness to pay benefits, which are used in the Sensitivity and Saved scenarios tabs. These values will generally be of similar order of magnitude to the epidemiological benefits if the valuation assumptions are coherent but will differ in level and distribution across configurations because they reflect stakeholder preferences rather than epidemiological modelling alone.
+</p>
+
+<h3>8.2 Scenario B: Intermediate, medium mentorship, moderate response time</h3>
+<p>
+  Scenario B corresponds to an Intermediate programme of 12 months with medium mentorship, blended delivery, response within 15 days, cost per trainee per month of 150,000 rupees, cohort size of 30, 15 cohorts and opportunity cost included.
+</p>
+<p>
+  In the Configuration tab the user selects Intermediate tier, medium mentorship, blended delivery and 15 day response, sets cost to 150,000, cohort size to 30 and number of cohorts to 15 and turns on the opportunity cost toggle. In the Results tab endorsement appears around 70 to 75 percent, with the remainder opting out. Programme cost per cohort is 150,000 multiplied by 30 and by 12, which equals 54,000,000 rupees. If the template indicates an opportunity cost share of 20 percent, economic cost per cohort is 64,800,000 rupees.
+</p>
+<p>
+  With a graduation rate of 0.90, outbreak multiplier of 0.5, value per graduate of 500,000 rupees, value per outbreak response of 30,000,000 rupees, planning horizon of five years and endorsement of 0.80, epidemiological benefits per cohort are around 70,800,000 rupees. Net benefit per cohort is therefore about 6,000,000 rupees and the benefit cost ratio is just above one. At national level, total cost for 15 cohorts is roughly 972,000,000 rupees and total benefits about 1,062,000,000 rupees.
+</p>
+<p>
+  Comparing Scenarios A and B in the Saved scenarios tab allows users to see that the Advanced configuration has higher cost but also substantially higher benefits and a stronger benefit cost ratio, while the Intermediate configuration delivers more graduates nationally at a lower total cost. DCE based benefits add a further dimension by capturing the value stakeholders attach to design features such as mentorship and response time beyond what is captured in the epidemiological multipliers.
+</p>
+</section> <!-- 9. COPILOT AND VIDEO --> <section id="sec-copilot" class="appendix-section"> <h2>9. Copilot tab and video guide</h2>
+<h3>9.1 Copilot tab</h3>
+<p>
+  The Copilot tab is a soft integration with Microsoft Copilot used at the University of Newcastle. The tab does not connect directly to any external service. Instead, it prepares a rich text prompt for the user that combines a plain language instruction and a JSON snapshot of selected scenarios. The instruction asks Copilot to use the scenario information to produce a structured policy briefing, including tables and narrative interpretation of endorsement, costs, DCE based benefits, epidemiological benefits, net benefits and benefit cost ratios.
+</p>
+<p>
+  When the user navigates to the Copilot tab after configuring and saving scenarios, the tool automatically generates this prompt and displays it in a read only text box. A copy button allows the user to copy the full text with one click. The user then opens Microsoft Copilot in a new browser tab, pastes the copied text and submits the prompt. Copilot responds inside the institutional environment, using the pasted scenario JSON and instructions to generate a briefing note, slide outline or talking points that can be refined further.
+</p>
+<p>
+  The key advantages of this approach are that no data are sent automatically outside the browser, that users retain full control over which scenarios are shared with Copilot and that the resulting analyses are anchored in the same numbers shown in the STEPS tool. Users who do not have Copilot access can ignore this tab and instead export scenario data to Excel or other tools.
+</p>
+<div class="example-box">
+  <div class="example-title">Worked example: using the Copilot tab</div>
+  <p>
+    A policy team configures three scenarios, saves them and then visits the Copilot tab. The tool displays a prompt that begins with a sentence such as “You are an expert policy analyst helping to interpret results from an FETP scale up decision aid” and follows with a JSON block that lists the three scenarios, including their tiers, cohorts, endorsement, costs and benefits. The team clicks the copy button, opens Microsoft Copilot in their institutional account, pastes the text and asks for a three page briefing for the Ministry of Health that compares the scenarios, highlights trade offs and proposes a recommendation. Copilot generates the briefing using the provided numbers as its main inputs.
+  </p>
+</div>
+
+<h3>9.2 Video guide</h3>
+<p>
+  The video guide embedded in the dedicated tab has been produced using Microsoft Copilot based on a script prepared by the tool developers. It walks through the tabs in the same order as this appendix, demonstrating how to configure scenarios, interpret results and use the Advanced settings. The video is particularly useful for first time users or for workshop participants who need a short orientation before hands on exercises.
+</p>
+<p>
+  The video is embedded via a secure iframe pointing to the host platform agreed with the project partners. Audio and visual content are aligned with the written documentation. No calculations depend on the video, and users who cannot access it can rely entirely on this appendix and the on screen tooltips.
+</p>
+</section> <!-- 10. USE AND LIMITS --> <section id="sec-use" class="appendix-section"> <h2>10. Recommended use, limits and future updates</h2> <p> STEPS is intended as a support tool for ministries, partners and funders considering investments in field epidemiology training and health security. It is most useful for exploring alternative programme designs, testing the sensitivity of cost benefit metrics to different assumptions and structuring workshop discussions around trade offs between endorsement, cost and epidemiological impact. The combination of DCE based benefits and epidemiological benefits provides complementary perspectives on value that are rarely both available in traditional appraisals. </p> <p> At the same time the tool has clear limits. It does not model specific disease transmission pathways, does not capture all long term health outcomes and does not include full fiscal planning or detailed macroeconomic impacts. It relies on simplified assumptions for values per graduate and per outbreak response and assumes that these values apply uniformly across cohorts. The discrete choice model is based on stated preferences in a survey rather than on observed budget data, so DCE based benefits should be interpreted as preference indices rather than binding willingness to pay by any single actor.:contentReference[oaicite:12]{index=12} </p> <p> Future updates may include calibration of benefit assumptions to more detailed economic analyses of health security investments, integration of time discounting, explicit linkage to International Health Regulations core capacity scores and expansion to other cadres of training. Users are encouraged to treat all assumptions as open to discussion, to document any changes made in the Advanced settings tab and to combine STEPS outputs with more detailed models where major investments are being considered. </p> </section> <!-- 11. REFERENCES --> <section id="sec-refs" class="appendix-section"> <h2>11. References and sources</h2> <ul class="ref-list"> <li> Louviere JJ, Hensher DA, Swait JD. Stated Choice Methods: Analysis and Applications. Cambridge University Press; 2000.:contentReference[oaicite:13]{index=13} </li> <li> Train KE. Discrete Choice Methods with Simulation. 2nd ed. Cambridge University Press; 2009.:contentReference[oaicite:14]{index=14} </li> <li> Hauber AB, González JM, Groothuis-Oudshoorn CGM, et al. Statistical methods for the analysis of discrete choice experiments: a report of the ISPOR Conjoint Analysis Good Research Practices Task Force. Applied Health Economics and Health Policy. 2016;14(4):333–352.:contentReference[oaicite:15]{index=15} </li> <li> de Bekker-Grob EW, Ryan M, Gerard K. Discrete choice experiments in health economics: a review of the literature. Health Economics. 2012;21(2):145–172.:contentReference[oaicite:16]{index=16} </li> <li> Lancsar E, Louviere J. Conducting discrete choice experiments to inform healthcare decision making: a user’s guide. Pharmacoeconomics. 2008;26(8):661–677.:contentReference[oaicite:17]{index=17} </li> <li> Drummond MF, Sculpher MJ, Claxton K, Stoddart GL, Torrance GW. Methods for the Economic Evaluation of Health Care Programmes. 4th ed. Oxford University Press; 2015.:contentReference[oaicite:18]{index=18} </li> <li> World Health Organization. WHO Guide to Costing Essential Public Health Functions. Geneva: WHO; 2022.:contentReference[oaicite:19]{index=19} </li> <li> Centers for Disease Control and Prevention, World Health Organization. Field Epidemiology Training Program Development Handbook. Atlanta: CDC; 2018.:contentReference[oaicite:20]{index=20} </li> <li> World Bank. The Economic Case for Investing in Pandemic Preparedness. Washington, DC: World Bank; 2019.:contentReference[oaicite:21]{index=21} </li> <li> World Health Organization. Joint External Evaluation Tool (JEE) – 3rd Edition. Geneva: WHO; 2022.:contentReference[oaicite:22]{index=22} </li> <li> Nicola M, Alsafi Z, Sohrabi C, et al. The socio-economic implications of the coronavirus pandemic (COVID-19): a review. International Journal of Surgery. 2020;78:185–193.:contentReference[oaicite:23]{index=23} </li> <li> Rabinowitz PM, Conti LA, Baker MG, et al. A planetary health perspective on human health in the Anthropocene. Lancet Planetary Health. 2018;2(8):e312–e321.:contentReference[oaicite:24]{index=24} </li> </ul> <p> STEPS and this technical appendix were prepared by Mesfin Genie, Newcastle Business School, The University of Newcastle, Australia, in collaboration with partners in India and international agencies. For technical questions or adaptation requests, please contact <a href="mailto:mesfin.genie@newcastle.edu.au">mesfin.genie@newcastle.edu.au</a>. </p> </section> </div> </body> </html> ::contentReference[oaicite:25]{index=25}
