@@ -22,16 +22,15 @@
         data-tour-content="This header shows the STEPS decision aid branding, the focus on FETP India and the World Bank partnership context.">
     <div class="app-header-left">
         <div class="app-logo-circle">
-            <span class="app-logo-inner-ring"></span>
-            <span class="app-logo-text">ST</span>
+            <span class="app-logo-mark">S</span>
         </div>
         <div class="app-title-block">
-            <h1 class="app-title">STEPS FETP Decision Aid</h1>
+            <h1 class="app-title">STEPS</h1>
             <p class="app-subtitle">Scalable Training Estimation and Planning System for FETP India</p>
         </div>
     </div>
     <div class="app-header-center">
-        <div class="app-header-line">FETP India</div>
+        <div class="app-header-line">FETP India scale-up decision aid</div>
         <div class="app-header-line">The University of Newcastle (Australia) · World Bank partnership</div>
     </div>
     <div class="app-header-right">
@@ -90,7 +89,7 @@
                 <h2>What STEPS does</h2>
                 <p>
                     STEPS helps policy makers and partners explore options for scaling Field Epidemiology
-                    Training Programmes in India. It links three main inputs.
+                    Training Programmes in India. It links three main inputs:
                 </p>
                 <ul class="plain-list">
                     <li>Preferences and willingness to pay estimates from a discrete choice experiment with stakeholders.</li>
@@ -142,8 +141,9 @@
              data-tour-content="This tab provides an embedded video and a suggested narration script that explain STEPS step by step for new users.">
             <h2>Video guide to STEPS</h2>
             <p>
-                This video gives a step by step walkthrough of the STEPS decision aid for workshops and policy meetings.
-                Use it with the configuration, results and sensitivity tabs open so participants can follow along on screen.
+                The embedded video gives a narrated walkthrough of the STEPS decision aid, showing how to configure scenarios,
+                interpret endorsement, willingness to pay, costs and benefits, and how to use the Copilot integration to
+                prepare policy briefings for stakeholders.
             </p>
 
             <div class="video-wrapper">
@@ -157,7 +157,6 @@
                         title="A Guide to Using the STEPS Decision Aid for FETP Policy in India.mp4">
                 </iframe>
             </div>
-
         </div>
     </section>
 
@@ -736,11 +735,11 @@
 
     <!-- COSTING TAB -->
     <section id="tab-costing" class="tab-panel">
-        <div class="grid-two-stretch"
+        <div class="grid-two-stretch costing-layout"
              data-tour-step="costing"
              data-tour-title="Costing details"
              data-tour-content="This view shows how programme and economic costs are constructed from the combined cost components for the selected tier, including opportunity cost where relevant.">
-            <div class="card">
+            <div class="card costing-left">
                 <div class="card-header-with-info">
                     <h2>Cost structure and sources</h2>
                     <button type="button"
@@ -773,7 +772,7 @@
                 </p>
             </div>
 
-            <div class="card card-secondary">
+            <div class="card card-secondary costing-right">
                 <div class="card-header-with-info">
                     <h2>Cost components for this configuration</h2>
                     <button type="button"
@@ -1132,68 +1131,96 @@
             </div>
 
             <p>
-                You can use Microsoft Copilot to generate a narrative interpretation of any scenario. The controls below prepare a structured prompt that includes a JSON export of the latest results and help you open Copilot in a new browser tab. No data is sent automatically. You decide when to copy and paste.
-            </p>
-
-            <p>
-                If automatic copy is blocked by your browser or organisation settings, you can copy the prompt manually from the dark panel on the right and paste it into Copilot at <code>https://copilot.microsoft.com/</code>.
+                This tab prepares a combined interpretation prompt and scenario JSON so that Microsoft Copilot can produce
+                a structured policy briefing. The STEPS tool never sends data automatically. You review the full text,
+                copy it when you are ready and paste it into Copilot in a separate browser tab.
             </p>
 
             <div class="copilot-layout">
+                <!-- Left column: narrative instructions, all in paragraphs -->
                 <div class="card card-secondary">
-                    <h3>How to use this tab</h3>
+                    <h3>How to use Copilot with STEPS</h3>
                     <p class="copilot-instructions">
-                        First, set up and apply your configuration in the other STEPS tabs until you are satisfied with the scenario and the results. When you are ready, move to this Copilot tab so that the latest configuration, endorsement, willingness to pay, cost and epidemiological results are available.
-                    </p>
-                    <p class="copilot-instructions">
-                        Next, click the button that prepares the interpretation text. The tool regenerates the full policy interpretation prompt using the current configuration and model outputs, and assembles the JSON export that summarises the scenario in machine readable form.
-                    </p>
-                    <p class="copilot-instructions">
-                        When clipboard access is permitted, the tool copies the full text into your clipboard automatically. If clipboard access is restricted, you can use the copy prompt button in the dark panel to copy the text manually. You can always read the prompt in full before sharing it.
+                        First, use the other STEPS tabs to define a scenario that you want to interpret. Apply the configuration,
+                        review endorsement, willingness to pay, costs and epidemiological benefits, and check the national
+                        simulation and sensitivity views. Once you have a scenario that is relevant for policy discussions,
+                        move to this Copilot tab to prepare a narrative briefing.
                     </p>
                     <p class="copilot-instructions">
-                        Then open Microsoft Copilot in a new browser tab, navigate to the chat box and paste the copied text. Once you paste and run the prompt, Copilot uses the embedded instructions and scenario JSON to produce a structured policy brief written in paragraphs with clear sections. The brief is designed to be three to five pages in length for decision makers in India.
+                        When you press the Copilot button, STEPS regenerates the interpretation text using the latest scenario
+                        and model outputs. The prompt combines a short description of the STEPS tool, a set of instructions
+                        for Copilot and the full JSON export for the current scenario. The aim is to guide Copilot to prepare
+                        a three to five page policy brief that is ready for meetings with ministries, World Bank staff and
+                        other partners.
                     </p>
                     <p class="copilot-instructions">
-                        The brief requests interpretation of endorsement, willingness to pay, costs, epidemiological benefits, benefit cost ratios and net benefits for scaling up FETP. It also guides Copilot to provide a clear narrative for ministries of health and finance, with tables and results described in words rather than relying on bullet points.
+                        The policy brief that Copilot produces should read as a narrative report rather than as a list of
+                        bullet points. The interpretation request asks for clearly labelled sections in paragraph form, such
+                        as background, scenario description, endorsement and preference patterns, costs, epidemiological
+                        benefits, benefit cost ratios, net present values, distributional considerations and implementation
+                        notes. Copilot is also asked to include tables summarising key indicators while keeping the main text
+                        concise and accessible.
                     </p>
-                    <p class="note">
-                        STEPS never sends your data to Copilot automatically. You keep full control over when the text is copied and where it is pasted. The JSON export is limited to the variables needed for interpretation and can be reviewed in full in this tab.
+                    <p class="copilot-instructions">
+                        After copying the text from the dark prompt panel, open Microsoft Copilot in a new browser tab,
+                        paste the entire content and run it. You can then edit the draft policy brief inside Copilot or
+                        in your preferred word processing software, keeping a clear record of the assumptions and JSON
+                        values generated by STEPS.
                     </p>
+
+                    <div class="copilot-help-box">
+                        The JSON export is limited to variables that are necessary for interpretation, such as configuration
+                        choices, endorsement, cost components, epidemiological multipliers and benefit indicators. The
+                        technical appendix lists these fields and explains how they are derived from the discrete choice
+                        experiment, cost templates and epidemiological assumptions.
+                    </div>
                 </div>
 
+                <!-- Right column: button, prompt panel and status -->
                 <div class="card">
+                    <h3>Prepare and copy the interpretation prompt</h3>
+                    <p class="hint">
+                        When you click the button, STEPS refreshes the Copilot prompt using the latest configuration,
+                        attempts to copy the full text to your clipboard and opens Microsoft Copilot in a new tab. If
+                        automatic copying is blocked, you can copy directly from the panel below.
+                    </p>
+                    <div class="button-row">
+                        <button id="copilot-open-and-copy-btn" type="button" class="btn-primary">
+                            Open in Copilot and copy prompt
+                        </button>
+                    </div>
+
                     <div class="copilot-prompt-panel">
                         <div class="copilot-prompt-header">
                             <div>
-                                <div class="copilot-prompt-title">Copilot interpretation prompt</div>
-                                <div class="copilot-prompt-hint">Review this text before copying and pasting it into Microsoft Copilot.</div>
+                                <div class="copilot-prompt-title">Copilot interpretation text</div>
+                                <div class="copilot-prompt-hint">
+                                    Review this text carefully. Copy all of it before pasting into Microsoft Copilot.
+                                </div>
                             </div>
-                            <button type="button" id="copilot-copy-btn" class="copilot-copy-btn">
-                                <span class="copilot-copy-icon">⧉</span>
-                                Copy prompt
-                            </button>
                         </div>
-                        <div id="copilot-prompt-output" class="copilot-prompt-body">
-Apply a configuration in STEPS and click the button below to generate the full interpretation prompt and scenario JSON. The text will appear here in paragraph form and will be ready to paste into Microsoft Copilot to obtain a three to five page policy brief without bullet points.
+                        <div class="copilot-prompt-body">
+                            <textarea id="copilot-prompt-output"
+                                      rows="18"
+                                      readonly>
+Apply a configuration in STEPS and click "Open in Copilot and copy prompt" to generate the full interpretation prompt and scenario JSON. The text will appear here and will be ready to paste into Microsoft Copilot at https://copilot.microsoft.com/.
+                            </textarea>
                         </div>
                         <div class="copilot-status-row">
-                            <span id="copilot-status-text">
-                                The Copilot interpretation text shown here is based on the most recent configuration and results. If you change the scenario, regenerate the prompt before copying.
+                            <span class="copilot-status-pill" id="copilot-status-pill">
+                                Waiting for configuration
                             </span>
-                            <span class="copilot-status-pill">Prompt ready for manual copy</span>
+                            <span id="copilot-status-text">
+                                The Copilot interpretation text shown here is based on the most recent configuration and results. After changing the scenario, click the button above again so that the text is updated.
+                            </span>
                         </div>
                     </div>
 
                     <div class="copilot-actions">
-                        <div class="copilot-actions-text">
-                            When the prompt looks correct, copy it and paste it into Microsoft Copilot. You can open Copilot directly at
-                            <span class="copilot-url-pill">copilot.microsoft.com</span>
-                            and start a new chat.
-                        </div>
-                        <button id="copilot-open-and-copy-btn" type="button" class="btn-primary">
-                            Open Copilot in a new tab and refresh prompt
-                        </button>
+                        <span class="copilot-actions-text">
+                            Open Microsoft Copilot in a separate tab, paste the copied text and run it to obtain a three to five page policy brief with tables and commentary on endorsement, willingness to pay, costs, epidemiological benefits, benefit cost ratios and net benefits.
+                        </span>
+                        <span class="copilot-url-pill">copilot.microsoft.com</span>
                     </div>
                 </div>
             </div>
@@ -1451,7 +1478,7 @@ Apply a configuration in STEPS and click the button below to generate the full i
             <div class="card">
                 <h2>Methods overview and technical appendix</h2>
                 <p>
-                    STEPS combines three elements into a single decision aid for FETP scale up in India.
+                    STEPS combines three elements into a single decision aid for FETP scale up in India:
                 </p>
                 <ul class="plain-list">
                     <li>A discrete choice experiment with stakeholders that provides endorsement rates and willingness to pay for alternative programme designs.</li>
