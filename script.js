@@ -2528,7 +2528,7 @@ function initAdvancedSettings() {
       appState.usdRate = DEFAULT_EPI_SETTINGS.general.inrToUsdRate;
 
       if (valueGradInput) valueGradInput.value = "0";
-      if (valueOutbreakInput) valueOutbreakInput.value = "20000000000";
+      if (valueOutbreakInput) valueOutbreakInput.value = "4000000";
       if (completionInput) completionInput.value = "90";
       if (outbreaksPerGradInput) outbreaksPerGradInput.value = "0.5";
       if (horizonInput) horizonInput.value = String(DEFAULT_EPI_SETTINGS.general.planningHorizonYears);
