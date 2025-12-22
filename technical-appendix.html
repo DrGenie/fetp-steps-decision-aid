@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>STEPS FETP Scale Up Decision Aid - Technical Appendix</title>
+  <title>STEPS FETP Scale Up Decision Aid – Technical Appendix</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     :root {
@@ -339,6 +339,7 @@
       <p>
         The experimental design varied the following attributes:
       </p>
+
       <div class="grid-two">
         <div>
           <p><span class="tag">Tier of training</span> Frontline, Intermediate, Advanced.</p>
@@ -379,7 +380,8 @@ U<sub>prog</sub> = β<sub>0</sub><sup>prog</sup>
           + β<sub>resp,7</sub>·I(7 days)
           + β<sub>qual,uni</sub>·I(university qualification)
           + β<sub>qual,career</sub>·I(career path)
-          + β<sub>cost</sub>·(Cost / 1&nbsp;000)        </div>
+          + β<sub>cost</sub>·(Cost / 1&nbsp;000)
+        </div>
         <p class="equation-explanation">
           This equation states that the utility of a programme option is equal to an alternative specific constant plus the sum of the coefficients for each attribute level that applies to the option, plus a cost term. Indicator functions take the value one when the corresponding level is present and zero otherwise. Cost is expressed in thousands of Rupees per trainee per month so that β<sub>cost</sub> is interpreted per 1&nbsp;000 Rupees.
         </p>
@@ -392,7 +394,8 @@ U<sub>prog</sub> = β<sub>0</sub><sup>prog</sup>
       <div class="equation-block">
         <div class="equation-label">Equation 2: Utility of the opt out option</div>
         <div class="equation-text">
-U<sub>opt</sub> = β<sub>0</sub><sup>opt</sup>        </div>
+U<sub>opt</sub> = β<sub>0</sub><sup>opt</sup>
+        </div>
         <p class="equation-explanation">
           This equation states that the utility of the opt out option is captured by a single parameter that reflects the baseline attractiveness of not implementing additional FETP training relative to an unspecified status quo. This constant is estimated from the frequency with which respondents chose the opt out alternative in the DCE.
         </p>
@@ -508,14 +511,15 @@ U<sub>opt</sub> = β<sub>0</sub><sup>opt</sup>        </div>
       <div class="equation-block">
         <div class="equation-label">Equation 3: Endorsement probability for a programme</div>
         <div class="equation-text">
-P(prog) = exp(U<sub>prog</sub>) / [exp(U<sub>prog</sub>) + exp(U<sub>opt</sub>)]        </div>
+P(prog) = exp(U<sub>prog</sub>) / [exp(U<sub>prog</sub>) + exp(U<sub>opt</sub>)]
+        </div>
         <p class="equation-explanation">
           This equation states that the probability that stakeholders endorse the programme is equal to the exponential of the programme utility divided by the sum of exponentials for the programme and opt out utilities. The probability for the opt out option is one minus this probability.
         </p>
       </div>
 
       <p>
-        In the STEPS outputs this probability is reported as the endorsement rate for each scenario. It is also used as an adjustment factor when translating the number of trainees into effective graduates and, in turn, into outbreak equivalents averted, so that designs that stakeholders are unlikely to support yield smaller effective benefits.
+        In the STEPS outputs this probability is reported as the endorsement rate for each scenario. It is also used as an adjustment factor when translating training capacity into outbreak equivalents averted, so that designs that stakeholders are unlikely to support yield smaller effective benefits.
       </p>
     </section>
 
@@ -623,14 +627,15 @@ P(prog) = exp(U<sub>prog</sub>) / [exp(U<sub>prog</sub>) + exp(U<sub>opt</sub>)]
         <div class="equation-text">
 C<sub>trainee</sub> = C<sub>month</sub> × D
 
-C<sub>cohort</sub> = C<sub>trainee</sub> × N        </div>
+C<sub>cohort</sub> = C<sub>trainee</sub> × N
+        </div>
         <p class="equation-explanation">
           These equations state that the full programme cost per trainee (C<sub>trainee</sub>) is equal to the user selected monthly cost per trainee (C<sub>month</sub>) multiplied by the programme duration in months (D). The cost per cohort (C<sub>cohort</sub>) is then equal to the cost per trainee multiplied by the number of trainees in the cohort (N).
         </p>
       </div>
 
       <p>
-        In the current configuration, the default durations are 24 months for Advanced, 12 months for Intermediate and 3 months for Frontline programmes. The default cohort sizes used in the national templates are 40 trainees for Advanced, 80 for Intermediate and 35 for Frontline, consistent with the cost template data.
+        In the cost templates, the reference cohort sizes are 40 trainees for Advanced, 80 for Intermediate and 35 for Frontline, consistent with the template data used to derive cost shares. For the worked numerical examples in section 14 and the illustrative national scaling in section 12, calculations are standardised to 50 trainees per cohort for all tiers. Where national roll out is discussed, 10 cohorts per tier are used as the default configuration to match the current STEPS settings.
       </p>
 
       <h3>4.3 Linking the cost slider to the DCE</h3>
@@ -799,7 +804,7 @@ C<sub>cohort</sub> = C<sub>trainee</sub> × N        </div>
               <td><strong>375,747,710</strong></td>
             </tr>
             <tr>
-              <td colspan="4"><strong>Total cohort size</strong></td>
+              <td colspan="4"><strong>Total cohort size (reference)</strong></td>
               <td><strong>35</strong></td>
               <td><strong>80</strong></td>
               <td><strong>40</strong></td>
@@ -819,7 +824,8 @@ C<sub>cohort</sub> = C<sub>trainee</sub> × N        </div>
       <div class="equation-block">
         <div class="equation-label">Equation 5: Example cost share calculation</div>
         <div class="equation-text">
-Share<sub>travel,in</sub><sup>adv</sup> = 107,499,500 / 375,747,710 ≈ 0.29        </div>
+Share<sub>travel,in</sub><sup>adv</sup> = 107,499,500 / 375,747,710 ≈ 0.29
+        </div>
         <p class="equation-explanation">
           This equation states that the share of in country travel in the total Advanced programme cost is obtained by dividing the travel cost by the total cost. The resulting value of approximately 0.29 means that around 29 percent of the Advanced programme cost is absorbed by in country travel.
         </p>
@@ -835,7 +841,7 @@ Share<sub>travel,in</sub><sup>adv</sup> = 107,499,500 / 375,747,710 ≈ 0.29    
       </p>
 
       <p>
-        For example, suppose the user configures an Advanced programme with a monthly cost per trainee of ₹ 100,000, a duration of 24 months and a cohort size of 40. The total cost per cohort is:
+        For example, suppose the user configures an Advanced programme with a monthly cost per trainee of ₹ 100,000, a duration of 24 months and a cohort size of 50. The total cost per cohort is:
       </p>
 
       <div class="equation-block">
@@ -843,14 +849,15 @@ Share<sub>travel,in</sub><sup>adv</sup> = 107,499,500 / 375,747,710 ≈ 0.29    
         <div class="equation-text">
 C<sub>trainee</sub> = 100,000 × 24 = 2,400,000
 
-C<sub>cohort</sub> = 2,400,000 × 40 = 96,000,000        </div>
+C<sub>cohort</sub> = 2,400,000 × 50 = 120,000,000
+        </div>
         <p class="equation-explanation">
-          These expressions show that the full programme cost per trainee is ₹ 2.4 million, and the total cost for a cohort of 40 trainees is ₹ 96.0 million.
+          These expressions show that the full programme cost per trainee is ₹ 2.4 million, and the total cost for a cohort of 50 trainees is ₹ 120.0 million.
         </p>
       </div>
 
       <p>
-        If the Advanced in country travel share is approximately 0.29, then the implied in country travel cost for this configuration is 0.29 multiplied by ₹ 96.0 million, that is around ₹ 27.8 million. The same logic is applied to all other cost categories to generate a fully disaggregated cost breakdown for each scenario.
+        If the Advanced in country travel share is approximately 0.29, then the implied in country travel cost for this configuration is 0.29 multiplied by ₹ 120.0 million, that is around ₹ 34.8 million. The same logic is applied to all other cost categories to generate a fully disaggregated cost breakdown for each scenario.
       </p>
     </section>
 
@@ -870,7 +877,7 @@ C<sub>cohort</sub> = 2,400,000 × 40 = 96,000,000        </div>
       </ul>
 
       <p>
-        The core formulas for a single cohort are given in Equation 4. When a scenario includes multiple cohorts, the tool multiplies the cohort level totals by the number of cohorts to obtain the total scenario cost.
+        The core formulas for a single cohort are given in Equation 4. When a scenario includes multiple cohorts, the tool multiplies the cohort level totals by the number of cohorts to obtain the total scenario cost. In the worked examples, each scenario assumes 50 trainees per cohort and 10 cohorts for national scale illustrations.
       </p>
 
       <h3>6.2 Relationship to economic cost</h3>
@@ -905,7 +912,8 @@ C<sub>cohort</sub> = 2,400,000 × 40 = 96,000,000        </div>
         <div class="equation-text">
 C<sub>econ,include</sub> = C<sub>cohort</sub>
 
-C<sub>econ,exclude</sub> = C<sub>cohort</sub> × (1 &minus; s<sub>indirect</sub>)        </div>
+C<sub>econ,exclude</sub> = C<sub>cohort</sub> × (1 &minus; s<sub>indirect</sub>)
+        </div>
         <p class="equation-explanation">
           These equations state that when opportunity costs are included, the economic cost (C<sub>econ,include</sub>) is equal to the full cohort cost envelope. When opportunity costs are excluded, the economic cost (C<sub>econ,exclude</sub>) is equal to the cohort cost multiplied by one minus the indirect cost share for the relevant tier, effectively removing the indirect component.
         </p>
@@ -932,7 +940,8 @@ U<sub>non-cost</sub> = β<sub>0</sub><sup>prog</sup>
   + β<sub>ment,·</sub>
   + β<sub>del,·</sub>
   + β<sub>resp,7</sub>
-  + β<sub>qual,·</sub>        </div>
+  + β<sub>qual,·</sub>
+        </div>
         <p class="equation-explanation">
           This equation states that the non cost component of utility (U<sub>non-cost</sub>) is the sum of the constant and the coefficients corresponding to the levels of tier, mentoring, delivery, response time and qualification selected in the scenario. It does not include the cost term.
         </p>
@@ -946,7 +955,8 @@ U<sub>non-cost</sub> = β<sub>0</sub><sup>prog</sup>
       <div class="equation-block">
         <div class="equation-label">Equation 9: Willingness to pay per trainee per month</div>
         <div class="equation-text">
-WTP<sub>month</sub> = U<sub>non-cost</sub> / |β<sub>cost</sub>| × 1&nbsp;000        </div>
+WTP<sub>month</sub> = U<sub>non-cost</sub> / |β<sub>cost</sub>| × 1&nbsp;000
+        </div>
         <p class="equation-explanation">
           This equation states that willingness to pay per trainee per month (WTP<sub>month</sub>) is equal to the non cost utility divided by the absolute value of the cost coefficient, multiplied by one thousand to convert from thousands of Rupees to Rupees. The result is the maximum monthly cost per trainee consistent with the estimated preferences for the chosen set of attributes.
         </p>
@@ -959,9 +969,10 @@ WTP<sub>month</sub> = U<sub>non-cost</sub> / |β<sub>cost</sub>| × 1&nbsp;000  
       <div class="equation-block">
         <div class="equation-label">Equation 10: Total WTP per cohort</div>
         <div class="equation-text">
-WTP<sub>cohort</sub> = WTP<sub>month</sub> × D × N        </div>
+WTP<sub>cohort</sub> = WTP<sub>month</sub> × D × N
+        </div>
         <p class="equation-explanation">
-          This equation states that total willingness to pay for the cohort (WTP<sub>cohort</sub>) is equal to the willingness to pay per trainee per month multiplied by the programme duration in months (D) and the number of trainees in the cohort (N).
+          This equation states that total willingness to pay for the cohort (WTP<sub>cohort</sub>) is equal to the willingness to pay per trainee per month multiplied by the programme duration in months (D) and the number of trainees in the cohort (N). In the worked examples, N is set to 50 for all tiers.
         </p>
       </div>
 
@@ -975,47 +986,55 @@ WTP<sub>cohort</sub> = WTP<sub>month</sub> × D × N        </div>
 
       <h3>9.1 Concept of outbreak equivalents averted</h3>
       <p>
-        The epidemiological impact calculations in the STEPS tool are expressed in terms of outbreak equivalents averted. An outbreak equivalent is defined as the avoidance or substantial mitigation of one large multi district or multi state infectious disease outbreak of the type that would impose major health system and economic costs if uncontrolled. The tool does not attempt to model actual outbreak frequencies but instead uses a calibrated mapping from training outputs to expected outbreak equivalents avoided over the planning horizon.
+        The epidemiological impact calculations in the STEPS tool are expressed in terms of outbreak equivalents averted. An outbreak equivalent is defined as the avoidance or substantial mitigation of one large multi district or multi state infectious disease outbreak of the type that would impose major health system and economic costs if uncontrolled. The tool does not attempt to model actual outbreak frequencies but instead uses a calibrated mapping from training capacity to expected outbreak equivalents avoided over the planning horizon.
       </p>
 
-      <h3>9.2 Effective graduates</h3>
+      <h3>9.2 Training capacity index</h3>
       <p>
-        The script first translates the configured cohort into a number of effective graduates. This recognises that not all enrolled trainees complete the programme and that a programme with low endorsement from stakeholders is less likely to be implemented and sustained. The number of effective graduates for a cohort is:
+        For each cohort, the tool computes a training capacity index that reflects the number of trainees, the duration of their training and the tier, mentoring and delivery characteristics of the programme. The index is defined as:
       </p>
 
       <div class="equation-block">
-        <div class="equation-label">Equation 11: Effective graduates per cohort</div>
+        <div class="equation-label">Equation 11: Training capacity index</div>
         <div class="equation-text">
-G<sub>eff</sub> = N × c × P(prog)        </div>
+C = N × (D / 12) × w<sub>tier</sub> × w<sub>ment</sub> × w<sub>del</sub> / 1&nbsp;000
+        </div>
         <p class="equation-explanation">
-          This equation states that the number of effective graduates (G<sub>eff</sub>) is equal to the number of trainees in the cohort (N) multiplied by the assumed completion rate (c) and the endorsement probability P(prog) from Equation 3. In the current implementation, the completion rate c is set to 0.9 for all tiers, reflecting an assumption that 90 percent of enrolled trainees complete the programme.
+          This equation states that the capacity index (C) is equal to the number of trainees (N) multiplied by the duration of training in years (D divided by 12), multiplied by tier, mentoring and delivery weights (w<sub>tier</sub>, w<sub>ment</sub> and w<sub>del</sub>), divided by one thousand to keep the index numerically small. The weights capture the idea that Advanced and highly mentored programmes build more capacity per trainee than Frontline or low mentoring programmes.
         </p>
       </div>
 
       <p>
-        A cohort with more trainees, higher endorsement and a higher completion rate generates more effective graduates and therefore more potential to influence outbreak detection and response capacity.
+        The default weights used in the tool are:
       </p>
 
-      <h3>9.3 Outbreak equivalents averted over the planning horizon</h3>
+      <ul class="small">
+        <li>Tier weights: 0.7 for Frontline, 1.0 for Intermediate and 1.3 for Advanced.</li>
+        <li>Mentoring weights: 0.7 for Low, 1.0 for Medium and 1.3 for High.</li>
+        <li>Delivery weights: 1.0 for Blended and 1.1 for In person delivery.</li>
+      </ul>
+
       <p>
-        The script then converts effective graduates into outbreak equivalents averted over the planning horizon by applying a per graduate outbreak impact factor and a discounting or horizon adjustment factor. Conceptually, the expected number of outbreak equivalents averted by a cohort is:
+        These values can be interpreted as relative effectiveness factors. For example, keeping other attributes constant, an Advanced cohort is treated as having about 86 percent more capacity than a Frontline cohort (1.3 versus 0.7), and a High mentoring programme is treated as having 30 percent more capacity than a Medium mentoring programme (1.3 versus 1.0).
+      </p>
+
+      <h3>9.3 Endorsement adjusted outbreak equivalents</h3>
+      <p>
+        Training capacity translates into expected outbreak equivalents averted once scaled by the endorsement probability. Programmes that stakeholders are unlikely to support are less likely to be implemented effectively, so their capacity is down weighted. The expected number of outbreak equivalents averted for a single cohort is:
       </p>
 
       <div class="equation-block">
-        <div class="equation-label">Equation 12: Outbreak equivalents averted per cohort</div>
+        <div class="equation-label">Equation 12: Outbreak equivalents averted</div>
         <div class="equation-text">
-O = G<sub>eff</sub> × λ × F(H, r)        </div>
+O = C × P(prog)
+        </div>
         <p class="equation-explanation">
-          This equation states that the expected number of outbreak equivalents averted (O) is equal to the number of effective graduates (G<sub>eff</sub>) multiplied by a per graduate outbreak impact factor λ and by a time adjustment factor F(H, r) that depends on the planning horizon (H, in years) and the discount rate (r). The factor λ summarises how much one additional effective FETP graduate is expected to reduce large outbreak risk over the horizon; F(H, r) summarises how those benefits are spread in time and discounted to present value.
+          This equation states that the expected number of outbreak equivalents averted (O) is equal to the capacity index (C) multiplied by the endorsement probability P(prog) from Equation 3. The result is a dimensionless number representing the fraction of a large outbreak expected to be avoided due to the additional training cohort.
         </p>
       </div>
 
       <p>
-        In the current script, λ and F(H, r) are implemented as fixed constants for a given choice of planning horizon and discount rate, so that all scenarios share the same mapping from effective graduates to total outbreak equivalents over the horizon. Changing the planning horizon or discount rate in the Settings tab leads to a different value of F(H, r) and therefore rescales outbreak equivalents and benefits for all scenarios.
-      </p>
-
-      <p>
-        The combined term λ × F(H, r) is calibrated using the literature and expert judgement so that the resulting benefit cost ratios for plausible Advanced, Intermediate and Frontline programmes fall in a realistic range, conditional on the chosen value per outbreak in the Settings tab.
+        In the default calibration used in STEPS, the combination of the capacity weights and the scaling factor of one thousand in Equation 11 yields outbreak equivalents on the order of one tenth to one quarter of an outbreak equivalent per cohort for plausible Advanced and Intermediate programmes, and smaller fractions for Frontline programmes. These values are then combined with the monetary value per outbreak to obtain epidemiological benefits in Rupees.
       </p>
     </section>
 
@@ -1029,7 +1048,7 @@ O = G<sub>eff</sub> × λ × F(H, r)        </div>
 
       <h3>10.2 Literature based calibration table</h3>
       <p>
-        Table 4 summarises key evidence used to calibrate the value per outbreak in STEPS. The estimates span severe multi country epidemics such as Ebola and SARS, national outbreaks such as pandemic influenza and dengue, and local or regional waterborne and vector borne outbreaks. The last row shows how these values are translated into working calibration values for India.
+        Table 4 summarises key evidence used to calibrate the value per outbreak in STEPS. The estimates span severe multi country epidemics such as Ebola and SARS, national outbreaks such as pandemic influenza and dengue, and local or regional waterborne and vector borne outbreaks. The last row shows how these values are translated into a working calibration for India.
       </p>
 
       <figure class="table-block">
@@ -1135,31 +1154,35 @@ O = G<sub>eff</sub> × λ × F(H, r)        </div>
               <td>Monetary value of averting or substantially reducing a large outbreak</td>
               <td>Lower bound: ₹ 8.3 billion (US$ 0.1 billion). Baseline: ₹ 20.0 billion (about US$ 0.24 billion). Upper bound: ₹ 166 billion (US$ 2.0 billion).</td>
               <td>Lower: ₹ 8.3 billion. Baseline: ₹ 20.0 billion. Upper: ₹ 166 billion.</td>
-              <td>Construction for STEPS: the lower bound reflects sizeable outbreaks with costs in the single digit billions of Rupees. The baseline is a conservative central value used in the tool for main results. The upper bound reflects rare very large outbreaks with macroeconomic disruption. Sensitivity analysis varies the value per outbreak over this range.</td>
+              <td>Construction for STEPS: the lower bound reflects sizeable outbreaks with costs in the single digit billions of Rupees. The baseline is a central value for large multi state outbreaks. The upper bound reflects rare very large outbreaks with macroeconomic disruption. Sensitivity analysis can vary the value per outbreak over this range.</td>
               <td>Tool setting: value per outbreak in Settings tab.</td>
             </tr>
           </tbody>
         </table>
         <p class="table-note">
-          Note: The STEPS value per outbreak is user selectable in the Settings tab. The literature rows provide order of magnitude context rather than exact predictions for India.
+          Note: The calibration values in the bottom row provide order of magnitude anchors for large outbreaks. In the current STEPS implementation, the default setting in the tool for many analyses, including the worked examples in section 14, is a more conservative value of ₹ 4 million per outbreak, representing the avoidance or mitigation of a localised outbreak. Users can change the setting to explore higher calibrations, including the ₹ 8.3 billion to ₹ 166 billion range summarised in this table.
         </p>
       </figure>
 
       <h3>10.3 Rationale for the STEPS outbreak values</h3>
       <p>
-        The baseline value of the monetary loss associated with a large multi state outbreak is chosen as a conservative central value. It is substantially lower than the economic losses associated with global SARS or regional Ebola outbreaks but is similar in order of magnitude to the estimated national annual burden of dengue in India. It therefore represents a large but not extreme national scale event that could plausibly be influenced by improved surveillance and response capacity.
+        The literature based values in Table 4 show that large national and multi country outbreaks can have very substantial economic impacts, often in the tens of billions of Rupees or more. For strategic planning of FETP investments, it is therefore appropriate to examine a wide range of outbreak valuations, from conservative localised events to larger national or multi state events.
       </p>
 
       <p>
-        The lower bound is intended to represent sizeable but less catastrophic outbreaks. This value is above the lower end of waterborne outbreak cost estimates in low and middle income countries but below annual national dengue burden estimates, and it provides a conservative lower scenario for sensitivity analysis.
+        For large national outbreaks, the baseline value of around ₹ 20.0 billion per outbreak is chosen as a conservative central value. It is substantially lower than the economic losses associated with global SARS or regional Ebola outbreaks but is similar in order of magnitude to the estimated national annual burden of dengue in India. It therefore represents a large but not extreme national scale event that could plausibly be influenced by improved surveillance and response capacity.
       </p>
 
       <p>
-        The upper bound reflects rare but very large outbreaks with significant macroeconomic disruption. It is well below the extreme worst case scenarios for Ebola or global SARS but similar in scale to some national macroeconomic estimates for respiratory pandemics. It provides an upper benchmark for sensitivity analysis.
+        The lower bound of ₹ 8.3 billion (about US$ 0.1 billion) is intended to represent sizeable but less catastrophic outbreaks. This value is above the lower end of waterborne outbreak cost estimates in low and middle income countries but below annual national dengue burden estimates, and it provides a conservative lower scenario for sensitivity analysis of large scale events.
       </p>
 
       <p>
-        Within the STEPS tool, users can also select smaller outbreak values (for example values in the tens of millions of Rupees) to allow very conservative assessments where the benefits are restricted to the avoidance of localised outbreaks with limited macroeconomic impact.
+        The upper bound of ₹ 166 billion (about US$ 2.0 billion) reflects rare but very large outbreaks with significant macroeconomic disruption. It is well below the extreme worst case scenarios for Ebola or global SARS but similar in scale to some national macroeconomic estimates for respiratory pandemics. It provides an upper benchmark for sensitivity analysis.
+      </p>
+
+      <p>
+        In day to day use for the India FETP scale up exercise, the STEPS tool defaults to a much smaller outbreak value of ₹ 4 million in the Settings tab. This default is deliberately conservative and reflects scenarios where improved FETP capacity is judged to avert or mitigate localised outbreaks or clusters with relatively modest economic footprints. Users can and should explore alternative outbreak values, including the larger calibrations set out in Table 4, to understand how conclusions vary across plausible ranges.
       </p>
     </section>
 
@@ -1174,9 +1197,10 @@ O = G<sub>eff</sub> × λ × F(H, r)        </div>
       <div class="equation-block">
         <div class="equation-label">Equation 13: Monetary epidemiological benefit per cohort</div>
         <div class="equation-text">
-B<sub>epi</sub> = O × V<sub>outbreak</sub>        </div>
+B<sub>epi</sub> = O × V<sub>outbreak</sub>
+        </div>
         <p class="equation-explanation">
-          This equation states that the monetary epidemiological benefit per cohort (B<sub>epi</sub>) is equal to the expected number of outbreak equivalents averted (O, from Equation 12) multiplied by the monetary value per outbreak (V<sub>outbreak</sub>) selected in the Settings tab. The result is expressed in Rupees.
+          This equation states that the monetary epidemiological benefit per cohort (B<sub>epi</sub>) is equal to the expected number of outbreak equivalents averted (O) multiplied by the monetary value per outbreak (V<sub>outbreak</sub>) selected in the Settings tab. The result is expressed in Rupees.
         </p>
       </div>
 
@@ -1190,7 +1214,8 @@ B<sub>epi</sub> = O × V<sub>outbreak</sub>        </div>
         <div class="equation-text">
 BCR = B<sub>epi</sub> / C<sub>econ</sub>
 
-Net benefit = B<sub>epi</sub> &minus; C<sub>econ</sub>        </div>
+Net benefit = B<sub>epi</sub> &minus; C<sub>econ</sub>
+        </div>
         <p class="equation-explanation">
           These equations state that the benefit cost ratio (BCR) is equal to the ratio of epidemiological benefits to economic costs, and that net benefit is equal to epidemiological benefits minus economic costs. Economic costs (C<sub>econ</sub>) include or exclude indirect and opportunity costs according to the setting chosen by the user.
         </p>
@@ -1198,24 +1223,25 @@ Net benefit = B<sub>epi</sub> &minus; C<sub>econ</sub>        </div>
 
       <h3>11.3 Planning horizon and discounting</h3>
       <p>
-        The planning horizon in the STEPS tool represents the period over which epidemiological benefits from a given cohort of trainees are expected to accrue. For example, a planning horizon of 10 years means that the benefits of training are assumed to extend over a decade of outbreak prevention and control. The per graduate outbreak impact factor λ and the time adjustment factor F(H, r) in Equation 12 are calibrated for a chosen baseline horizon and discount rate. When the user changes the planning horizon or discount rate, the script updates the effective horizon factor so that longer horizons increase outbreak equivalents and higher discount rates reduce them.
+        The planning horizon in the STEPS tool represents the period over which epidemiological benefits from a given cohort of trainees are expected to accrue. For example, a planning horizon of 10 years means that the benefits of training are assumed to extend over a decade of outbreak prevention and control. The default calibration of the capacity index and outbreak equivalents corresponds to a baseline horizon (for example 10 years). When the user changes the planning horizon, the tool scales the capacity index proportionally to reflect a longer or shorter period of impact.
       </p>
 
       <p>
-        Under a simplifying assumption that benefits are distributed evenly across each year of the horizon, a convenient approximation to the discount factor for a constant annual stream is:
+        When a non zero discount rate is set, the tool applies a standard annuity factor to adjust benefits and, where relevant, costs that are spread over time. Under a simplifying assumption that benefits are distributed evenly across each year of the horizon, the present value factor is:
       </p>
 
       <div class="equation-block">
         <div class="equation-label">Equation 15: Approximate discount factor for a constant annual stream</div>
         <div class="equation-text">
-DF = [1 &minus; (1 + r)<sup>&minus;H</sup>] / (r × H)        </div>
+DF = [1 &minus; (1 + r)<sup>&minus;H</sup>] / (r × H)
+        </div>
         <p class="equation-explanation">
-          This equation states that the discount factor (DF) for a constant annual stream over H years at annual discount rate r is given by the standard annuity factor divided by H. Multiplying undiscounted totals by DF yields an approximate present value that accounts for time preference. In the script, an equivalent horizon adjustment is embedded in F(H, r).
+          This equation states that the discount factor (DF) for a constant annual stream over H years at annual discount rate r is given by the standard annuity factor divided by H. Multiplying undiscounted totals by DF yields an approximate present value that accounts for time preference.
         </p>
       </div>
 
       <p>
-        For practical interpretation, the cohort level calculations reported in this appendix can be read as already expressed in present value terms for the baseline planning horizon and discount rate used in the tool. When users change the horizon or discount rate, the tool rescales benefits according to the chosen parameters, while the fundamental logic of the outbreak equivalent approach remains the same.
+        In practice, the cohort level calculations reported in this appendix can be interpreted as already expressed in present value terms for a baseline planning horizon. When users change the horizon or discount rate, the tool scales benefits according to the chosen parameters, while the fundamental logic of the outbreak equivalent approach remains the same.
       </p>
     </section>
 
@@ -1232,14 +1258,15 @@ DF = [1 &minus; (1 + r)<sup>&minus;H</sup>] / (r × H)        </div>
         <div class="equation-text">
 C<sub>national</sub> = Σ<sub>tiers</sub> (C<sub>econ,cohort,tier</sub> × N<sub>cohort,tier</sub>)
 
-B<sub>national</sub> = Σ<sub>tiers</sub> (B<sub>epi,cohort,tier</sub> × N<sub>cohort,tier</sub>)        </div>
+B<sub>national</sub> = Σ<sub>tiers</sub> (B<sub>epi,cohort,tier</sub> × N<sub>cohort,tier</sub>)
+        </div>
         <p class="equation-explanation">
           These equations state that national economic cost (C<sub>national</sub>) is equal to the sum across tiers of economic cost per cohort multiplied by the number of cohorts for that tier. National epidemiological benefit (B<sub>national</sub>) is defined in the same way using benefits per cohort.
         </p>
       </div>
 
       <p>
-        The resulting national totals are then combined into national level BCRs and net benefits. In scenarios where cohorts are phased in over time, the tool can apply discounting in the same way as described in section 11, adjusting for the timing of costs and benefits.
+        In the default configuration used in this appendix, N<sub>cohort,tier</sub> is set to 10 for each tier, so national totals for a given configuration are 10 times the corresponding per cohort values. The resulting national totals are then combined into national level BCRs and net benefits. In scenarios where cohorts are phased in over time, the tool can apply discounting in the same way as described in section 11, adjusting for the timing of costs and benefits.
       </p>
     </section>
 
@@ -1268,7 +1295,8 @@ B<sub>national</sub> = Σ<sub>tiers</sub> (B<sub>epi,cohort,tier</sub> × N<sub>
       <div class="equation-block">
         <div class="equation-label">Equation 17: Endorsement adjusted WTP</div>
         <div class="equation-text">
-WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
+WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)
+        </div>
         <p class="equation-explanation">
           This equation states that endorsement adjusted WTP (WTP<sub>adj</sub>) is equal to total WTP per cohort multiplied by the endorsement probability. It reflects the fact that a programme with high potential value but low support may not be implemented or sustained in practice.
         </p>
@@ -1280,12 +1308,23 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
 
       <h3>13.3 Outbreak value sensitivity</h3>
       <p>
-        The Sensitivity tab allows users to evaluate each scenario under multiple values of V<sub>outbreak</sub>. For each value, the tool recomputes B<sub>epi</sub>, BCR and net benefit. This allows users to see how robust their conclusions are to different assumptions about the monetary cost of outbreaks, including very conservative cases where only localised outbreaks with costs in the tens of millions of Rupees are considered.
+        The Sensitivity tab allows users to evaluate each scenario under multiple values of V<sub>outbreak</sub>. Examples include:
+      </p>
+
+      <ul class="small">
+        <li>₹ 4 million per outbreak (current conservative default, representing the avoidance or mitigation of a localised outbreak).</li>
+        <li>₹ 8.3 billion per outbreak (lower bound for large outbreaks).</li>
+        <li>₹ 20.0 billion per outbreak (central value for large national outbreaks).</li>
+        <li>₹ 166 billion per outbreak (upper bound for rare, very large outbreaks).</li>
+      </ul>
+
+      <p>
+        For each value, the tool recomputes B<sub>epi</sub>, BCR and net benefit. This allows users to see how robust their conclusions are to different assumptions about the monetary cost of outbreaks, including very conservative cases where only localised outbreaks with costs in the millions of Rupees are considered.
       </p>
 
       <h3>13.4 Planning horizon and discounting sensitivity</h3>
       <p>
-        Users can also vary the planning horizon and discount rate in the Settings tab. Longer horizons increase benefits through the effective horizon factor F(H, r), whereas higher discount rates reduce present values. The sensitivity tables show how BCRs and net benefits change across these settings, making trade offs between short term and long term perspectives explicit.
+        Users can also vary the planning horizon and discount rate in the Settings tab. Longer horizons increase benefits proportionally through the capacity index scaling, whereas higher discount rates reduce present values. The sensitivity tables show how BCRs and net benefits change across these settings, making trade offs between short term and long term perspectives explicit.
       </p>
 
       <h3>13.5 Interpreting sensitivity results</h3>
@@ -1298,11 +1337,11 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
       <h2>14. Detailed worked examples for illustrative scenarios</h2>
 
       <p class="section-lead">
-        This section presents fully worked numerical examples for nine illustrative FETP programme scenarios. For each scenario, response capacity is fixed at 7 days, opportunity costs are included in economic costs and the planning horizon and value per outbreak correspond to the current baseline calibration implemented in the script. All calculations follow exactly the formulas used in <code>script.js</code> for utility, endorsement, costs, effective graduates and epidemiological benefits.
+        This section presents fully worked numerical examples for nine illustrative FETP programme scenarios. For each scenario, response capacity is fixed at 7 days, the value per outbreak is set to ₹ 4 million (the current default in the STEPS Settings tab), opportunity costs are included in economic costs and the planning horizon corresponds to the baseline calibration used in the capacity index. All calculations assume 50 trainees per cohort. Where relevant for national scale, 10 cohorts per tier can be used to obtain national totals by simple multiplication.
       </p>
 
       <p>
-        The scenarios are defined as follows (monthly costs per trainee, durations and cohort sizes are inputs to the tool):
+        The scenarios are defined as follows (monthly costs per trainee and durations are inputs to the tool):
       </p>
 
       <figure class="table-block">
@@ -1339,7 +1378,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
               <td>University qualification</td>
               <td>100,000</td>
               <td>24</td>
-              <td>40</td>
+              <td>50</td>
             </tr>
             <tr>
               <td>S3</td>
@@ -1349,7 +1388,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
               <td>Government certificate</td>
               <td>75,000</td>
               <td>24</td>
-              <td>40</td>
+              <td>50</td>
             </tr>
             <tr>
               <td>S4</td>
@@ -1359,7 +1398,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
               <td>University qualification</td>
               <td>100,000</td>
               <td>12</td>
-              <td>80</td>
+              <td>50</td>
             </tr>
             <tr>
               <td>S5</td>
@@ -1369,7 +1408,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
               <td>Government certificate</td>
               <td>75,000</td>
               <td>12</td>
-              <td>80</td>
+              <td>50</td>
             </tr>
             <tr>
               <td>S6</td>
@@ -1379,7 +1418,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
               <td>Government certificate</td>
               <td>50,000</td>
               <td>12</td>
-              <td>80</td>
+              <td>50</td>
             </tr>
             <tr>
               <td>S7</td>
@@ -1389,7 +1428,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
               <td>Government certificate</td>
               <td>75,000</td>
               <td>3</td>
-              <td>35</td>
+              <td>50</td>
             </tr>
             <tr>
               <td>S8</td>
@@ -1399,7 +1438,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
               <td>Government certificate</td>
               <td>50,000</td>
               <td>3</td>
-              <td>35</td>
+              <td>50</td>
             </tr>
             <tr>
               <td>S9</td>
@@ -1409,12 +1448,12 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
               <td>Government certificate</td>
               <td>25,000</td>
               <td>3</td>
-              <td>35</td>
+              <td>50</td>
             </tr>
           </tbody>
         </table>
         <p class="table-note">
-          Note: Cohort sizes are chosen for illustration. They are consistent with, but do not need to match exactly, the reference cohort sizes used in the cost templates (Table 3) for Advanced, Intermediate and Frontline programmes.
+          Note: Cohort size is fixed at 50 trainees for all scenarios to align with the default configuration used in the current STEPS tool. National totals can be obtained by multiplying cohort-level results by the number of cohorts specified in the National Simulation tab (10 cohorts per tier in the default examples).
         </p>
       </figure>
 
@@ -1444,12 +1483,13 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           Non cost utility includes the programme constant, Advanced tier, High mentoring, In person delivery, 7 day response and University qualification coefficients:
         </p>
         <p class="small">
-          U<sub>non-cost</sub> = 0.168 (constant) + 0.487 (Advanced) + 0.640 (High mentoring) + (−0.232) (In person) + 0.610 (7 days) + 0.017 (University qualification) = 1.690.
+          U<sub>non-cost</sub> = 0.168 (constant) + 0.487 (Advanced) + 0.640 (High mentoring) + (−0.232) (In person) + 0.610 (7 days) + 0.017 (University qualification)
+          = 1.690.
         </p>
 
         <p class="scenario-subtitle">Step 4. Endorsement probability</p>
         <p>
-          The cost term in utility is β<sub>cost</sub> × (Cost / 1,000) = −0.005 × (120,000 / 1,000) = −0.005 × 120 = −0.600. Programme utility is:
+          The cost term in utility is β<sub>cost</sub> × (Cost / 1,000) = −0.005 × (120,000 / 1,000) = −0.600. Programme utility is:
         </p>
         <p class="small">
           U<sub>prog</sub> = U<sub>non-cost</sub> + cost term = 1.690 − 0.600 = 1.090.
@@ -1458,7 +1498,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           The opt out utility is β<sub>0</sub><sup>opt</sup> = −0.601. The endorsement probability is:
         </p>
         <p class="small">
-          P(prog) = exp(1.090) / [exp(1.090) + exp(−0.601)] ≈ 0.836.
+          P(prog) = exp(1.090) / [exp(1.090) + exp(−0.601)] ≈ 0.844.
         </p>
 
         <p class="scenario-subtitle">Step 5. WTP per trainee per month and total WTP</p>
@@ -1469,26 +1509,32 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           WTP<sub>month</sub> = 1.690 / 0.005 × 1,000 = 338,000 Rupees per month.
         </p>
         <p>
-          Total WTP for the cohort is:
+          Total WTP for the cohort (50 trainees) is:
         </p>
         <p class="small">
           WTP<sub>cohort</sub> = 338,000 × 24 × 50 = ₹ 405,600,000.
         </p>
 
-        <p class="scenario-subtitle">Step 6. Effective graduates</p>
+        <p class="scenario-subtitle">Step 6. Training capacity index</p>
         <p>
-          With a completion rate of 90 percent, the number of effective graduates is:
+          For Advanced, High mentoring, In person delivery the weights are w<sub>tier</sub> = 1.3, w<sub>ment</sub> = 1.3 and w<sub>del</sub> = 1.1. Duration in years is D / 12 = 24 / 12 = 2. The capacity index is:
         </p>
         <p class="small">
-          G<sub>eff</sub> = N × c × P(prog) = 50 × 0.9 × 0.836 ≈ 37.6.
+          C = 50 × 2 × 1.3 × 1.3 × 1.1 / 1,000 ≈ 0.186.
         </p>
 
-        <p class="scenario-subtitle">Step 7. Epidemiological benefits</p>
+        <p class="scenario-subtitle">Step 7. Outbreak equivalents averted and epidemiological benefit</p>
         <p>
-          The script multiplies the effective graduates by the calibrated outbreak impact factor and horizon adjustment and then by the value per outbreak. Under the current baseline settings, this yields a monetary epidemiological benefit per cohort of approximately:
+          Outbreak equivalents averted are:
         </p>
         <p class="small">
-          B<sub>epi</sub> ≈ ₹ 522,031,705.
+          O = C × P(prog) ≈ 0.186 × 0.844 ≈ 0.157.
+        </p>
+        <p>
+          Using the default value per outbreak of ₹ 4,000,000, the epidemiological benefit is:
+        </p>
+        <p class="small">
+          B<sub>epi</sub> = 0.157 × 4,000,000 ≈ ₹ 627,863.
         </p>
 
         <p class="scenario-subtitle">Step 8. Net benefit and benefit cost ratio</p>
@@ -1496,13 +1542,13 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           Net benefit is epidemiological benefit minus economic cost:
         </p>
         <p class="small">
-          Net benefit ≈ 522,031,705 − 144,000,000 ≈ ₹ 378,031,705.
+          Net benefit ≈ 627,863 − 144,000,000 ≈ −₹ 143,372,137.
         </p>
         <p>
           The benefit cost ratio is:
         </p>
         <p class="small">
-          BCR = 522,031,705 / 144,000,000 ≈ 3.6.
+          BCR = 627,863 / 144,000,000 ≈ 0.004.
         </p>
       </div>
 
@@ -1516,10 +1562,10 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           C<sub>trainee</sub> = 100,000 × 24 = ₹ 2,400,000.
         </p>
         <p>
-          Cohort size is 40, so cost per cohort is:
+          Cohort size is 50, so cost per cohort is:
         </p>
         <p class="small">
-          C<sub>cohort</sub> = 2,400,000 × 40 = ₹ 96,000,000.
+          C<sub>cohort</sub> = 2,400,000 × 50 = ₹ 120,000,000.
         </p>
 
         <p class="scenario-subtitle">Step 2. Non cost utility and endorsement</p>
@@ -1530,10 +1576,10 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           U<sub>non-cost</sub> = 0.168 + 0.487 + 0.640 + 0.610 + 0.017 = 1.922.
         </p>
         <p>
-          The cost term is −0.005 × (100,000 / 1,000) = −0.005 × 100 = −0.500. Programme utility is U<sub>prog</sub> = 1.922 − 0.500 = 1.422. The endorsement probability is:
+          The cost term is −0.005 × (100,000 / 1,000) = −0.500. Programme utility is U<sub>prog</sub> = 1.922 − 0.500 = 1.422. The endorsement probability is:
         </p>
         <p class="small">
-          P(prog) ≈ exp(1.422) / [exp(1.422) + exp(−0.601)] ≈ 0.872.
+          P(prog) ≈ exp(1.422) / [exp(1.422) + exp(−0.601)] ≈ 0.883.
         </p>
 
         <p class="scenario-subtitle">Step 3. WTP and total WTP</p>
@@ -1541,27 +1587,29 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           WTP<sub>month</sub> = 1.922 / 0.005 × 1,000 = 384,400 Rupees per month.
         </p>
         <p class="small">
-          WTP<sub>cohort</sub> = 384,400 × 24 × 40 ≈ ₹ 369,024,000.
+          WTP<sub>cohort</sub> = 384,400 × 24 × 50 = ₹ 461,280,000.
         </p>
 
-        <p class="scenario-subtitle">Step 4. Effective graduates and epidemiological benefits</p>
+        <p class="scenario-subtitle">Step 4. Capacity index, outbreaks and benefits</p>
         <p>
-          Effective graduates:
+          The capacity index is the same as S1 except for delivery weight (Blended, so w<sub>del</sub> = 1.0):
         </p>
         <p class="small">
-          G<sub>eff</sub> = 40 × 0.9 × 0.872 ≈ 31.4.
-        </p>
-        <p>
-          Applying the same outbreak impact calibration and the baseline value per outbreak as in the script yields a monetary epidemiological benefit of:
+          C = 50 × 2 × 1.3 × 1.3 × 1.0 / 1,000 ≈ 0.169.
         </p>
         <p class="small">
-          B<sub>epi</sub> ≈ ₹ 436,833,597.
+          O = C × P(prog) ≈ 0.169 × 0.883 ≈ 0.149.
         </p>
         <p class="small">
-          Net benefit ≈ 436,833,597 − 96,000,000 ≈ ₹ 340,833,597.
+          B<sub>epi</sub> = 0.149 × 4,000,000 ≈ ₹ 596,967.
+        </p>
+
+        <p class="scenario-subtitle">Step 5. Net benefit and BCR</p>
+        <p class="small">
+          Net benefit ≈ 596,967 − 120,000,000 ≈ −₹ 119,403,033.
         </p>
         <p class="small">
-          BCR ≈ 436,833,597 / 96,000,000 ≈ 4.6.
+          BCR ≈ 596,967 / 120,000,000 ≈ 0.005.
         </p>
       </div>
 
@@ -1572,7 +1620,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           C<sub>trainee</sub> = 75,000 × 24 = ₹ 1,800,000.
         </p>
         <p class="small">
-          C<sub>cohort</sub> = 1,800,000 × 40 = ₹ 72,000,000.
+          C<sub>cohort</sub> = 1,800,000 × 50 = ₹ 90,000,000.
         </p>
         <p>
           Non cost utility is:
@@ -1581,33 +1629,39 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           U<sub>non-cost</sub> = 0.168 + 0.487 + 0.453 + 0.610 = 1.718.
         </p>
         <p>
-          The cost term is −0.005 × (75,000 / 1,000) = −0.375, so U<sub>prog</sub> = 1.718 − 0.375 = 1.343. With U<sub>opt</sub> = −0.601, the endorsement probability is approximately 0.861.
+          The cost term is −0.005 × (75,000 / 1,000) = −0.375, so U<sub>prog</sub> = 1.718 − 0.375 = 1.343. With U<sub>opt</sub> = −0.601, the endorsement probability is approximately:
+        </p>
+        <p class="small">
+          P(prog) ≈ 0.875.
         </p>
         <p class="small">
           WTP<sub>month</sub> = 1.718 / 0.005 × 1,000 = 343,600 Rupees per month.
         </p>
         <p class="small">
-          WTP<sub>cohort</sub> = 343,600 × 24 × 40 ≈ ₹ 329,856,000.
+          WTP<sub>cohort</sub> = 343,600 × 24 × 50 = ₹ 412,320,000.
         </p>
 
-        <p class="scenario-subtitle">Effective graduates and benefits</p>
+        <p class="scenario-subtitle">Capacity, outbreaks and benefits</p>
         <p>
-          Effective graduates:
+          Capacity index (Advanced, Medium, Blended) is:
         </p>
         <p class="small">
-          G<sub>eff</sub> = 40 × 0.9 × 0.861 ≈ 31.0.
+          C = 50 × 2 × 1.3 × 1.0 × 1.0 / 1,000 ≈ 0.136.
         </p>
         <p>
-          Using the outbreak calibration in the script, the epidemiological benefit per cohort is:
+          Outbreak equivalents averted are:
         </p>
         <p class="small">
-          B<sub>epi</sub> ≈ ₹ 432,678,920.
+          O ≈ 0.136 × 0.875 ≈ 0.119.
         </p>
         <p class="small">
-          Net benefit ≈ 432,678,920 − 72,000,000 ≈ ₹ 360,678,920.
+          B<sub>epi</sub> = 0.119 × 4,000,000 ≈ ₹ 475,877.
         </p>
         <p class="small">
-          BCR ≈ 432,678,920 / 72,000,000 ≈ 6.0.
+          Net benefit ≈ 475,877 − 90,000,000 ≈ −₹ 89,524,123.
+        </p>
+        <p class="small">
+          BCR ≈ 475,877 / 90,000,000 ≈ 0.005.
         </p>
       </div>
 
@@ -1618,7 +1672,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           C<sub>trainee</sub> = 100,000 × 12 = ₹ 1,200,000.
         </p>
         <p class="small">
-          C<sub>cohort</sub> = 1,200,000 × 80 = ₹ 96,000,000.
+          C<sub>cohort</sub> = 1,200,000 × 50 = ₹ 60,000,000.
         </p>
         <p>
           Non cost utility for Intermediate, High mentoring, In person, 7 days, University qualification is:
@@ -1627,27 +1681,36 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           U<sub>non-cost</sub> = 0.168 + 0.220 + 0.640 + (−0.232) + 0.610 + 0.017 = 1.423.
         </p>
         <p>
-          The cost term is −0.005 × (100,000 / 1,000) = −0.500, so U<sub>prog</sub> = 1.423 − 0.500 = 0.923. The endorsement probability is approximately 0.810.
+          The cost term is −0.005 × (100,000 / 1,000) = −0.500, so U<sub>prog</sub> = 1.423 − 0.500 = 0.923. The endorsement probability is approximately:
+        </p>
+        <p class="small">
+          P(prog) ≈ 0.821.
         </p>
         <p class="small">
           WTP<sub>month</sub> = 1.423 / 0.005 × 1,000 = 284,600 Rupees per month.
         </p>
         <p class="small">
-          WTP<sub>cohort</sub> = 284,600 × 12 × 80 ≈ ₹ 273,216,000.
+          WTP<sub>cohort</sub> = 284,600 × 12 × 50 = ₹ 170,760,000.
         </p>
 
-        <p class="scenario-subtitle">Effective graduates and benefits</p>
-        <p class="small">
-          G<sub>eff</sub> = 80 × 0.9 × 0.810 ≈ 58.3.
+        <p class="scenario-subtitle">Capacity, outbreaks and benefits</p>
+        <p>
+          For Intermediate, High, In person the weights are w<sub>tier</sub> = 1.0, w<sub>ment</sub> = 1.3 and w<sub>del</sub> = 1.1. Duration is 12 months, that is 1 year. The capacity index is:
         </p>
         <p class="small">
-          B<sub>epi</sub> ≈ ₹ 812,272,333.
+          C = 50 × 1 × 1.0 × 1.3 × 1.1 / 1,000 ≈ 0.143.
         </p>
         <p class="small">
-          Net benefit ≈ 812,272,333 − 96,000,000 ≈ ₹ 716,272,333.
+          O ≈ 0.143 × 0.821 ≈ 0.117.
         </p>
         <p class="small">
-          BCR ≈ 812,272,333 / 96,000,000 ≈ 8.5.
+          B<sub>epi</sub> = 0.117 × 4,000,000 ≈ ₹ 312,122.
+        </p>
+        <p class="small">
+          Net benefit ≈ 312,122 − 60,000,000 ≈ −₹ 59,687,878.
+        </p>
+        <p class="small">
+          BCR ≈ 312,122 / 60,000,000 ≈ 0.005.
         </p>
       </div>
 
@@ -1658,7 +1721,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           C<sub>trainee</sub> = 75,000 × 12 = ₹ 900,000.
         </p>
         <p class="small">
-          C<sub>cohort</sub> = 900,000 × 80 = ₹ 72,000,000.
+          C<sub>cohort</sub> = 900,000 × 50 = ₹ 45,000,000.
         </p>
         <p>
           Non cost utility is:
@@ -1667,27 +1730,36 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           U<sub>non-cost</sub> = 0.168 + 0.220 + 0.453 + 0.610 = 1.451.
         </p>
         <p>
-          The cost term is −0.005 × (75,000 / 1,000) = −0.375, so U<sub>prog</sub> = 1.451 − 0.375 = 1.076. The endorsement probability is approximately 0.856.
+          The cost term is −0.005 × (75,000 / 1,000) = −0.375, so U<sub>prog</sub> = 1.451 − 0.375 = 1.076. The endorsement probability is approximately:
+        </p>
+        <p class="small">
+          P(prog) ≈ 0.843.
         </p>
         <p class="small">
           WTP<sub>month</sub> = 1.451 / 0.005 × 1,000 = 290,200 Rupees per month.
         </p>
         <p class="small">
-          WTP<sub>cohort</sub> = 290,200 × 12 × 80 ≈ ₹ 278,592,000.
+          WTP<sub>cohort</sub> = 290,200 × 12 × 50 = ₹ 174,120,000.
         </p>
 
-        <p class="scenario-subtitle">Effective graduates and benefits</p>
-        <p class="small">
-          G<sub>eff</sub> = 80 × 0.9 × 0.856 ≈ 61.6.
+        <p class="scenario-subtitle">Capacity, outbreaks and benefits</p>
+        <p>
+          For Intermediate, Medium, Blended the weights are w<sub>tier</sub> = 1.0, w<sub>ment</sub> = 1.0 and w<sub>del</sub> = 1.0. Capacity index:
         </p>
         <p class="small">
-          B<sub>epi</sub> ≈ ₹ 833,421,913.
+          C = 50 × 1 × 1.0 × 1.0 × 1.0 / 1,000 = 0.050.
         </p>
         <p class="small">
-          Net benefit ≈ 833,421,913 − 72,000,000 ≈ ₹ 761,421,913.
+          O ≈ 0.050 × 0.843 ≈ 0.084.
         </p>
         <p class="small">
-          BCR ≈ 833,421,913 / 72,000,000 ≈ 11.6.
+          B<sub>epi</sub> = 0.084 × 4,000,000 ≈ ₹ 249,128.
+        </p>
+        <p class="small">
+          Net benefit ≈ 249,128 − 45,000,000 ≈ −₹ 44,750,872.
+        </p>
+        <p class="small">
+          BCR ≈ 249,128 / 45,000,000 ≈ 0.006.
         </p>
       </div>
 
@@ -1698,7 +1770,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           C<sub>trainee</sub> = 50,000 × 12 = ₹ 600,000.
         </p>
         <p class="small">
-          C<sub>cohort</sub> = 600,000 × 80 = ₹ 48,000,000.
+          C<sub>cohort</sub> = 600,000 × 50 = ₹ 30,000,000.
         </p>
         <p>
           Non cost utility is:
@@ -1707,27 +1779,36 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           U<sub>non-cost</sub> = 0.168 + 0.220 + 0.610 = 0.998.
         </p>
         <p>
-          The cost term is −0.005 × (50,000 / 1,000) = −0.250, so U<sub>prog</sub> = 0.998 − 0.250 = 0.748. The endorsement probability is approximately 0.778.
+          The cost term is −0.005 × (50,000 / 1,000) = −0.250, so U<sub>prog</sub> = 0.998 − 0.250 = 0.748. The endorsement probability is approximately:
+        </p>
+        <p class="small">
+          P(prog) ≈ 0.794.
         </p>
         <p class="small">
           WTP<sub>month</sub> = 0.998 / 0.005 × 1,000 = 199,600 Rupees per month.
         </p>
         <p class="small">
-          WTP<sub>cohort</sub> = 199,600 × 12 × 80 ≈ ₹ 191,616,000.
+          WTP<sub>cohort</sub> = 199,600 × 12 × 50 = ₹ 119,760,000.
         </p>
 
-        <p class="scenario-subtitle">Effective graduates and benefits</p>
-        <p class="small">
-          G<sub>eff</sub> = 80 × 0.9 × 0.778 ≈ 56.0.
+        <p class="scenario-subtitle">Capacity, outbreaks and benefits</p>
+        <p>
+          For Intermediate, Low, Blended the weights are w<sub>tier</sub> = 1.0, w<sub>ment</sub> = 0.7 and w<sub>del</sub> = 1.0. Capacity index:
         </p>
         <p class="small">
-          B<sub>epi</sub> ≈ ₹ 785,404,559.
+          C = 50 × 1 × 1.0 × 0.7 × 1.0 / 1,000 = 0.035.
         </p>
         <p class="small">
-          Net benefit ≈ 785,404,559 − 48,000,000 ≈ ₹ 737,404,559.
+          O ≈ 0.035 × 0.794 ≈ 0.056.
         </p>
         <p class="small">
-          BCR ≈ 785,404,559 / 48,000,000 ≈ 16.4.
+          B<sub>epi</sub> = 0.056 × 4,000,000 ≈ ₹ 160,499.
+        </p>
+        <p class="small">
+          Net benefit ≈ 160,499 − 30,000,000 ≈ −₹ 29,839,501.
+        </p>
+        <p class="small">
+          BCR ≈ 160,499 / 30,000,000 ≈ 0.005.
         </p>
       </div>
 
@@ -1738,7 +1819,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           C<sub>trainee</sub> = 75,000 × 3 = ₹ 225,000.
         </p>
         <p class="small">
-          C<sub>cohort</sub> = 225,000 × 35 = ₹ 7,875,000.
+          C<sub>cohort</sub> = 225,000 × 50 = ₹ 11,250,000.
         </p>
         <p>
           Non cost utility is:
@@ -1747,27 +1828,36 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           U<sub>non-cost</sub> = 0.168 (constant) + 0.640 (High mentoring) + (−0.232) (In person) + 0.610 (7 days) = 1.186.
         </p>
         <p>
-          The cost term is −0.005 × (75,000 / 1,000) = −0.375, so U<sub>prog</sub> = 1.186 − 0.375 = 0.811. The endorsement probability is approximately 0.820.
+          The cost term is −0.005 × (75,000 / 1,000) = −0.375, so U<sub>prog</sub> = 1.186 − 0.375 = 0.811. The endorsement probability is approximately:
+        </p>
+        <p class="small">
+          P(prog) ≈ 0.804.
         </p>
         <p class="small">
           WTP<sub>month</sub> = 1.186 / 0.005 × 1,000 = 237,200 Rupees per month.
         </p>
         <p class="small">
-          WTP<sub>cohort</sub> = 237,200 × 3 × 35 ≈ ₹ 24,906,000.
+          WTP<sub>cohort</sub> = 237,200 × 3 × 50 = ₹ 35,580,000.
         </p>
 
-        <p class="scenario-subtitle">Effective graduates and benefits</p>
-        <p class="small">
-          G<sub>eff</sub> = 35 × 0.9 × 0.820 ≈ 25.8.
+        <p class="scenario-subtitle">Capacity, outbreaks and benefits</p>
+        <p>
+          For Frontline, High, In person the weights are w<sub>tier</sub> = 0.7, w<sub>ment</sub> = 1.3 and w<sub>del</sub> = 1.1. Duration is 3 months, that is 0.25 years. Capacity index:
         </p>
         <p class="small">
-          B<sub>epi</sub> ≈ ₹ 347,992,137.
+          C = 50 × 0.25 × 0.7 × 1.3 × 1.1 / 1,000 ≈ 0.013.
         </p>
         <p class="small">
-          Net benefit ≈ 347,992,137 − 7,875,000 ≈ ₹ 340,117,137.
+          O ≈ 0.013 × 0.804 ≈ 0.010.
         </p>
         <p class="small">
-          BCR ≈ 347,992,137 / 7,875,000 ≈ 44.2.
+          B<sub>epi</sub> = 0.010 × 4,000,000 ≈ ₹ 39,725.
+        </p>
+        <p class="small">
+          Net benefit ≈ 39,725 − 11,250,000 ≈ −₹ 11,210,275.
+        </p>
+        <p class="small">
+          BCR ≈ 39,725 / 11,250,000 ≈ 0.004.
         </p>
       </div>
 
@@ -1778,7 +1868,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           C<sub>trainee</sub> = 50,000 × 3 = ₹ 150,000.
         </p>
         <p class="small">
-          C<sub>cohort</sub> = 150,000 × 35 = ₹ 5,250,000.
+          C<sub>cohort</sub> = 150,000 × 50 = ₹ 7,500,000.
         </p>
         <p>
           Non cost utility is:
@@ -1787,27 +1877,36 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           U<sub>non-cost</sub> = 0.168 + 0.453 + 0.610 = 1.231.
         </p>
         <p>
-          Cost term is −0.005 × (50,000 / 1,000) = −0.250, so U<sub>prog</sub> = 1.231 − 0.250 = 0.981. The endorsement probability is approximately 0.731.
+          Cost term is −0.005 × (50,000 / 1,000) = −0.250, so U<sub>prog</sub> = 1.231 − 0.250 = 0.981. The endorsement probability is approximately:
+        </p>
+        <p class="small">
+          P(prog) ≈ 0.829.
         </p>
         <p class="small">
           WTP<sub>month</sub> = 1.231 / 0.005 × 1,000 = 246,200 Rupees per month.
         </p>
         <p class="small">
-          WTP<sub>cohort</sub> = 246,200 × 3 × 35 ≈ ₹ 25,851,000.
+          WTP<sub>cohort</sub> = 246,200 × 3 × 50 = ₹ 36,930,000.
         </p>
 
-        <p class="scenario-subtitle">Effective graduates and benefits</p>
-        <p class="small">
-          G<sub>eff</sub> = 35 × 0.9 × 0.731 ≈ 23.0.
+        <p class="scenario-subtitle">Capacity, outbreaks and benefits</p>
+        <p>
+          For Frontline, Medium, Blended the weights are w<sub>tier</sub> = 0.7, w<sub>ment</sub> = 1.0 and w<sub>del</sub> = 1.0. Capacity index:
         </p>
         <p class="small">
-          B<sub>epi</sub> ≈ ₹ 358,987,567.
+          C = 50 × 0.25 × 0.7 × 1.0 × 1.0 / 1,000 ≈ 0.009.
         </p>
         <p class="small">
-          Net benefit ≈ 358,987,567 − 5,250,000 ≈ ₹ 353,737,567.
+          O ≈ 0.009 × 0.829 ≈ 0.008.
         </p>
         <p class="small">
-          BCR ≈ 358,987,567 / 5,250,000 ≈ 68.4.
+          B<sub>epi</sub> = 0.008 × 4,000,000 ≈ ₹ 30,624.
+        </p>
+        <p class="small">
+          Net benefit ≈ 30,624 − 7,500,000 ≈ −₹ 7,469,376.
+        </p>
+        <p class="small">
+          BCR ≈ 30,624 / 7,500,000 ≈ 0.004.
         </p>
       </div>
 
@@ -1818,7 +1917,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           C<sub>trainee</sub> = 25,000 × 3 = ₹ 75,000.
         </p>
         <p class="small">
-          C<sub>cohort</sub> = 75,000 × 35 = ₹ 2,625,000.
+          C<sub>cohort</sub> = 75,000 × 50 = ₹ 3,750,000.
         </p>
         <p>
           Non cost utility is:
@@ -1827,34 +1926,43 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
           U<sub>non-cost</sub> = 0.168 + 0.610 = 0.778.
         </p>
         <p>
-          Cost term is −0.005 × (25,000 / 1,000) = −0.125, so U<sub>prog</sub> = 0.778 − 0.125 = 0.653. The endorsement probability is approximately 0.658.
+          Cost term is −0.005 × (25,000 / 1,000) = −0.125, so U<sub>prog</sub> = 0.778 − 0.125 = 0.653. The endorsement probability is approximately:
+        </p>
+        <p class="small">
+          P(prog) ≈ 0.778.
         </p>
         <p class="small">
           WTP<sub>month</sub> = 0.778 / 0.005 × 1,000 = 155,600 Rupees per month.
         </p>
         <p class="small">
-          WTP<sub>cohort</sub> = 155,600 × 3 × 35 ≈ ₹ 16,338,000.
+          WTP<sub>cohort</sub> = 155,600 × 3 × 50 = ₹ 23,340,000.
         </p>
 
-        <p class="scenario-subtitle">Effective graduates and benefits</p>
-        <p class="small">
-          G<sub>eff</sub> = 35 × 0.9 × 0.658 ≈ 20.8.
+        <p class="scenario-subtitle">Capacity, outbreaks and benefits</p>
+        <p>
+          For Frontline, Low, Blended the weights are w<sub>tier</sub> = 0.7, w<sub>ment</sub> = 0.7 and w<sub>del</sub> = 1.0. Capacity index:
         </p>
         <p class="small">
-          B<sub>epi</sub> ≈ ₹ 336,700,979.
+          C = 50 × 0.25 × 0.7 × 0.7 × 1.0 / 1,000 ≈ 0.006.
         </p>
         <p class="small">
-          Net benefit ≈ 336,700,979 − 2,625,000 ≈ ₹ 334,075,979.
+          O ≈ 0.006 × 0.778 ≈ 0.005.
         </p>
         <p class="small">
-          BCR ≈ 336,700,979 / 2,625,000 ≈ 128.3.
+          B<sub>epi</sub> = 0.005 × 4,000,000 ≈ ₹ 17,494.
+        </p>
+        <p class="small">
+          Net benefit ≈ 17,494 − 3,750,000 ≈ −₹ 3,732,506.
+        </p>
+        <p class="small">
+          BCR ≈ 17,494 / 3,750,000 ≈ 0.005.
         </p>
       </div>
 
       <h3>14.10 Summary table for scenarios S1 to S9</h3>
       <figure class="table-block">
         <table class="scenario-summary-table">
-          <caption>Table 6. Summary of costs and benefits for illustrative scenarios</caption>
+          <caption>Table 6. Summary of costs and benefits for illustrative scenarios (50 trainees per cohort, V<sub>outbreak</sub> = ₹ 4 million)</caption>
           <thead>
             <tr>
               <th>Scenario</th>
@@ -1874,94 +1982,94 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
               <td>2,880,000</td>
               <td>144,000,000</td>
               <td>405,600,000</td>
-              <td>522,031,705</td>
-              <td>378,031,705</td>
-              <td>≈ 3.6</td>
+              <td>627,863</td>
+              <td>&minus;143,372,137</td>
+              <td>≈ 0.004</td>
             </tr>
             <tr>
               <td>S2</td>
               <td>Advanced</td>
               <td>2,400,000</td>
-              <td>96,000,000</td>
-              <td>369,024,000</td>
-              <td>436,833,597</td>
-              <td>340,833,597</td>
-              <td>≈ 4.6</td>
+              <td>120,000,000</td>
+              <td>461,280,000</td>
+              <td>596,967</td>
+              <td>&minus;119,403,033</td>
+              <td>≈ 0.005</td>
             </tr>
             <tr>
               <td>S3</td>
               <td>Advanced</td>
               <td>1,800,000</td>
-              <td>72,000,000</td>
-              <td>329,856,000</td>
-              <td>432,678,920</td>
-              <td>360,678,920</td>
-              <td>≈ 6.0</td>
+              <td>90,000,000</td>
+              <td>412,320,000</td>
+              <td>475,877</td>
+              <td>&minus;89,524,123</td>
+              <td>≈ 0.005</td>
             </tr>
             <tr>
               <td>S4</td>
               <td>Intermediate</td>
               <td>1,200,000</td>
-              <td>96,000,000</td>
-              <td>273,216,000</td>
-              <td>812,272,333</td>
-              <td>716,272,333</td>
-              <td>≈ 8.5</td>
+              <td>60,000,000</td>
+              <td>170,760,000</td>
+              <td>312,122</td>
+              <td>&minus;59,687,878</td>
+              <td>≈ 0.005</td>
             </tr>
             <tr>
               <td>S5</td>
               <td>Intermediate</td>
               <td>900,000</td>
-              <td>72,000,000</td>
-              <td>278,592,000</td>
-              <td>833,421,913</td>
-              <td>761,421,913</td>
-              <td>≈ 11.6</td>
+              <td>45,000,000</td>
+              <td>174,120,000</td>
+              <td>249,128</td>
+              <td>&minus;44,750,872</td>
+              <td>≈ 0.006</td>
             </tr>
             <tr>
               <td>S6</td>
               <td>Intermediate</td>
               <td>600,000</td>
-              <td>48,000,000</td>
-              <td>191,616,000</td>
-              <td>785,404,559</td>
-              <td>737,404,559</td>
-              <td>≈ 16.4</td>
+              <td>30,000,000</td>
+              <td>119,760,000</td>
+              <td>160,499</td>
+              <td>&minus;29,839,501</td>
+              <td>≈ 0.005</td>
             </tr>
             <tr>
               <td>S7</td>
               <td>Frontline</td>
               <td>225,000</td>
-              <td>7,875,000</td>
-              <td>24,906,000</td>
-              <td>347,992,137</td>
-              <td>340,117,137</td>
-              <td>≈ 44.2</td>
+              <td>11,250,000</td>
+              <td>35,580,000</td>
+              <td>39,725</td>
+              <td>&minus;11,210,275</td>
+              <td>≈ 0.004</td>
             </tr>
             <tr>
               <td>S8</td>
               <td>Frontline</td>
               <td>150,000</td>
-              <td>5,250,000</td>
-              <td>25,851,000</td>
-              <td>358,987,567</td>
-              <td>353,737,567</td>
-              <td>≈ 68.4</td>
+              <td>7,500,000</td>
+              <td>36,930,000</td>
+              <td>30,624</td>
+              <td>&minus;7,469,376</td>
+              <td>≈ 0.004</td>
             </tr>
             <tr>
               <td>S9</td>
               <td>Frontline</td>
               <td>75,000</td>
-              <td>2,625,000</td>
-              <td>16,338,000</td>
-              <td>336,700,979</td>
-              <td>334,075,979</td>
-              <td>≈ 128.3</td>
+              <td>3,750,000</td>
+              <td>23,340,000</td>
+              <td>17,494</td>
+              <td>&minus;3,732,506</td>
+              <td>≈ 0.005</td>
             </tr>
           </tbody>
         </table>
         <p class="table-note">
-          Note: All costs and benefits are expressed in Rupees with opportunity costs included. Epidemiological benefits and BCRs reflect the current baseline outbreak value and horizon calibration in the script. Minor differences in rounded values arise from rounding intermediate calculations.
+          Note: All costs and benefits are expressed in Rupees with opportunity costs included and value per outbreak set to ₹ 4,000,000. Benefit cost ratios are substantially below one under this conservative outbreak value because the epidemiological benefits per cohort are modest relative to the full economic cost of training. National level totals for 10 cohorts per tier are obtained by multiplying cohort-level costs and benefits by 10; the BCRs remain unchanged.
         </p>
       </figure>
     </section>
@@ -1986,7 +2094,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
       <ul class="small">
         <li><strong>scenario_name</strong>: User defined label for the scenario.</li>
         <li><strong>tier</strong>, <strong>mentoring</strong>, <strong>delivery_mode</strong>, <strong>qualification</strong>: Programme design attributes.</li>
-        <li><strong>monthly_cost_per_trainee</strong>, <strong>duration_months</strong>, <strong>cohort_size</strong>: Core cost and size parameters.</li>
+        <li><strong>monthly_cost_per_trainee</strong>, <strong>duration_months</strong>, <strong>cohort_size</strong>, <strong>number_of_cohorts</strong>: Core cost and size parameters.</li>
         <li><strong>total_cost_cohort</strong>, <strong>total_cost_national</strong>: Economic costs at cohort and national scale.</li>
         <li><strong>value_per_outbreak</strong>, <strong>planning_horizon_years</strong>, <strong>discount_rate</strong>: Key settings from the Settings tab.</li>
         <li><strong>endorsement_probability</strong>, <strong>wtp_per_month</strong>, <strong>total_wtp</strong>, <strong>wtp_adjusted</strong>: Preference based indicators.</li>
@@ -2002,7 +2110,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
 
       <h3>15.3 Example JSON snippet</h3>
       <p>
-        An example JSON snippet for a single scenario might look as follows:
+        An example JSON snippet for a single scenario (aligned with Scenario S1 and the current default outbreak value) might look as follows:
       </p>
 
       <div class="code-block">
@@ -2015,23 +2123,30 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
   "monthly_cost_per_trainee": 120000,
   "duration_months": 24,
   "cohort_size": 50,
+  "number_of_cohorts": 10,
   "total_cost_cohort": 144000000,
-  "value_per_outbreak": 20000000000,
+  "total_cost_national": 1440000000,
+  "value_per_outbreak": 4000000,
   "planning_horizon_years": 10,
   "discount_rate": 0.03,
   "include_opportunity_costs": true,
   "endorsement_probability": 0.84,
   "wtp_per_month": 338000,
   "total_wtp": 405600000,
-  "outbreak_equivalents_averted": 0.04,
-  "benefit_epi_cohort": 522031705,
-  "bcr_cohort": 3.6,
-  "net_benefit_cohort": 378031705,
-  "notes": "Response capacity fixed at 7 days; outbreak value and horizon as per tool settings."
-}      </div>
+  "wtp_adjusted": 340704000,
+  "outbreak_equivalents_averted": 0.16,
+  "benefit_epi_cohort": 627863,
+  "benefit_epi_national": 6278630,
+  "bcr_cohort": 0.004,
+  "bcr_national": 0.004,
+  "net_benefit_cohort": -143372137,
+  "net_benefit_national": -1433721370,
+  "notes": "Response capacity fixed at 7 days; outbreak value reflects a conservative assumption of ₹4 million per outbreak equivalent."
+}
+      </div>
 
       <p>
-        This example is illustrative. The STEPS tool automatically populates the values based on the current configuration and results.
+        This example is illustrative. The STEPS tool automatically populates the values based on the current configuration and results, including national totals when the user specifies the number of cohorts on the National Simulation tab.
       </p>
 
       <h3>15.4 Copilot interpretation prompt</h3>
@@ -2070,7 +2185,7 @@ WTP<sub>adj</sub> = WTP<sub>cohort</sub> × P(prog)        </div>
       </p>
 
       <p>
-        Epidemiological benefits are expressed in terms of outbreak equivalents averted using a stylised but script implemented mapping from effective graduates to outbreak risk reduction. The per graduate outbreak impact factor and horizon adjustment are calibrated so that the resulting benefit cost ratios sit within a plausible range given the chosen value per outbreak. The value per outbreak itself is calibrated to be consistent with international and Indian economic evidence but remains uncertain. The tool therefore emphasises sensitivity analysis around outbreak values.
+        Epidemiological benefits are expressed in terms of outbreak equivalents averted using a stylised capacity index. The weights used for tier, mentoring and delivery are judgement based and are calibrated so that a cohort of Advanced or Intermediate trainees yields a fraction of an outbreak equivalent over the planning horizon. The value per outbreak is calibrated to be consistent with international and Indian economic evidence but remains uncertain. The tool therefore emphasises sensitivity analysis around outbreak values, from conservative localised events (for example ₹ 4 million per outbreak) up to large multi state outbreaks (tens of billions of Rupees).
       </p>
 
       <h3>16.2 Limitations and appropriate use</h3>
