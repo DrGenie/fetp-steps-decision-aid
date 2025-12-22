@@ -1,4 +1,3 @@
-
 /* ===================================================
    STEPS FETP India Decision Aid
    Next generation script with working tooltips,
