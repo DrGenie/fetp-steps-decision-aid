@@ -1,3 +1,4 @@
+
 /* ===========================
    Base layout and typography
    =========================== */
@@ -521,9 +522,18 @@ button:disabled,
     border-color: rgba(15, 23, 42, 0.08);
 }
 
+.card:hover:has(.tooltip-bubble),
+.card:hover:has([role="tooltip"]) {
+    transform: none;
+}
+
 .card-secondary {
     background-color: #F9FAFB;
     box-shadow: var(--shadow-soft);
+}
+
+.card-config {
+    position: relative;
 }
 
 .card-header-with-info {
@@ -967,6 +977,9 @@ input[type="range"]::-moz-range-thumb {
         border-color var(--transition-fast),
         transform var(--transition-fast),
         box-shadow var(--transition-fast);
+    pointer-events: auto;
+    touch-action: manipulation;
+    user-select: none;
 }
 
 .info-icon:hover {
@@ -976,7 +989,22 @@ input[type="range"]::-moz-range-thumb {
     box-shadow: var(--shadow-soft);
 }
 
-/* Tooltip bubble (injected by JS) */
+.info-icon:focus-visible,
+.tooltip-trigger:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Tooltip triggers (contract) */
+
+.tooltip-trigger {
+    cursor: help;
+    pointer-events: auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* Tooltip bubble (legacy, injected by JS) */
 
 .tooltip-bubble {
     position: fixed;
@@ -986,7 +1014,7 @@ input[type="range"]::-moz-range-thumb {
     font-size: 12px;
     padding: 8px 10px;
     border-radius: 8px;
-    z-index: 80;
+    z-index: 110;
     box-shadow: var(--shadow-medium);
     opacity: 1;
     transform: translateY(0);
@@ -994,18 +1022,23 @@ input[type="range"]::-moz-range-thumb {
     transition:
         opacity var(--transition-fast),
         transform var(--transition-fast);
+    overflow-wrap: break-word;
+    word-break: break-word;
+    visibility: visible;
 }
 
 .tooltip-bubble.tooltip-hidden {
     opacity: 0;
     transform: translateY(4px);
     pointer-events: none;
+    visibility: hidden;
 }
 
 .tooltip-bubble.tooltip-visible {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
+    visibility: visible;
 }
 
 .tooltip-bubble p {
@@ -1027,6 +1060,76 @@ input[type="range"]::-moz-range-thumb {
 
 .tooltip-bubble.bottom .tooltip-arrow {
     top: -4px;
+}
+
+/* Global tooltip system (contract) */
+
+#globalTooltip {
+    position: fixed;
+    max-width: 320px;
+    background-color: #111827;
+    color: #F9FAFB;
+    font-size: 12px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    z-index: 110;
+    box-shadow: var(--shadow-medium);
+    opacity: 0;
+    transform: translateY(4px);
+    pointer-events: none;
+    transition:
+        opacity var(--transition-fast),
+        transform var(--transition-fast);
+    overflow-wrap: break-word;
+    word-break: break-word;
+    visibility: hidden;
+}
+
+#globalTooltip.tooltip-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    visibility: visible;
+}
+
+#globalTooltip.tooltip-hidden {
+    opacity: 0;
+    transform: translateY(4px);
+    pointer-events: none;
+    visibility: hidden;
+}
+
+#globalTooltip .tooltip-title {
+    margin: 0 0 4px 0;
+    font-weight: 600;
+    font-size: 12px;
+    color: #F9FAFB;
+}
+
+#globalTooltip .tooltip-body {
+    margin: 0;
+    color: #F9FAFB;
+}
+
+#globalTooltip p {
+    margin: 0;
+}
+
+/* Allow tooltip content to escape common clipping containers only when needed */
+.attr-table-card:has(.tooltip-bubble),
+.attr-table-card:has([role="tooltip"]) {
+    overflow: visible;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    overflow-y: visible;
+    margin-top: 8px;
+}
+
+.table-wrapper:has(.tooltip-bubble),
+.table-wrapper:has([role="tooltip"]) {
+    overflow-y: visible;
 }
 
 /* ===========================
@@ -1274,11 +1377,6 @@ canvas {
    Tables
    =========================== */
 
-.table-wrapper {
-    overflow-x: auto;
-    margin-top: 8px;
-}
-
 .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -1375,7 +1473,7 @@ canvas {
 }
 
 /* ===========================
-   Assumption log
+   Assumption log and settings log
    =========================== */
 
 .assumption-log {
@@ -1392,6 +1490,21 @@ canvas {
     border-radius: var(--radius-md);
     max-height: 220px;
     overflow: auto;
+}
+
+/* Settings log box used in the Settings tab */
+.advanced-log-box {
+    margin-top: 8px;
+    padding: 8px 10px;
+    border-radius: var(--radius-md);
+    background-color: #F9FAFB;
+    border: 1px solid var(--color-border);
+    font-size: 12px;
+    color: var(--color-text-muted);
+    max-height: 200px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    line-height: 1.4;
 }
 
 /* ===========================
@@ -1488,6 +1601,63 @@ canvas {
 }
 
 .toast-error {
+    background-color: var(--color-danger);
+}
+
+/* Toast container system (contract) */
+
+#toastContainer {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 95;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+    pointer-events: none;
+}
+
+#toastContainer .toast-message {
+    min-width: 260px;
+    max-width: 360px;
+    background-color: #111827;
+    color: #F9FAFB;
+    border-radius: var(--radius-lg);
+    padding: 8px 12px;
+    font-size: 13px;
+    box-shadow: var(--shadow-medium);
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition:
+        opacity var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+#toastContainer .toast-message.show,
+#toastContainer .toast-message.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+#toastContainer .toast-message.toast-hidden,
+#toastContainer .toast-message.hidden {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+}
+
+#toastContainer .toast-message.toast-success {
+    background-color: var(--color-success);
+}
+
+#toastContainer .toast-message.toast-warning {
+    background-color: var(--color-warning);
+}
+
+#toastContainer .toast-message.toast-error {
     background-color: var(--color-danger);
 }
 
@@ -2186,6 +2356,82 @@ textarea:focus-visible {
 }
 
 /* ===========================
+   PDF export specific styling
+   =========================== */
+
+/* Wrapper and headings used when exporting sensitivity tables to PDF */
+.pdf-export-wrapper {
+    font-size: 12px;
+    color: var(--color-text);
+}
+
+.pdf-export-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.pdf-export-note {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    margin-bottom: 6px;
+}
+
+/* Table layout tuned for PDF rendering to keep content within page borders */
+.pdf-export-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    table-layout: fixed;
+}
+
+.pdf-export-table th,
+.pdf-export-table td {
+    border: 1px solid var(--color-border);
+    padding: 4px 4px;
+    text-align: left;
+    vertical-align: top;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.pdf-export-table th {
+    background-color: var(--color-table-header);
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+/* Ensure sensitivity content renders without clipping when used inside PDF export wrapper */
+.pdf-export-wrapper .table-wrapper {
+    overflow: visible;
+}
+
+.pdf-export-wrapper .data-table {
+    min-width: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.pdf-export-wrapper .sensitivity-table {
+    min-width: 0;
+}
+
+.pdf-export-wrapper .data-table thead tr {
+    position: static;
+    top: auto;
+}
+
+.pdf-export-wrapper .data-table th,
+.pdf-export-wrapper .data-table td {
+    white-space: normal;
+    word-break: break-word;
+}
+
+.pdf-export-wrapper #sensitivityTableContainer {
+    overflow: visible;
+}
+
+/* ===========================
    Print styles for exports
    =========================== */
 
@@ -2197,8 +2443,12 @@ textarea:focus-visible {
     .app-header,
     .tab-bar,
     #toast,
+    #toastContainer,
+    #globalTooltip,
     #tour-overlay,
-    #tour-popover {
+    #tour-popover,
+    .tour-overlay,
+    .tour-popover {
         display: none !important;
     }
 
@@ -2221,8 +2471,26 @@ textarea:focus-visible {
         display: none !important;
     }
 
+    .table-wrapper,
+    #sensitivityTableContainer {
+        overflow: visible !important;
+    }
+
+    .data-table {
+        min-width: 0 !important;
+        width: 100% !important;
+        table-layout: fixed;
+    }
+
+    .data-table thead tr {
+        position: static !important;
+        top: auto !important;
+    }
+
     .data-table th,
     .data-table td {
         border-color: #9CA3AF;
+        white-space: normal !important;
+        word-break: break-word !important;
     }
 }
