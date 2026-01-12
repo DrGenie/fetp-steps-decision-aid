@@ -3,6 +3,7 @@
    - Uses original mixed logit coefficients
    - Adds mentor support cost and capacity checks
    - Adds cross-sector multiplier and richer exports
+   - Restores outbreak response capacity attribute
    =================================================== */
 
 /* ===========================
@@ -141,7 +142,6 @@ const appState = {
     uptake: null,
     sensitivity: null
   },
-  tooltips: {},
   assumptionsText: "",
   briefMode: "standard"
 };
@@ -285,6 +285,10 @@ const TOOLTIP_CONTENT = {
   delivery: {
     title: "Delivery mode",
     body: "Programme delivery mode (in-person, blended or fully online) consistent with the preference study attributes."
+  },
+  response_capacity: {
+    title: "Outbreak response capacity",
+    body: "Attribute describing the expected time to respond to outbreaks (30, 15 or 7 days) as in the preference study."
   },
   cost_per_trainee: {
     title: "Cost per trainee per month",
@@ -636,6 +640,7 @@ function readConfig() {
   const career = document.getElementById("career").value;
   const mentorship = document.getElementById("mentorship").value;
   const delivery = document.getElementById("delivery").value;
+  const response = Number(document.getElementById("response-time").value || 7);
   const costPerTraineePerMonth = getInputNumber("cost", 250000);
   const traineesPerCohort = getInputNumber("trainees", 25);
   const cohorts = getInputNumber("cohorts", 10);
@@ -643,8 +648,6 @@ function readConfig() {
   const oppConfig = getCheckbox("opp-cost-config");
   const scenarioName = document.getElementById("scenario-name").value.trim();
   const scenarioNotes = document.getElementById("scenario-notes").value.trim();
-
-  const response = 7; // fixed at 7 days (most ambitious, consistent with attributes tab)
 
   const config = {
     tier,
@@ -751,6 +754,7 @@ function updateConfigSummary(config) {
       <li><strong>Career incentive:</strong> ${config.career}</li>
       <li><strong>Mentorship intensity:</strong> ${config.mentorship}</li>
       <li><strong>Delivery mode:</strong> ${config.delivery}</li>
+      <li><strong>Outbreak response capacity:</strong> ${config.response} days</li>
       <li><strong>Cohorts:</strong> ${formatNumber(config.cohorts)}</li>
       <li><strong>Trainees per cohort:</strong> ${formatNumber(config.traineesPerCohort)}</li>
       <li><strong>Cost per trainee per month:</strong> ${formatCurrencyINR(
@@ -892,6 +896,7 @@ function buildAssumptionsText(scenario) {
       0
     )}`,
     `Cross-sector benefit multiplier: ${formatNumber(st.crossSectorMultiplier, 2)}`,
+    `Outbreak response capacity attribute: ${cfg.response} days (DCE levels: 30, 15, 7 days)`,
     `Opportunity cost included: ${st.includeOppCost && cfg.opportunityCostIncluded ? "Yes" : "No"}`,
     `Mentor support cost per cohort (base): ${formatCurrencyINR(
       scenario.mentorCostBase,
@@ -1041,7 +1046,6 @@ function runSensitivity() {
   }
 
   const cfgBase = appState.currentConfig;
-  const settings = readSettings();
 
   const labels = [];
   const endorseSeries = [];
@@ -1178,6 +1182,7 @@ function buildScenarioJsonForAI(scenarios) {
       mentorship: s.config.mentorship,
       career: s.config.career,
       delivery: s.config.delivery,
+      outbreakResponseCapacityDays: s.config.response,
       cohorts: s.config.cohorts,
       traineesPerCohort: s.config.traineesPerCohort,
       endorseRate: s.endorseRate,
@@ -1199,7 +1204,9 @@ function buildBriefingPrompt(target = "copilot") {
   const scenarios = chooseScenariosForBriefing();
   const scenarioJson = buildScenarioJsonForAI(scenarios);
   const assumptions = appState.assumptionsText || "";
-  const feas = scenarios[0] ? scenarios[0].capacity : null;
+  const mainScenario = scenarios[0] || null;
+  const feas = mainScenario ? mainScenario.capacity : null;
+  const mainCfg = mainScenario ? mainScenario.config : null;
 
   const aiInstruction =
     target === "copilot"
@@ -1210,7 +1217,7 @@ function buildBriefingPrompt(target = "copilot") {
     ? `Capacity and feasibility summary (for the main configuration):
 - Required mentors nationally: ${feas.requiredMentors}
 - Mentor shortfall: ${feas.mentorShortfall}
-- Planned cohorts vs site capacity: ${feas.cohorts || ""} vs ${feas.maxCohortsBySites}
+- Planned cohorts vs site capacity: ${mainCfg ? mainCfg.cohorts : ""} vs ${feas.maxCohortsBySites}
 - Overall feasibility status: ${feas.capacityStatus}`
     : "Capacity and feasibility summary: not computed.";
 
@@ -1322,6 +1329,7 @@ function exportStandardPDF() {
 
     const lines = [
       `Tier: ${s.config.tier} · Mentorship: ${s.config.mentorship} · Career: ${s.config.career} · Delivery: ${s.config.delivery}`,
+      `Outbreak response capacity: ${s.config.response} days`,
       `Cohorts: ${formatNumber(s.config.cohorts)} · Trainees / cohort: ${formatNumber(
         s.config.traineesPerCohort
       )}`,
@@ -1585,6 +1593,7 @@ function exportExcel() {
       "Mentorship",
       "Career",
       "Delivery",
+      "Outbreak response capacity (days)",
       "Cohorts",
       "Trainees per cohort",
       "Endorsement (%)",
@@ -1609,6 +1618,7 @@ function exportExcel() {
       s.config.mentorship,
       s.config.career,
       s.config.delivery,
+      s.config.response,
       s.config.cohorts,
       s.config.traineesPerCohort,
       s.endorseRate,
@@ -1654,6 +1664,37 @@ function updateAllPanels(scenario) {
 }
 
 /* ===========================
+   Validation warnings
+   =========================== */
+
+function updateCostWarning() {
+  const costSlider = document.getElementById("cost");
+  const warning = document.getElementById("cost-warning");
+  if (!costSlider || !warning) return;
+  const val = Number(costSlider.value);
+  if (val <= 80000 || val >= 380000) {
+    warning.textContent =
+      "Cost is at the edge of the range used in the preference study. Check realism and robustness.";
+  } else {
+    warning.textContent = "";
+  }
+}
+
+function updateVolumeWarning() {
+  const trainees = getInputNumber("trainees", 25);
+  const cohorts = getInputNumber("cohorts", 10);
+  const warning = document.getElementById("volume-warning");
+  if (!warning) return;
+  const total = trainees * cohorts;
+  if (total >= 5000) {
+    warning.textContent =
+      "Total trainees (cohorts × trainees) is very large. Please check realism and capacity assumptions.";
+  } else {
+    warning.textContent = "";
+  }
+}
+
+/* ===========================
    Event handlers
    =========================== */
 
@@ -1663,17 +1704,17 @@ function initEventHandlers() {
     costSlider.addEventListener("input", () => {
       const disp = document.getElementById("cost-display");
       if (disp) disp.textContent = formatCurrencyINR(Number(costSlider.value), 0);
-      const val = Number(costSlider.value);
-      const warning = document.getElementById("scale-warning");
-      if (warning) {
-        if (val <= 80000 || val >= 380000) {
-          warning.textContent =
-            "Cost is at the edge of the range used in the preference study. Check realism and robustness.";
-        } else {
-          warning.textContent = "";
-        }
-      }
+      updateCostWarning();
     });
+  }
+
+  const traineesInput = document.getElementById("trainees");
+  const cohortsInput = document.getElementById("cohorts");
+  if (traineesInput) {
+    traineesInput.addEventListener("input", updateVolumeWarning);
+  }
+  if (cohortsInput) {
+    cohortsInput.addEventListener("input", updateVolumeWarning);
   }
 
   const applySettingsBtn = document.getElementById("apply-settings");
@@ -1754,10 +1795,12 @@ document.addEventListener("DOMContentLoaded", () => {
   initTooltips();
   initEventHandlers();
 
-  // Initial cost label
+  // Initial cost label and warnings
   const costSlider = document.getElementById("cost");
   if (costSlider) {
     const disp = document.getElementById("cost-display");
     if (disp) disp.textContent = formatCurrencyINR(Number(costSlider.value), 0);
+    updateCostWarning();
   }
+  updateVolumeWarning();
 });
