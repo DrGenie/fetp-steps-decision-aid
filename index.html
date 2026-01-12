@@ -127,9 +127,12 @@
               <td>The <strong>delivery mode</strong> dropdown in the Configuration tab.</td>
             </tr>
             <tr>
-              <td>Outbreak response time</td>
+              <td>Outbreak response capacity</td>
               <td>30 days, 15 days, 7 days</td>
-              <td>STEPS currently fixes this at <strong>7 days</strong> to match the most ambitious option.</td>
+              <td>
+                The <strong>outbreak response capacity</strong> dropdown in the Configuration tab
+                (30, 15 or 7 days; default is 7 days).
+              </td>
             </tr>
             <tr>
               <td>Cost per trainee per month</td>
@@ -318,6 +321,18 @@
             </div>
 
             <div class="form-group">
+              <label for="response-time">
+                Outbreak response capacity
+                <button type="button" class="info-icon" data-tooltip-key="response_capacity">i</button>
+              </label>
+              <select id="response-time">
+                <option value="30">30 days</option>
+                <option value="15">15 days</option>
+                <option value="7" selected>7 days</option>
+              </select>
+            </div>
+
+            <div class="form-group">
               <label for="cost">
                 Cost per trainee per month (INR)
                 <button type="button" class="info-icon" data-tooltip-key="cost_per_trainee">i</button>
@@ -327,6 +342,7 @@
                 <span id="cost-display">INR 250,000</span>
                 <span class="slider-hint">Range used in the preference study (75,000 – 400,000 rupees).</span>
               </div>
+              <p id="cost-warning" class="warning-text" aria-live="polite"></p>
             </div>
 
             <div class="form-group">
@@ -344,7 +360,7 @@
               </label>
               <input type="number" id="cohorts" min="1" max="200" value="10">
               <p class="hint">Increase this to explore national scale-up.</p>
-              <p id="scale-warning" class="warning-text" aria-live="polite"></p>
+              <p id="volume-warning" class="warning-text" aria-live="polite"></p>
             </div>
 
             <div class="form-group">
