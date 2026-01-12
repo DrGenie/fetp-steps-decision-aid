@@ -291,6 +291,18 @@ h3 {
   color: var(--color-warning);
 }
 
+/* Warning text */
+
+.warning-text {
+  margin-top: 4px;
+  border-radius: 6px;
+  padding: 6px 8px;
+  background: #fff7e6;
+  border: 1px solid #ffdd99;
+  font-size: 0.78rem;
+  color: #8a4b00;
+}
+
 /* Toggle */
 
 .form-group-toggle {
@@ -641,17 +653,6 @@ h3 {
   color: var(--color-accent);
   border: 1px solid rgba(37, 99, 235, 0.35);
   cursor: pointer;
-}
-
-/* Scale warning */
-
-#scale-warning {
-  margin-top: 4px;
-  border-radius: 6px;
-  padding: 6px 8px;
-  background: #fff7e6;
-  border: 1px solid #ffdd99;
-  font-size: 0.78rem;
 }
 
 /* Textarea mono (briefing) */
